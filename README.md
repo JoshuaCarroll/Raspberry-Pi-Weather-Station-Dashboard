@@ -9,7 +9,10 @@ Contributions to this project can be made by using the program and providing fee
 
 ----------
 
-## Install prerequisites
+# Installation
+
+### Install prerequisites
+
 
 1. Install the Apache2 package with the following command:
 
@@ -23,7 +26,7 @@ Contributions to this project can be made by using the program and providing fee
 
     `sudo apt-get install php5-mysql -y`
 
-## Get the data logging code
+### Get the dashboard code
 
 1. You will need root access on the Raspberry Pi. From the command line type:
 
@@ -43,7 +46,7 @@ Contributions to this project can be made by using the program and providing fee
 
 You should now be in `/var/www/html/dashboard`
 
-## Set up and connect
+### Set up and connect
   
 1. Update the the php script with the MySQL password that you chose when installing the database.
 
@@ -66,3 +69,27 @@ You should now be in `/var/www/html/dashboard`
 Enter this IP address into a browser followed by `/dashboard`. For example:
 
   - `http://192.168.0.X/dashboard`
+  
+----------
+
+# Installing updates
+
+This is a work-in-progress. New features and bug-fixes will be added here as needed. If you want to update your copy with the latest changes, follow these steps.
+
+1. Navigate to the dashboard folder:
+
+    `cd /var/www/html/dashboard`
+    
+2. Backup your variables file:
+
+    `sudo cp variables.php ../`
+    
+3. Update your code with the latest changes:
+
+    `sudo git pull`
+    
+4. Update the variables file with the values appropriate to your environment and installation:
+
+    `sudo nano variables.php`
+    
+    *NOTE: Since new variables may have been introduced since the time when you initially installed this program, do not overwrite the new variables file with your old one. Rather edit the new file and enter the appropriate values. If needed, refer to the backup copy of the variables file you made (located at /var/www/html) for values that you don't remember.*

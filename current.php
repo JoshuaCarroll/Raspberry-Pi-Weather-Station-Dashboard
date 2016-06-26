@@ -28,7 +28,10 @@ while($row = mysql_fetch_array($result)) {
     echo "\"Observation" . $numberOfRows . "\": { ";
     for($i = 0; $i < $numberOfFields; $i++) {
         $field_info = mysql_fetch_field($result, $i);
-        echo "\"" . $field_info->name . "\":";
+        $fieldName = $field_info->name;
+        
+        // $useMetricAndCelsiusMeasurements
+        echo "\"" . $fieldName . "\":";
         echo "\"" . $row[$i] . "\"";
 
         if ($i+1 < $numberOfFields) {
@@ -41,4 +44,9 @@ while($row = mysql_fetch_array($result)) {
 echo "} }";
 
 mysql_close($con);
+
+function convertCelsiusToF($celsiusDegrees) {
+    $F = ((($celsiusDegrees * 9) / 5) + 32);
+    return $F;
+}
 ?>

@@ -52,7 +52,7 @@ function loadData() {
     $.getJSON(jsonPath, function(result) {
         var obj = result.WeatherObservation.Observation1;
 
-        intTemperature = convertCtoF(obj.GROUND_TEMPERATURE);
+        intTemperature = obj.GROUND_TEMPERATURE;
         intHumidity = obj.HUMIDITY;
         intPressure = obj.AIR_PRESSURE;
         intPrCh1h = obj.AIR_PRESSURE - result.WeatherObservation.Observation3.AIR_PRESSURE;
@@ -127,10 +127,6 @@ function drawChart(strChartDiv, strLabel, intValue, objOptions) {
 
 function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-function convertCtoF(degree) {
-    return (((degree * 9) / 5) + 32);
 }
 
 function chartOptions() {

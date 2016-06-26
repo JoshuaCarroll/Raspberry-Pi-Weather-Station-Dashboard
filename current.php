@@ -34,12 +34,12 @@ while($row = mysql_fetch_array($result)) {
         if (($fieldName ==  "AMBIENT_TEMPERATURE") || ($fieldName =="GROUND_TEMPERATURE")) {
             if ($useMetricAndCelsiusMeasurements) {
                 echo "\"" . $fieldName . "_STRING\":";
-                echo "\"" . $fieldValue . "° C\"";
+                echo "\"" . $fieldValue . "° C\",";
             } else {
                 $fieldValue = convertCelsiusToF($fieldValue);
                 
                 echo "\"" . $fieldName . "_STRING\":";
-                echo "\"" . $fieldValue . "° F\"";
+                echo "\"" . $fieldValue . "° F\",";
             }
         }
         

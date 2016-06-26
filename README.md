@@ -32,7 +32,7 @@ This project will provide you with a graphical dashboard of the current weather 
 
     `git clone https://github.com/JoshuaCarroll/Raspberry-Pi-Weather-Station-Dashboard.git dashboard`
   
-1. Return to the demo site root.
+4. Return to the dashboard site root.
 
     `cd dashboard`
 
@@ -42,22 +42,22 @@ You should now be in `/var/www/html/dashboard`
   
 1. Update the the php script with the MySQL password that you chose when installing the database.
 
-    `nano current.php`
+    `nano variables.php`
   
-    Find the line: `$con=mysql_connect("localhost","root","raspberry","weather");`
-  
-    Update `raspberry` to the password that you chose.
+    Update the variables to the values that you chose.
   
     Press `Ctrl O` then `Enter` to save and `Ctrl X` to quit nano.
-  
-1. Repeat the previous step for `csv.php`.
+    
+2. Create the GETCURRENTOBS stored procedure.
 
-1. Find the weather station's ip address:
+    `mysql weather < GETCURRENT.sql`
+
+3. Find the weather station's ip address:
 
     `ifconfig`
   
   The IP address will be on the second line just after `inet addr:`
 
-Enter this IP address into a browser followed by `/demo`. For example:
+Enter this IP address into a browser followed by `/dashboard`. For example:
 
-  - `http://192.168.0.X/demo`
+  - `http://192.168.0.X/dashboard`

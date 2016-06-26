@@ -29,10 +29,22 @@ while($row = mysql_fetch_array($result)) {
     for($i = 0; $i < $numberOfFields; $i++) {
         $field_info = mysql_fetch_field($result, $i);
         $fieldName = $field_info->name;
+        $fieldValue = $row[$i];
         
-        // $useMetricAndCelsiusMeasurements
+        if (($fieldName ==  "AMBIENT_TEMPERATURE") || ($fieldName =="GROUND_TEMPERATURE")) {
+            if ($useMetricAndCelsiusMeasurements) {
+                echo "\"" . $fieldName . "_STRING\":";
+                echo "\"" . $fieldValue . "° C\"";
+            } else {
+                $fieldValue = convertCelsiusToF($fieldValue);
+                
+                echo "\"" . $fieldName . "_STRING\":";
+                echo "\"" . $fieldValue . "° F\"";
+            }
+        }
+        
         echo "\"" . $fieldName . "\":";
-        echo "\"" . $row[$i] . "\"";
+        echo "\"" . $fieldValue . "\"";
 
         if ($i+1 < $numberOfFields) {
                 echo ",";

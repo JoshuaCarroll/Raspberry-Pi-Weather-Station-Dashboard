@@ -4,4 +4,4 @@ body {font-family: "Source Sans Pro";}
 body, textarea {background-color: #1e1f22; color: #bfbfbf;}
 
 div { float: left; }
-#chart_pressure {clear: left;}
+#chart_pressure, #rawData {clear: left;}

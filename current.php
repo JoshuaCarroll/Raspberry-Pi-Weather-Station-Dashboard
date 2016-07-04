@@ -1,91 +1,86 @@
 <?php
 include 'variables.php';
-header('content-type: application/json; charset=utf-8');
+header('content-type: text/plain; charset=utf-8');
+//header('content-type: application/json; charset=utf-8');
 header("access-control-allow-origin: *");
-$con=mysql_connect($databaseAddress,$databaseUsername,$databasePassword);
-mysql_select_db('weather', $con);
+$con = new mysqli($databaseAddress,$databaseUsername,$databasePassword,'weather');
 
 // Check connection
 if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
 
-$select_query = "CALL GETRECENTOBS";
+$result = $con->query('call GETRECENTOBS');
+$fieldcount = mysqli_num_fields($result);
 
-$result = mysql_query($select_query) or die(mysql_error());
+echo "{ "; // Open document object
+echo "\r\n\t\"WeatherObservations\" : {"; // Open weather observations object
 
-echo "{ \"WeatherObservation\": { ";
-$numberOfFields = mysql_num_fields($result);
-$numberOfRows = 0;
-
-while($row = mysql_fetch_array($result)) {
-    $numberOfRows++;
-
-    if ($numberOfRows > 1) {
-        echo ", ";
+if ($result->num_rows > 0) {
+    $fields = array();
+    while ($fieldinfo = mysqli_fetch_field($result)) {
+        array_push($fields, $fieldinfo->name);
     }
 
-    echo "\"Observation" . $numberOfRows . "\": { ";
-    for($i = 0; $i < $numberOfFields; $i++) {
-        $field_info = mysql_fetch_field($result, $i);
-        $fieldName = $field_info->name;
+    $numberOfRows = 0;
+    while($row = mysqli_fetch_array($result)) { // Rows
+	$numberOfRows++;
+
+        if ($numberOfRows > 1) {
+            echo ", ";
+        }
+
+	echo "\r\n\t\t\"Observation" . $numberOfRows . "\" : {";
+
+	for ($i = 0; $i < $fieldcount; $i++) {   // Columns
+		$fieldInfo = mysqli_fetch_field($result);
+		$fieldName = $fields[$i];
+		$fieldValue = $row[$i];
+
+		echo "\r\n\t\t\t\"" . $fieldName . "\" : " . "\"" . $fieldValue . "\"";
+
+                if ($i+1 < $fieldcount) {
+                        echo ",";
+                }
+	}
+
+	echo "\r\n\t\t}";
+    }
+    $result->close();
+    $con->next_result();
+}
+echo "\r\n\t}"; // Close weather observations object
+
+$result = $con->query('call GETDAILYRECORDS');
+$fieldcount = mysqli_num_fields($result);
+echo ",\r\n\t\"DailyStats\" : {"; // Open daily stats object
+
+if ($result->num_rows > 0) {
+    $fields = array();
+    while ($fieldinfo = mysqli_fetch_field($result)) {
+        array_push($fields, $fieldinfo->name);
+    }
+
+    $row = mysqli_fetch_array($result); // Only one row of data
+    for ($i = 0; $i < $fieldcount; $i++) {   // Columns
+        $fieldInfo = mysqli_fetch_field($result);
+        $fieldName = $fields[$i];
         $fieldValue = $row[$i];
-        
-        if (($fieldName ==  "AMBIENT_TEMPERATURE") || ($fieldName =="GROUND_TEMPERATURE")) {
-            if ($useMetricAndCelsiusMeasurements) {
-                echo "\"" . $fieldName . "_STRING\":";
-                echo "\"" . $fieldValue . "° C\",";
-            } else {
-                $fieldValue = convertCelsiusToF($fieldValue);
-                
-                echo "\"" . $fieldName . "_STRING\":";
-                echo "\"" . $fieldValue . "° F\",";
-            }
-        }
-        
-        echo "\"" . $fieldName . "\":";
-        echo "\"" . $fieldValue . "\"";
 
-        if ($i+1 < $numberOfFields) {
-                echo ",";
+        echo "\r\n\t\t\t\"" . $fieldName . "\" : " . "\"" . $fieldValue . "\"";
+
+        if ($i+1 < $fieldcount) {
+            echo ",";
         }
     }
-    echo " } ";
 }
 
-echo "}, \"DailyRecords\": {";
+echo "\r\n\t}"; // Close daily stats object
 
-$select_query = "CALL GETRECENTOBS";
-$result = mysql_query($select_query) or die(mysql_error());
-$numberOfFields = mysql_num_fields($result);
-    for($i = 0; $i < $numberOfFields; $i++) {
-        $field_info = mysql_fetch_field($result, $i);
-        $fieldName = $field_info->name;
-        $fieldValue = $row[$i];
-        
-        if (($fieldName ==  "AMBIENT_TEMPERATURE") || ($fieldName =="GROUND_TEMPERATURE")) {
-            if ($useMetricAndCelsiusMeasurements) {
-                echo "\"" . $fieldName . "_STRING\":";
-                echo "\"" . $fieldValue . "° C\",";
-            } else {
-                $fieldValue = convertCelsiusToF($fieldValue);
-                
-                echo "\"" . $fieldName . "_STRING\":";
-                echo "\"" . $fieldValue . "° F\",";
-            }
-        }
-        
-        echo "\"" . $fieldName . "\":";
-        echo "\"" . $fieldValue . "\"";
+echo "\r\n}"; // Close document object
 
-        if ($i+1 < $numberOfFields) {
-                echo ",";
-        }
-    }
-
-echo "}}";
-
-mysql_close($con);
+$result->close();
+mysqli_close($con);
 
 function convertCelsiusToF($celsiusDegrees) {
     $F = ((($celsiusDegrees * 9) / 5) + 32);

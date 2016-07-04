@@ -5,12 +5,12 @@ header("access-control-allow-origin: *");
 $con=mysql_connect($databaseAddress,$databaseUsername,$databasePassword);
 mysql_select_db('weather', $con);
 
-$select_query = "CALL GETRECENTOBS";
-
 // Check connection
 if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
+
+$select_query = "CALL GETRECENTOBS";
 
 $result = mysql_query($select_query) or die(mysql_error());
 
@@ -53,7 +53,37 @@ while($row = mysql_fetch_array($result)) {
     echo " } ";
 }
 
-echo "} }";
+echo "}, \"DailyRecords\": {";
+
+$select_query = "CALL GETRECENTOBS";
+$result = mysql_query($select_query) or die(mysql_error());
+$numberOfFields = mysql_num_fields($result);
+    for($i = 0; $i < $numberOfFields; $i++) {
+        $field_info = mysql_fetch_field($result, $i);
+        $fieldName = $field_info->name;
+        $fieldValue = $row[$i];
+        
+        if (($fieldName ==  "AMBIENT_TEMPERATURE") || ($fieldName =="GROUND_TEMPERATURE")) {
+            if ($useMetricAndCelsiusMeasurements) {
+                echo "\"" . $fieldName . "_STRING\":";
+                echo "\"" . $fieldValue . "° C\",";
+            } else {
+                $fieldValue = convertCelsiusToF($fieldValue);
+                
+                echo "\"" . $fieldName . "_STRING\":";
+                echo "\"" . $fieldValue . "° F\",";
+            }
+        }
+        
+        echo "\"" . $fieldName . "\":";
+        echo "\"" . $fieldValue . "\"";
+
+        if ($i+1 < $numberOfFields) {
+                echo ",";
+        }
+    }
+
+echo "}}";
 
 mysql_close($con);
 

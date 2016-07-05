@@ -1,4 +1,3 @@
-
 var intTemperature = 0;
 var intHumidity = 0;
 var intPressure = 0;
@@ -18,16 +17,16 @@ function loadData() {
     var jsonPath = "current.php";
     
     $.getJSON(jsonPath, function (result) {
-        var obj = result.WeatherObservation.Observation1;
+        var obj = result.WeatherObservations.Observation1;
 
         intTemperature = obj.GROUND_TEMPERATURE;
         intHumidity = obj.HUMIDITY;
         intPressure = obj.AIR_PRESSURE;
-        intPrCh1h = obj.AIR_PRESSURE - result.WeatherObservation.Observation3.AIR_PRESSURE;
-        intPrCh6h = obj.AIR_PRESSURE - result.WeatherObservation.Observation4.AIR_PRESSURE;
-        intPrCh12h = obj.AIR_PRESSURE - result.WeatherObservation.Observation5.AIR_PRESSURE;
-        intPrCh24h = obj.AIR_PRESSURE - result.WeatherObservation.Observation6.AIR_PRESSURE;
-        intPrCh48h =  obj.AIR_PRESSURE - result.WeatherObservation.Observation2.AIR_PRESSURE;
+        intPrCh1h = obj.AIR_PRESSURE - result.WeatherObservations.Observation2.AIR_PRESSURE;
+        intPrCh6h = obj.AIR_PRESSURE - result.WeatherObservations.Observation3.AIR_PRESSURE;
+        intPrCh12h = obj.AIR_PRESSURE - result.WeatherObservations.Observation4.AIR_PRESSURE;
+        intPrCh24h = obj.AIR_PRESSURE - result.WeatherObservations.Observation5.AIR_PRESSURE;
+        intPrCh48h =  obj.AIR_PRESSURE - result.WeatherObservations.Observation6.AIR_PRESSURE;
 
         for (var property in obj) {
             if (obj.hasOwnProperty(property)) {

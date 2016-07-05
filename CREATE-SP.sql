@@ -50,11 +50,20 @@ END$$
 DELIMITER ##
 CREATE PROCEDURE `GETDAILYRECORDS`()
 BEGIN
+    SELECT SUM(RAINFALL) FROM WEATHER_MEASUREMENT WHERE created >= DATE(NOW()) INTO @RainfallSinceMidnight;
+
+    SELECT created FROM WEATHER_MEASUREMENT WHERE rainfall > 0 ORDER BY created DESC LIMIT 1 INTO @stormEnd;
+    SELECT created FROM WEATHER_MEASUREMENT WHERE rainfall = 0 AND created < @stormEnd ORDER BY created DESC LIMIT 1 INTO @stormStart;
+    SELECT SUM(Rainfall) FROM WEATHER_MEASUREMENT WHERE created >= @stormStart AND created <= @stormEnd INTO @stormTotal;
+
+    SELECT AMBIENT_TEMPERATURE FROM WEATHER_MEASUREMENT WHERE created >= DATE(NOW()) ORDER BY AMBIENT_TEMPERATURE ASC LIMIT 1 INTO @LowSinceMidnight;
+    SELECT AMBIENT_TEMPERATURE FROM WEATHER_MEASUREMENT WHERE created >= DATE(NOW()) ORDER BY AMBIENT_TEMPERATURE DESC LIMIT 1 INTO @HighSinceMidnight;
+
     SELECT 
-    (SELECT SUM(RAINFALL) FROM WEATHER_MEASUREMENT WHERE created >= DATE(NOW())) AS RainFallSinceMidnight,
-    (SELECT created FROM WEATHER_MEASUREMENT WHERE rainfall > 0 ORDER BY created DESC LIMIT 1) AS stormEnd,
-    (SELECT created FROM WEATHER_MEASUREMENT WHERE rainfall = 0 AND created < @stormEnd ORDER BY created DESC LIMIT 1) as stormStart,
-    (SELECT SUM(Rainfall) FROM WEATHER_MEASUREMENT WHERE created >= @stormStart AND created <= @stormEnd) as stormTotal,
-    (SELECT AMBIENT_TEMPERATURE FROM WEATHER_MEASUREMENT WHERE created >= DATE(NOW()) ORDER BY AMBIENT_TEMPERATURE ASC LIMIT 1) as LowSinceMidnight,
-    (SELECT AMBIENT_TEMPERATURE FROM WEATHER_MEASUREMENT WHERE created >= DATE(NOW()) ORDER BY AMBIENT_TEMPERATURE DESC LIMIT 1) as HighSinceMidnight;
+        @RainFallSinceMidnight AS RainFallSinceMidnight,
+        @stormStart AS LastStormStart,
+        @stormEnd AS LastStormEnd,
+        @stormTotal AS LastStormTotal,
+        @LowSinceMidnight AS LowSinceMidnight,
+        @HighSinceMidnight AS HighSinceMidnight;
 END##

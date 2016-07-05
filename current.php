@@ -1,7 +1,6 @@
 <?php
 include 'variables.php';
-header('content-type: text/plain; charset=utf-8');
-//header('content-type: application/json; charset=utf-8');
+header('content-type: application/json; charset=utf-8');
 header("access-control-allow-origin: *");
 $con = new mysqli($databaseAddress,$databaseUsername,$databasePassword,'weather');
 

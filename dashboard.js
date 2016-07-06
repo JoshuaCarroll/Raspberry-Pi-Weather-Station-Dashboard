@@ -1,3 +1,7 @@
+var NumberOfSecondsBetweenReloadingData = 120;
+
+// ============================
+
 var intTemperature = 0;
 var intHumidity = 0;
 var intPressure = 0;
@@ -7,88 +11,134 @@ var intPrCh12h = 0;
 var intPrCh24h = 0;
 var intPrCh48h = 0;
 
+var chtPC1h = new chartSet();
+var chtPC6h = new chartSet();
+var chtPC12h = new chartSet();
+var chtPC24h = new chartSet();
+var chtPC48h = new chartSet();
+var chtTemp = new chartSet();
+var chtHumidity = new chartSet();
+var chtPressure = new chartSet();
+
+// Load the gauge from the Google Chart API. Details at
 // https://developers.google.com/chart/interactive/docs/gallery/gauge#configuration-options
 google.charts.load('current', {
     'packages': ['gauge']
 });
-google.charts.setOnLoadCallback(loadData);
+google.charts.setOnLoadCallback(loadData(setupDataAndCharts));
 
-function loadData() {
+function loadData(callback) {
+    console.log("loadData");
     var jsonPath = "current.php";
-    
-    $.getJSON(jsonPath, function (result) {
-        var obj = result.WeatherObservations.Observation1;
-
-        intTemperature = obj.GROUND_TEMPERATURE;
-        intHumidity = obj.HUMIDITY;
-        intPressure = obj.AIR_PRESSURE;
-        intPrCh1h = obj.AIR_PRESSURE - result.WeatherObservations.Observation2.AIR_PRESSURE;
-        intPrCh6h = obj.AIR_PRESSURE - result.WeatherObservations.Observation3.AIR_PRESSURE;
-        intPrCh12h = obj.AIR_PRESSURE - result.WeatherObservations.Observation4.AIR_PRESSURE;
-        intPrCh24h = obj.AIR_PRESSURE - result.WeatherObservations.Observation5.AIR_PRESSURE;
-        intPrCh48h =  obj.AIR_PRESSURE - result.WeatherObservations.Observation6.AIR_PRESSURE;
-
-        for (var property in obj) {
-            if (obj.hasOwnProperty(property)) {
-                $("#rawData").append(property + ": " + obj[property] + "<br>");
-            }
-        }
-
-        drawCharts();
-    });
+    $.getJSON(jsonPath, callback);
 }
 
-function drawCharts() {
-    drawChart("chart_temp", "Temperature", intTemperature, chartOptions());
+function setupDataAndCharts(result) {
+    console.log("setupDataAndCharts");
+    setupData(result);
+    setupCharts();
+    setTimeout(loadData, NumberOfSecondsBetweenReloadingData * 1000, updateDataAndCharts);
+}
 
-    var humidityOps = chartOptions();
-    humidityOps.redFrom = 85;
-    humidityOps.redTo = 100;
-    humidityOps.yellowFrom = 75;
-    humidityOps.yellowTo = 85;
-    humidityOps.max = 100;
-    drawChart("chart_hum", "Humidity", intHumidity, humidityOps);
+function setupData(result) {
+    console.log("setupData");
+    var obj = result.WeatherObservations.Observation1;
+    intTemperature = obj.GROUND_TEMPERATURE;
+    intHumidity = obj.HUMIDITY;
+    intPressure = obj.AIR_PRESSURE;
+    intPrCh1h = obj.AIR_PRESSURE - result.WeatherObservations.Observation2.AIR_PRESSURE;
+    intPrCh6h = obj.AIR_PRESSURE - result.WeatherObservations.Observation3.AIR_PRESSURE;
+    intPrCh12h = obj.AIR_PRESSURE - result.WeatherObservations.Observation4.AIR_PRESSURE;
+    intPrCh24h = obj.AIR_PRESSURE - result.WeatherObservations.Observation5.AIR_PRESSURE;
+    intPrCh48h = obj.AIR_PRESSURE - result.WeatherObservations.Observation6.AIR_PRESSURE;
     
-    var pressOps = chartOptions();
-    pressOps.redFrom = 960;
-    pressOps.redTo = 990        ;
-    pressOps.yellowFrom = 990;
-    pressOps.yellowTo = 1015;
-    pressOps.greenFrom = 1015;
-    pressOps.greenTo = 1040;
-    pressOps.max = 1060;
-    pressOps.min = 920
-    drawChart("chart_pressure", "Pressure", intPressure, pressOps);
-    
+    $("#rawData").empty();
+    for (var property in obj) {
+        if (obj.hasOwnProperty(property)) {
+            $("#rawData").append(property + ": " + obj[property] + "<br>");
+        }
+    }
+}
+
+function setupCharts() {
+    console.log("setupCharts");
+    chtTemp.options = new chartOptions();
+    drawChart(chtTemp, "chart_temp", "Temperature", intTemperature);
+
+    chtHumidity.options = chartOptions();
+    chtHumidity.options.redFrom = 85;
+    chtHumidity.options.redTo = 100;
+    chtHumidity.options.yellowFrom = 75;
+    chtHumidity.options.yellowTo = 85;
+    chtHumidity.options.max = 100;
+    drawChart(chtHumidity, "chart_hum", "Humidity", intHumidity);
+
+    chtPressure.options = chartOptions();
+    chtPressure.options.redFrom = 960;
+    chtPressure.options.redTo = 990;
+    chtPressure.options.yellowFrom = 990;
+    chtPressure.options.yellowTo = 1015;
+    chtPressure.options.greenFrom = 1015;
+    chtPressure.options.greenTo = 1040;
+    chtPressure.options.max = 1060;
+    chtPressure.options.min = 920
+    drawChart(chtPressure, "chart_pressure", "Pressure", intPressure);
+
     var pressureChOps = chartOptions();
     pressureChOps.height = Math.round(pressureChOps.height * 0.66);
     pressureChOps.width = Math.round(pressureChOps.width * 0.66);
     pressureChOps.max = 10;
     pressureChOps.min = -10
-    drawChart("chart_pressure_change1h", "Δ 1 hr", intPrCh1h, pressureChOps);
-    drawChart("chart_pressure_change6h", "Δ 6 hr", intPrCh6h, pressureChOps);
-    drawChart("chart_pressure_change12h", "Δ 12 hr", intPrCh12h, pressureChOps);
-    drawChart("chart_pressure_change24h", "Δ 24 hr", intPrCh24h, pressureChOps);
-    drawChart("chart_pressure_change48h", "Δ 48 hr", intPrCh48h, pressureChOps);
+    
+    chtPC1h.options = pressureChOps;
+    chtPC6h.options = pressureChOps;
+    chtPC12h.options = pressureChOps;
+    chtPC24h.options = pressureChOps;
+    chtPC48h.options = pressureChOps;
+    
+    drawChart(chtPC1h, "chart_pressure_change1h", "Δ 1 hr", intPrCh1h);
+    drawChart(chtPC6h, "chart_pressure_change6h", "Δ 6 hr", intPrCh6h);
+    drawChart(chtPC12h, "chart_pressure_change12h", "Δ 12 hr", intPrCh12h);
+    drawChart(chtPC24h, "chart_pressure_change24h", "Δ 24 hr", intPrCh24h);
+    drawChart(chtPC48h, "chart_pressure_change48h", "Δ 48 hr", intPrCh48h);
 }
 
-function drawChart(strChartDiv, strLabel, intValue, objOptions) {
-    if (!objOptions) {
-        objOptions = chartOptions();
+function updateDataAndCharts(result) {
+    console.log("updateDataAndCharts");
+    setupData(result);
+    updateCharts();
+    setTimeout(loadData, NumberOfSecondsBetweenReloadingData * 1000, updateDataAndCharts);
+}
+
+function updateCharts() {
+    console.log("updateCharts");
+    chtTemp.update(intTemperature);
+    chtHumidity.update(intHumidity);
+    chtPressure.update(intPressure);
+    chtPC1h.update(intPrCh1h);
+    chtPC6h.update(intPrCh6h);
+    chtPC12h.update(intPrCh12h);
+    chtPC24h.update(intPrCh24h);
+    chtPC48h.update(intPrCh48h);
+}
+
+function drawChart(chartSetObj, strChartDiv, strLabel, intValue) {
+    if (!chartSetObj.options) {
+        chartSetObj.options = chartOptions();
     }
-
-    var data = google.visualization.arrayToDataTable([
+    
+    chartSetObj.data = google.visualization.arrayToDataTable([
         ['Label', 'Value'],
-        [strLabel, objOptions.min]
+        [strLabel, chartSetObj.options.min]
     ]);
-
-    var chart = new google.visualization.Gauge(document.getElementById(strChartDiv));
-
-    chart.draw(data, objOptions);
-
+    
+    chartSetObj.chart = new google.visualization.Gauge(document.getElementById(strChartDiv));
+    
+    chartSetObj.chart.draw(chartSetObj.data, chartSetObj.options);
+    
     setTimeout(function() {
-        data.setValue(0, 1, intValue);
-        chart.draw(data, objOptions);
+        chartSetObj.data.setValue(0, 1, intValue);
+        chartSetObj.chart.draw(chartSetObj.data, chartSetObj.options);
     }, randomIntFromInterval(500, 2500));
 }
 
@@ -111,4 +161,12 @@ function chartOptions() {
     return defaultChartOptions;
 }
 
-window.setTimeout(function () { window.location.reload() }, 300000);
+function chartSet() {
+    this.chart = {};
+    this.data = {};
+    this.options = {};
+    this.update = function (val) {
+        this.data.setValue(0, 1, val);
+        this.chart.draw(this.data, this.options);
+    }
+}

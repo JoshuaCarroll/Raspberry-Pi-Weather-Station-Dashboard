@@ -38,31 +38,31 @@ if ($result->num_rows > 0) {
         
         if (strpos($fieldName, "_TEMPERATURE")) {
             if ($useMetricAndCelsiusMeasurements) {
-                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° C\"";
+                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° C\",";
             }
             else {
                 $fieldValue = convertCelsiusToFahrenheit($fieldValue);
-                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° F\"";
+                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° F\",";
             }
         }
         
         if (strpos($fieldName, "_SPEED")) {
             if ($useMetricAndCelsiusMeasurements) {
-                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " Km/H\"";
+                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " Km/H\",";
             }
             else {
                 $fieldValue = convertKilometersToMiles($fieldValue);
-                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " MPH\"";
+                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " MPH\",";
             }
         }
         
         if (strpos($fieldName, "_PRESSURE")) {
             if ($useMetricAndCelsiusMeasurements) {
-                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " mb\"";
+                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " mb\",";
             }
             else {
                 $fieldValue = convertMillibarsToInches($fieldValue);
-                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " in\"";
+                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " in\",";
             }
         }
         

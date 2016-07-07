@@ -90,7 +90,11 @@ This is a work-in-progress. New features and bug-fixes will be added here as nee
 
     `sudo git pull`
     
-4. Update the variables file with the values appropriate to your environment and installation:
+4. Update the stored procedure in your database:
+
+    `sudo mysql -u root -p weather < CREATE-SP.sql`
+    
+5. Update the variables file with the values appropriate to your environment and installation:
 
     `sudo nano variables.php`
     

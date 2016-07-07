@@ -4,4 +4,18 @@ body {font-family: "Source Sans Pro";}
 body, textarea {background-color: #1e1f22; color: #bfbfbf;}
 
 div { float: left; }
-#chart_pressure {clear: left;}
+#chart_pressure, #rawData {clear: left;}
+
+#rawData { font-size: 0.75em; color: #7f7f7f; }
+#footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #3e3f52;
+  text-align: center;
+}
+#footer a { color: #66ccFF; text-decoration: none; }
+#footer #repo { float: left; }
+#footer #codeDate { float: right; }

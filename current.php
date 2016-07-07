@@ -32,15 +32,45 @@ if ($result->num_rows > 0) {
 	echo "\r\n\t\t\"Observation" . $numberOfRows . "\" : {";
 
 	for ($i = 0; $i < $fieldcount; $i++) {   // Columns
-		$fieldInfo = mysqli_fetch_field($result);
 		$fieldName = $fields[$i];
 		$fieldValue = $row[$i];
-
+        
+        
+        if (strpos($fieldName, "_TEMPERATURE")) {
+            if ($useMetricAndCelsiusMeasurements) {
+                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° C\"";
+            }
+            else {
+                $fieldValue = convertCelsiusToFahrenheit($fieldValue);
+                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° F\"";
+            }
+        }
+        
+        if (strpos($fieldName, "_SPEED")) {
+            if ($useMetricAndCelsiusMeasurements) {
+                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " Km/H\"";
+            }
+            else {
+                $fieldValue = convertKilometersToMiles($fieldValue);
+                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " MPH\"";
+            }
+        }
+        
+        if (strpos($fieldName, "_PRESSURE")) {
+            if ($useMetricAndCelsiusMeasurements) {
+                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " mb\"";
+            }
+            else {
+                $fieldValue = convertMillibarsToInches($fieldValue);
+                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " in\"";
+            }
+        }
+        
 		echo "\r\n\t\t\t\"" . $fieldName . "\" : " . "\"" . $fieldValue . "\"";
 
-                if ($i+1 < $fieldcount) {
-                        echo ",";
-                }
+        if ($i+1 < $fieldcount) {
+                echo ",";
+        }
 	}
 
 	echo "\r\n\t\t}";
@@ -81,8 +111,20 @@ echo "\r\n}"; // Close document object
 $result->close();
 mysqli_close($con);
 
-function convertCelsiusToF($celsiusDegrees) {
+// ===============================================================
+function convertKilometersToMiles($kilometers) {
+    $miles = $kilometers * 0.621371;
+    return $miles;
+}
+        
+function convertCelsiusToFahrenheit($celsiusDegrees) {
     $F = ((($celsiusDegrees * 9) / 5) + 32);
     return $F;
 }
+
+function convertMillibarsToInches($millibars) {
+    $inches = $millibars * 0.0295301;
+    return $inches;
+}
+
 ?>

@@ -43,7 +43,7 @@ function setupDataAndCharts(result) {
 function setupData(result) {
     console.log("setupData");
     var obj = result.WeatherObservations.Observation1;
-    intTemperature = obj.GROUND_TEMPERATURE;
+    intTemperature = obj.AMBIENT_TEMPERATURE;
     intHumidity = obj.HUMIDITY;
     intPressure = obj.AIR_PRESSURE;
     intPrCh1h = obj.AIR_PRESSURE - result.WeatherObservations.Observation2.AIR_PRESSURE;

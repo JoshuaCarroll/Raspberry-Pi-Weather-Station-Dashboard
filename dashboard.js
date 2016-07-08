@@ -58,6 +58,11 @@ function setupData(result) {
             $("#rawData").append(property + ": " + obj[property] + "<br>");
         }
     }
+    for (var property in result.DailyStats) {
+        if (obj.hasOwnProperty(property)) {
+            $("#rawData").append(property + ": " + obj[property] + "<br>");
+        }
+    }
 }
 
 function setupCharts() {

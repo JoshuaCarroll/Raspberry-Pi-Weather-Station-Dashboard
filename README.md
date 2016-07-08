@@ -5,9 +5,15 @@ This project will provide you with a graphical dashboard of the current weather 
 
 <img src="http://shrinktheweb.snapito.io/v2/webshot/spu-ea68c8-ogi2-3cwn3bmfojjlb56e?size=800x0&screen=1024x768&url=http%3A%2F%2Fn5jlc.duckdns.org%2Fdashboard" width="400" height="300">
 
+You can see a live version of the master branch at [n5jlc.duckdns.org/dashboard](http://n5jlc.duckdns.org/dashboard).
+
 #### Contributing
 
 Contributions to this project can be made by using the program and providing feedback or by assisting in the programming and submitting pull requests. In either case, please read the [contributing page](https://github.com/JoshuaCarroll/Raspberry-Pi-Weather-Station-Dashboard/blob/master/CONTRIBUTING.md) for instructions.
+
+#### Questions / Comments
+
+**Please don't ask question in the issue tracker**, instead ask them in a [![chat on Gitter](https://badges.gitter.im/JoshuaCarroll/Raspberry-Pi-Weather-Station-Dashboard.svg)](https://gitter.im/JoshuaCarroll/Raspberry-Pi-Weather-Station-Dashboard?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge).  I will be notified when something is posted in the chat room, and if I'm available I'll join you.
 
 ----------
 

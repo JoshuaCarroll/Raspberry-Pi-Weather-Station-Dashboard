@@ -20,10 +20,10 @@
         <div id="chart_pressure_change48h"></div>
         <div id="rawData"></div>
         <div id="footer">
-            <div id="repo"><a href="https://github.com/JoshuaCarroll/Raspberry-Pi-Weather-Station-Dashboard">RPiWx Dashboard</a></div>
+            <div id="repo"><a href="https://github.com/JoshuaCarroll/Raspberry-Pi-Weather-Station-Dashboard">RPi Wx Dashboard</a></div>
             <div id="codeDate">
 <?php
-echo "\t\t\tUpdated on " . exec("git --git-dir=/var/www/html/dev/.git log -1 --pretty=format:'%ci'");  
+echo "\t\t\tUpdated on " . exec("git --git-dir=/var/www/html/dev/.git log -1 --pretty=format:'%ci'");
 ?>
             </div>
         </div>

@@ -65,7 +65,7 @@ function setupData(result) {
 }
 
 function setupCharts() {
-    console.log("setupCharts");
+    console.log("Calling setupCharts");
     chtTemp.options = new chartOptions();
     drawChart(chtTemp, "chart_temp", "Temperature", intTemperature);
 
@@ -108,14 +108,14 @@ function setupCharts() {
 }
 
 function updateDataAndCharts(result) {
-    console.log("updateDataAndCharts");
+    console.log("Calling updateDataAndCharts");
     setupData(result);
     updateCharts();
     setTimeout(loadData, NumberOfSecondsBetweenReloadingData * 1000, updateDataAndCharts);
 }
 
 function updateCharts() {
-    console.log("updateCharts");
+    console.log("Calling updateCharts");
     chtTemp.update(intTemperature);
     chtHumidity.update(intHumidity);
     chtPressure.update(intPressure);
@@ -127,11 +127,13 @@ function updateCharts() {
 }
 
 function drawChart(chartSetObj, strChartDiv, strLabel, intValue) {
+    console.log("Calling drawChart(" + chartSetObj + ", " + strChartDiv + ", " + strLabel + ", " + intValue + ")")
     if (!chartSetObj.options) {
         chartSetObj.options = chartOptions();
     }
     
-    console.debug("google.visualization.arrayToDataTable([['Label', 'Value'],[[" + strLabel + ", " + chartSetObj.options.min + "]]);");
+    console.debug("google.visualization = " + google.visualization);
+    console.debug("Calling google.visualization.arrayToDataTable([['Label', 'Value'],[['" + strLabel + "', '" + chartSetObj.options.min + "']]);");
     chartSetObj.data = google.visualization.arrayToDataTable([
         ['Label', 'Value'],
         [strLabel, chartSetObj.options.min]

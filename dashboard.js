@@ -28,20 +28,20 @@ google.charts.load('current', {
 google.charts.setOnLoadCallback(loadData(setupDataAndCharts));
 
 function loadData(callback) {
-    console.log("loadData");
+    console.log("Calling loadData");
     var jsonPath = "current.php";
     $.getJSON(jsonPath, callback);
 }
 
 function setupDataAndCharts(result) {
-    console.log("setupDataAndCharts");
+    console.log("Google charts loaded. Calling setupDataAndCharts");
     setupData(result);
     setupCharts();
     setTimeout(loadData, NumberOfSecondsBetweenReloadingData * 1000, updateDataAndCharts);
 }
 
 function setupData(result) {
-    console.log("setupData");
+    console.log("Calling setupData");
     var obj = result.WeatherObservations.Observation1;
     intTemperature = obj.AMBIENT_TEMPERATURE;
     intHumidity = obj.HUMIDITY;
@@ -131,7 +131,7 @@ function drawChart(chartSetObj, strChartDiv, strLabel, intValue) {
         chartSetObj.options = chartOptions();
     }
     
-    console.debug("google.visualization.arrayToDataTable([['Label', 'Value'],[" + strLabel + ", " + chartSetObj.options.min + "]]);");
+    console.debug("google.visualization.arrayToDataTable([['Label', 'Value'],[[" + strLabel + ", " + chartSetObj.options.min + "]]);");
     chartSetObj.data = google.visualization.arrayToDataTable([
         ['Label', 'Value'],
         [strLabel, chartSetObj.options.min]

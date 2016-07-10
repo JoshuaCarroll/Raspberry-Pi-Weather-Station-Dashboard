@@ -6,9 +6,9 @@ body, textarea {background-color: #1e1f22; color: #bfbfbf;}
 div { float: left; }
 #chart_pressure, #rawData {clear: left;}
 
-#rawData { font-size: 0.75em; color: #7f7f7f; }
+#rawData { font-size: 0.75em; color: #7f7f7f; margin-bottom: 100px; }
 #footer {
-  position: absolute;
+  position: fixed;
   right: 0;
   bottom: 0;
   left: 0;

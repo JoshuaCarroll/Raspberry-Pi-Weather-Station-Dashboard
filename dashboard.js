@@ -53,17 +53,15 @@ function setupData(result) {
     intPrCh48h = obj.AIR_PRESSURE - result.WeatherObservations.Observation6.AIR_PRESSURE;
     
     $("#rawData").empty();
-    for (var property in obj) {
-        if (obj.hasOwnProperty(property)) {
-            $("#rawData").append(property + ": " + obj[property] + "<br>");
+    $("#rawData").append("<ul>");
+    [result.WeatherObservations.Observation1,result.DailyStats].forEach(function (obj) { 
+        for (var property in obj) {
+            if (obj.hasOwnProperty(property)) {
+                $("#rawData").append("<li>" + property + ": " + obj[property] + "</li>");
+            }
         }
-    }
-    obj = result.DailyStats
-    for (var property in obj) {
-        if (obj.hasOwnProperty(property)) {
-            $("#rawData").append(property + ": " + obj[property] + "<br>");
-        }
-    }
+    });
+    $("#rawData").append("</ul>");
 }
 
 function setupCharts() {

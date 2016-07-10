@@ -25,7 +25,12 @@ var chtPressure = new chartSet();
 google.charts.load('current', {
     'packages': ['gauge']
 });
-google.charts.setOnLoadCallback(loadData(setupDataAndCharts));
+google.charts.setOnLoadCallback(GoogleCharts_onload);
+
+function GoogleCharts_onload() {
+    console.log("Google charts loaded.")
+    loadData(setupDataAndCharts);
+}
 
 function loadData(callback) {
     console.log("Calling loadData");
@@ -34,7 +39,7 @@ function loadData(callback) {
 }
 
 function setupDataAndCharts(result) {
-    console.log("Google charts loaded. Calling setupDataAndCharts");
+    console.log("Calling setupDataAndCharts");
     setupData(result);
     setupCharts();
     setTimeout(loadData, NumberOfSecondsBetweenReloadingData * 1000, updateDataAndCharts);
@@ -66,6 +71,8 @@ function setupData(result) {
 
 function setupCharts() {
     console.log("Calling setupCharts");
+    console.log("- Inside setupCharts, google.visualization = " + google.visualization);
+    
     chtTemp.options = new chartOptions();
     drawChart(chtTemp, "chart_temp", "Temperature", intTemperature);
 

@@ -58,7 +58,8 @@ function setupData(result) {
             $("#rawData").append(property + ": " + obj[property] + "<br>");
         }
     }
-    for (var property in result.DailyStats) {
+    obj = result.DailyStats
+    for (var property in obj) {
         if (obj.hasOwnProperty(property)) {
             $("#rawData").append(property + ": " + obj[property] + "<br>");
         }

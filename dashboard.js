@@ -131,6 +131,7 @@ function drawChart(chartSetObj, strChartDiv, strLabel, intValue) {
         chartSetObj.options = chartOptions();
     }
     
+    console.debug("google.visualization.arrayToDataTable([['Label', 'Value'],[" + strLabel + ", " + chartSetObj.options.min + "]]);");
     chartSetObj.data = google.visualization.arrayToDataTable([
         ['Label', 'Value'],
         [strLabel, chartSetObj.options.min]

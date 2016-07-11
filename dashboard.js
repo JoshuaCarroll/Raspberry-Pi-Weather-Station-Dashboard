@@ -21,27 +21,32 @@ var chtHumidity = new chartSet();
 var chtPressure = new chartSet();
 
 // Load the gauge from the Google Chart API. Details at
-// https://developers.google.com/chart/interactive/docs/gallery/gauge#configuration-options
+// https://developers.google.com/chart/interactive/docs/gallery/gauge
 google.charts.load('current', {
     'packages': ['gauge']
 });
-google.charts.setOnLoadCallback(loadData(setupDataAndCharts));
+google.charts.setOnLoadCallback(GoogleCharts_onload);
+
+function GoogleCharts_onload() {
+    if (window.console) console.log("Google charts loaded.");
+    loadData(setupDataAndCharts);
+}
 
 function loadData(callback) {
-    console.log("loadData");
+    if (window.console) console.log("Calling loadData");
     var jsonPath = "current.php";
     $.getJSON(jsonPath, callback);
 }
 
 function setupDataAndCharts(result) {
-    console.log("setupDataAndCharts");
+    if (window.console) console.log("Calling setupDataAndCharts");
     setupData(result);
     setupCharts();
     setTimeout(loadData, NumberOfSecondsBetweenReloadingData * 1000, updateDataAndCharts);
 }
 
 function setupData(result) {
-    console.log("setupData");
+    if (window.console) console.log("Calling setupData");
     var obj = result.WeatherObservations.Observation1;
     intTemperature = obj.AMBIENT_TEMPERATURE;
     intHumidity = obj.HUMIDITY;
@@ -65,7 +70,8 @@ function setupData(result) {
 }
 
 function setupCharts() {
-    console.log("setupCharts");
+    if (window.console) console.log("Calling setupCharts");
+    
     chtTemp.options = new chartOptions();
     drawChart(chtTemp, "chart_temp", "Temperature", intTemperature);
 
@@ -108,14 +114,14 @@ function setupCharts() {
 }
 
 function updateDataAndCharts(result) {
-    console.log("updateDataAndCharts");
+    if (window.console) console.log("Calling updateDataAndCharts");
     setupData(result);
     updateCharts();
     setTimeout(loadData, NumberOfSecondsBetweenReloadingData * 1000, updateDataAndCharts);
 }
 
 function updateCharts() {
-    console.log("updateCharts");
+    if (window.console) console.log("Calling updateCharts");
     chtTemp.update(intTemperature);
     chtHumidity.update(intHumidity);
     chtPressure.update(intPressure);
@@ -127,6 +133,7 @@ function updateCharts() {
 }
 
 function drawChart(chartSetObj, strChartDiv, strLabel, intValue) {
+    if (window.console) console.log("Calling drawChart(" + chartSetObj + ", " + strChartDiv + ", " + strLabel + ", " + intValue + ")")
     if (!chartSetObj.options) {
         chartSetObj.options = chartOptions();
     }

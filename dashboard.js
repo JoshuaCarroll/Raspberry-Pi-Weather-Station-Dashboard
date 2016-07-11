@@ -10,6 +10,7 @@ var intPrCh6h = 0;
 var intPrCh12h = 0;
 var intPrCh24h = 0;
 var intPrCh48h = 0;
+var intWindDirection = 0;
 
 var chtPC1h = new chartSet();
 var chtPC6h = new chartSet();
@@ -19,6 +20,7 @@ var chtPC48h = new chartSet();
 var chtTemp = new chartSet();
 var chtHumidity = new chartSet();
 var chtPressure = new chartSet();
+var compass = null;
 
 // Load the gauge from the Google Chart API. Details at
 // https://developers.google.com/chart/interactive/docs/gallery/gauge
@@ -29,6 +31,11 @@ google.charts.setOnLoadCallback(GoogleCharts_onload);
 
 function GoogleCharts_onload() {
     if (window.console) console.log("Google charts loaded.");
+    
+    $.getScript("http://rawgit.com/JoshuaCarroll/Compass-/master/compass.js", Compass_onload);
+}
+
+function Compass_onload() {
     loadData(setupDataAndCharts);
 }
 
@@ -50,6 +57,7 @@ function setupData(result) {
     var obj = result.WeatherObservations.Observation1;
     intTemperature = obj.AMBIENT_TEMPERATURE;
     intHumidity = obj.HUMIDITY;
+    intWindDirection = obj.WIND_DIRECTION;
     intPressure = obj.AIR_PRESSURE;
     intPrCh1h = obj.AIR_PRESSURE - result.WeatherObservations.Observation2.AIR_PRESSURE;
     intPrCh6h = obj.AIR_PRESSURE - result.WeatherObservations.Observation3.AIR_PRESSURE;
@@ -82,6 +90,9 @@ function setupCharts() {
     chtHumidity.options.yellowTo = 85;
     chtHumidity.options.max = 100;
     drawChart(chtHumidity, "chart_hum", "Humidity", intHumidity);
+    
+    compass = new Compass("wind_dir");
+    compass.animateCompass(intWindDirection);
 
     chtPressure.options = chartOptions();
     chtPressure.options.redFrom = 960;
@@ -130,10 +141,11 @@ function updateCharts() {
     chtPC12h.update(intPrCh12h);
     chtPC24h.update(intPrCh24h);
     chtPC48h.update(intPrCh48h);
+    compass.animateCompass(intWindDirection);
 }
 
 function drawChart(chartSetObj, strChartDiv, strLabel, intValue) {
-    if (window.console) console.log("Calling drawChart(" + chartSetObj + ", " + strChartDiv + ", " + strLabel + ", " + intValue + ")")
+    if (window.console) console.log("Calling drawChart(" + chartSetObj + ", " + strChartDiv + ", " + strLabel + ", " + intValue + ")");
     if (!chartSetObj.options) {
         chartSetObj.options = chartOptions();
     }

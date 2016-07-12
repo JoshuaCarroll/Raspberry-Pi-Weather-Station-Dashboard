@@ -2,7 +2,8 @@ var NumberOfSecondsBetweenReloadingData = 120;
 
 // ============================
 
-var booluseMetricAndCelsiusMeasurements = true;
+var boolShowMetricAndCelsiusMeasurements = true;
+var boolShowPressureInMillibars = true;
 var intTemperature = 0;
 var intHumidity = 0;
 var intPressure = 0;
@@ -65,7 +66,8 @@ function setupData(result) {
     intPrCh12h = obj.AIR_PRESSURE - result.WeatherObservations.Observation4.AIR_PRESSURE;
     intPrCh24h = obj.AIR_PRESSURE - result.WeatherObservations.Observation5.AIR_PRESSURE;
     intPrCh48h = obj.AIR_PRESSURE - result.WeatherObservations.Observation6.AIR_PRESSURE;
-    booluseMetricAndCelsiusMeasurements = result.Settings.useMetricAndCelsiusMeasurements;
+    boolShowMetricAndCelsiusMeasurements = result.Settings.showMetricAndCelsiusMeasurements;
+    boolShowPressureInMillibars = result.Settings.showPressureInMillibars ;
     
     $("#rawData").empty();
     $("#rawData").append("<ul>");
@@ -83,7 +85,7 @@ function setupCharts() {
     if (window.console) console.log("Calling setupCharts");
     
     chtTemp.options = new chartOptions();
-    if (booluseMetricAndCelsiusMeasurements) {
+    if (boolShowMetricAndCelsiusMeasurements) {
         chtTemp.options.yellowFrom = 35;
         chtTemp.options.yellowTo = 42;
         chtTemp.options.redFrom = 42;
@@ -105,7 +107,7 @@ function setupCharts() {
     compass.animateCompass(intWindDirection);
 
     chtPressure.options = chartOptions();
-    if (booluseMetricAndCelsiusMeasurements) {
+    if (boolShowPressureInMillibars) {
         chtPressure.options.redFrom = 960;
         chtPressure.options.redTo = 990;
         chtPressure.options.yellowFrom = 990;

@@ -96,15 +96,18 @@ if ($result->num_rows > 0) {
         $fieldName = $fields[$i];
         $fieldValue = $row[$i];
 
-        echo "\r\n\t\t\t\"" . $fieldName . "\" : " . "\"" . $fieldValue . "\"";
+        echo "\r\n\t\t\"" . $fieldName . "\" : " . "\"" . $fieldValue . "\"";
 
         if ($i+1 < $fieldcount) {
             echo ",";
         }
     }
 }
-
 echo "\r\n\t}"; // Close daily stats object
+
+echo ",\r\n\t\"Settings\" : {"; // Open settings object
+echo "\r\n\t\t\"useMetricAndCelsiusMeasurements\" : " . "\"" . $useMetricAndCelsiusMeasurements . "\"";
+echo "\r\n\t}"; // Close settings object
 
 echo "\r\n}"; // Close document object
 

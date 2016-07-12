@@ -2,6 +2,7 @@ var NumberOfSecondsBetweenReloadingData = 120;
 
 // ============================
 
+var booluseMetricAndCelsiusMeasurements = true;
 var intTemperature = 0;
 var intHumidity = 0;
 var intPressure = 0;
@@ -64,6 +65,7 @@ function setupData(result) {
     intPrCh12h = obj.AIR_PRESSURE - result.WeatherObservations.Observation4.AIR_PRESSURE;
     intPrCh24h = obj.AIR_PRESSURE - result.WeatherObservations.Observation5.AIR_PRESSURE;
     intPrCh48h = obj.AIR_PRESSURE - result.WeatherObservations.Observation6.AIR_PRESSURE;
+    booluseMetricAndCelsiusMeasurements = result.Settings.useMetricAndCelsiusMeasurements;
     
     $("#rawData").empty();
     $("#rawData").append("<ul>");
@@ -81,6 +83,14 @@ function setupCharts() {
     if (window.console) console.log("Calling setupCharts");
     
     chtTemp.options = new chartOptions();
+    if (booluseMetricAndCelsiusMeasurements) {
+        chtTemp.options.yellowFrom = 35;
+        chtTemp.options.yellowTo = 42;
+        chtTemp.options.redFrom = 42;
+        chtTemp.options.redTo = 50;
+        chtTemp.options.min = -30;
+        chtTemp.options.max = 50;
+    }
     drawChart(chtTemp, "chart_temp", "Temperature", intTemperature);
 
     chtHumidity.options = chartOptions();
@@ -95,14 +105,26 @@ function setupCharts() {
     compass.animateCompass(intWindDirection);
 
     chtPressure.options = chartOptions();
-    chtPressure.options.redFrom = 960;
-    chtPressure.options.redTo = 990;
-    chtPressure.options.yellowFrom = 990;
-    chtPressure.options.yellowTo = 1015;
-    chtPressure.options.greenFrom = 1015;
-    chtPressure.options.greenTo = 1040;
-    chtPressure.options.max = 1060;
-    chtPressure.options.min = 920
+    if (booluseMetricAndCelsiusMeasurements) {
+        chtPressure.options.redFrom = 28;
+        chtPressure.options.redTo = 29.2;
+        chtPressure.options.yellowFrom = 29.2;
+        chtPressure.options.yellowTo = 29.9;
+        chtPressure.options.greenFrom = 29.9;
+        chtPressure.options.greenTo = 31.3;
+        chtPressure.options.max = 31.3;
+        chtPressure.options.min = 27.1;
+    }
+    else {
+        chtPressure.options.redFrom = 960;
+        chtPressure.options.redTo = 990;
+        chtPressure.options.yellowFrom = 990;
+        chtPressure.options.yellowTo = 1015;
+        chtPressure.options.greenFrom = 1015;
+        chtPressure.options.greenTo = 1060;
+        chtPressure.options.max = 1060;
+        chtPressure.options.min = 920;
+    }
     drawChart(chtPressure, "chart_pressure", "Pressure", intPressure);
 
     var pressureChOps = chartOptions();

@@ -106,16 +106,6 @@ function setupCharts() {
 
     chtPressure.options = chartOptions();
     if (booluseMetricAndCelsiusMeasurements) {
-        chtPressure.options.redFrom = 28;
-        chtPressure.options.redTo = 29.2;
-        chtPressure.options.yellowFrom = 29.2;
-        chtPressure.options.yellowTo = 29.9;
-        chtPressure.options.greenFrom = 29.9;
-        chtPressure.options.greenTo = 31.3;
-        chtPressure.options.max = 31.3;
-        chtPressure.options.min = 27.1;
-    }
-    else {
         chtPressure.options.redFrom = 960;
         chtPressure.options.redTo = 990;
         chtPressure.options.yellowFrom = 990;
@@ -124,6 +114,16 @@ function setupCharts() {
         chtPressure.options.greenTo = 1060;
         chtPressure.options.max = 1060;
         chtPressure.options.min = 920;
+    }
+    else {
+        chtPressure.options.redFrom = 28;
+        chtPressure.options.redTo = 29.2;
+        chtPressure.options.yellowFrom = 29.2;
+        chtPressure.options.yellowTo = 29.9;
+        chtPressure.options.greenFrom = 29.9;
+        chtPressure.options.greenTo = 31.3;
+        chtPressure.options.max = 31.3;
+        chtPressure.options.min = 27.1;
     }
     drawChart(chtPressure, "chart_pressure", "Pressure", intPressure);
 

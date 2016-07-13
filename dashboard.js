@@ -73,11 +73,11 @@ function setupData(result) {
     boolShowPressureInMillibars = result.Settings.showPressureInMillibars ;
     
     $("#rawData").empty();
-    $("#rawData").append("<ul>");
+    var rawList = $("#rawData").append("<ul>");
     [result.WeatherObservations.Observation1,result.DailyStats].forEach(function (obj) { 
         for (var property in obj) {
             if (obj.hasOwnProperty(property)) {
-                $("#rawData").append("<li>" + property + ": " + obj[property] + "</li>");
+                rawList.append("<li>" + property + ": " + obj[property] + "</li>");
             }
         }
     });

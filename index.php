@@ -11,6 +11,7 @@
 
     <body>
         <div id="chart_temp"></div>
+        <div id="chart_ground_temp"></div>
         <div id="chart_hum"></div>
         <canvas id="wind_dir" width="200" height="200"></canvas>
         <div id="chart_pressure"></div>

@@ -97,7 +97,9 @@ function setupCharts() {
         chtTemp.options.max = 50;
     }
     drawChart(chtTemp, "chart_temp", "Temperature", intTemperature);
-                                                                                        drawChart(chtGroundTemp, "chart_ground_temp", "Ground temp", intGroundTemperature);
+    
+    chtGroundTemp.options = chtTemp.options;
+    drawChart(chtGroundTemp, "chart_ground_temp", "Ground temp", intGroundTemperature);
     
     chtHumidity.options = chartOptions();
     chtHumidity.options.redFrom = 85;
@@ -108,7 +110,7 @@ function setupCharts() {
     drawChart(chtHumidity, "chart_hum", "Humidity", intHumidity);
     
     compass = new Compass("wind_dir");
-    compass.animateCompass(intWindDirection);
+    compass.animate(intWindDirection);
 
     chtPressure.options = chartOptions();
     if (boolShowPressureInMillibars) {
@@ -170,7 +172,7 @@ function updateCharts() {
     chtPC12h.update(intPrCh12h);
     chtPC24h.update(intPrCh24h);
     chtPC48h.update(intPrCh48h);
-    compass.animateCompass(intWindDirection);
+    compass.animate(intWindDirection);
 }
 
 function drawChart(chartSetObj, strChartDiv, strLabel, intValue) {

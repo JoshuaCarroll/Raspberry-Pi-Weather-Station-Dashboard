@@ -7,6 +7,10 @@ div { float: left; }
 #chart_pressure, #rawData {clear: left;}
 
 #rawData { font-size: 0.75em; color: #7f7f7f; margin-bottom: 100px; }
+#rawData ul {
+  column-count: 2;
+  column-gap: 20px;   
+}
 #footer {
   position: fixed;
   right: 0;

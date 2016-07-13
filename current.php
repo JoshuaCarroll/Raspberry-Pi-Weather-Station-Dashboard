@@ -37,7 +37,7 @@ if ($result->num_rows > 0) {
         
         
         if (strpos($fieldName, "_TEMPERATURE")) {
-            if ($useMetricAndCelsiusMeasurements) {
+            if ($showMetricAndCelsiusMeasurements) {
                 echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° C\",";
             }
             else {
@@ -47,7 +47,7 @@ if ($result->num_rows > 0) {
         }
         
         if (strpos($fieldName, "_SPEED")) {
-            if ($useMetricAndCelsiusMeasurements) {
+            if ($showMetricAndCelsiusMeasurements) {
                 echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " Km/H\",";
             }
             else {
@@ -57,7 +57,7 @@ if ($result->num_rows > 0) {
         }
         
         if (strpos($fieldName, "_PRESSURE")) {
-            if ($useMetricAndCelsiusMeasurements) {
+            if ($showPressureInMillibars) {
                 echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " mb\",";
             }
             else {
@@ -96,15 +96,20 @@ if ($result->num_rows > 0) {
         $fieldName = $fields[$i];
         $fieldValue = $row[$i];
 
-        echo "\r\n\t\t\t\"" . $fieldName . "\" : " . "\"" . $fieldValue . "\"";
+        echo "\r\n\t\t\"" . $fieldName . "\" : " . "\"" . $fieldValue . "\"";
 
         if ($i+1 < $fieldcount) {
             echo ",";
         }
     }
 }
-
 echo "\r\n\t}"; // Close daily stats object
+
+echo ",\r\n\t\"Settings\" : {"; // Open settings object
+echo "\r\n\t\t\"showMetricAndCelsiusMeasurements\" : " . "\"" . $showMetricAndCelsiusMeasurements . "\",";
+echo "\r\n\t\t\"showPressureInMillibars\" : " . "\"" . $showPressureInMillibars . "\"";
+
+echo "\r\n\t}"; // Close settings object
 
 echo "\r\n}"; // Close document object
 

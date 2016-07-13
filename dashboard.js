@@ -2,6 +2,8 @@ var NumberOfSecondsBetweenReloadingData = 120;
 
 // ============================
 
+var boolShowMetricAndCelsiusMeasurements = true;
+var boolShowPressureInMillibars = true;
 var intTemperature = 0;
 var intHumidity = 0;
 var intPressure = 0;
@@ -10,6 +12,7 @@ var intPrCh6h = 0;
 var intPrCh12h = 0;
 var intPrCh24h = 0;
 var intPrCh48h = 0;
+var intWindDirection = 0;
 
 var chtPC1h = new chartSet();
 var chtPC6h = new chartSet();
@@ -19,56 +22,77 @@ var chtPC48h = new chartSet();
 var chtTemp = new chartSet();
 var chtHumidity = new chartSet();
 var chtPressure = new chartSet();
+var compass = null;
 
 // Load the gauge from the Google Chart API. Details at
-// https://developers.google.com/chart/interactive/docs/gallery/gauge#configuration-options
+// https://developers.google.com/chart/interactive/docs/gallery/gauge
 google.charts.load('current', {
     'packages': ['gauge']
 });
-google.charts.setOnLoadCallback(loadData(setupDataAndCharts));
+google.charts.setOnLoadCallback(GoogleCharts_onload);
+
+function GoogleCharts_onload() {
+    if (window.console) console.log("Google charts loaded.");
+    
+    $.getScript("http://rawgit.com/JoshuaCarroll/Compass-/master/compass.js", Compass_onload);
+}
+
+function Compass_onload() {
+    loadData(setupDataAndCharts);
+}
 
 function loadData(callback) {
-    console.log("loadData");
+    if (window.console) console.log("Calling loadData");
     var jsonPath = "current.php";
     $.getJSON(jsonPath, callback);
 }
 
 function setupDataAndCharts(result) {
-    console.log("setupDataAndCharts");
+    if (window.console) console.log("Calling setupDataAndCharts");
     setupData(result);
     setupCharts();
     setTimeout(loadData, NumberOfSecondsBetweenReloadingData * 1000, updateDataAndCharts);
 }
 
 function setupData(result) {
-    console.log("setupData");
+    if (window.console) console.log("Calling setupData");
     var obj = result.WeatherObservations.Observation1;
     intTemperature = obj.AMBIENT_TEMPERATURE;
     intHumidity = obj.HUMIDITY;
+    intWindDirection = obj.WIND_DIRECTION;
     intPressure = obj.AIR_PRESSURE;
     intPrCh1h = obj.AIR_PRESSURE - result.WeatherObservations.Observation2.AIR_PRESSURE;
     intPrCh6h = obj.AIR_PRESSURE - result.WeatherObservations.Observation3.AIR_PRESSURE;
     intPrCh12h = obj.AIR_PRESSURE - result.WeatherObservations.Observation4.AIR_PRESSURE;
     intPrCh24h = obj.AIR_PRESSURE - result.WeatherObservations.Observation5.AIR_PRESSURE;
     intPrCh48h = obj.AIR_PRESSURE - result.WeatherObservations.Observation6.AIR_PRESSURE;
+    boolShowMetricAndCelsiusMeasurements = result.Settings.showMetricAndCelsiusMeasurements;
+    boolShowPressureInMillibars = result.Settings.showPressureInMillibars ;
     
     $("#rawData").empty();
-    for (var property in obj) {
-        if (obj.hasOwnProperty(property)) {
-            $("#rawData").append(property + ": " + obj[property] + "<br>");
+    $("#rawData").append("<ul>");
+    [result.WeatherObservations.Observation1,result.DailyStats].forEach(function (obj) { 
+        for (var property in obj) {
+            if (obj.hasOwnProperty(property)) {
+                $("#rawData").append("<li>" + property + ": " + obj[property] + "</li>");
+            }
         }
-    }
-    obj = result.DailyStats
-    for (var property in obj) {
-        if (obj.hasOwnProperty(property)) {
-            $("#rawData").append(property + ": " + obj[property] + "<br>");
-        }
-    }
+    });
+    $("#rawData").append("</ul>");
 }
 
 function setupCharts() {
-    console.log("setupCharts");
+    if (window.console) console.log("Calling setupCharts");
+    
     chtTemp.options = new chartOptions();
+    if (boolShowMetricAndCelsiusMeasurements) {
+        chtTemp.options.yellowFrom = 35;
+        chtTemp.options.yellowTo = 42;
+        chtTemp.options.redFrom = 42;
+        chtTemp.options.redTo = 50;
+        chtTemp.options.min = -30;
+        chtTemp.options.max = 50;
+    }
     drawChart(chtTemp, "chart_temp", "Temperature", intTemperature);
 
     chtHumidity.options = chartOptions();
@@ -78,16 +102,31 @@ function setupCharts() {
     chtHumidity.options.yellowTo = 85;
     chtHumidity.options.max = 100;
     drawChart(chtHumidity, "chart_hum", "Humidity", intHumidity);
+    
+    compass = new Compass("wind_dir");
+    compass.animateCompass(intWindDirection);
 
     chtPressure.options = chartOptions();
-    chtPressure.options.redFrom = 960;
-    chtPressure.options.redTo = 990;
-    chtPressure.options.yellowFrom = 990;
-    chtPressure.options.yellowTo = 1015;
-    chtPressure.options.greenFrom = 1015;
-    chtPressure.options.greenTo = 1040;
-    chtPressure.options.max = 1060;
-    chtPressure.options.min = 920
+    if (boolShowPressureInMillibars) {
+        chtPressure.options.redFrom = 960;
+        chtPressure.options.redTo = 990;
+        chtPressure.options.yellowFrom = 990;
+        chtPressure.options.yellowTo = 1015;
+        chtPressure.options.greenFrom = 1015;
+        chtPressure.options.greenTo = 1060;
+        chtPressure.options.max = 1060;
+        chtPressure.options.min = 920;
+    }
+    else {
+        chtPressure.options.redFrom = 28;
+        chtPressure.options.redTo = 29.2;
+        chtPressure.options.yellowFrom = 29.2;
+        chtPressure.options.yellowTo = 29.9;
+        chtPressure.options.greenFrom = 29.9;
+        chtPressure.options.greenTo = 31.3;
+        chtPressure.options.max = 31.3;
+        chtPressure.options.min = 27.1;
+    }
     drawChart(chtPressure, "chart_pressure", "Pressure", intPressure);
 
     var pressureChOps = chartOptions();
@@ -110,14 +149,14 @@ function setupCharts() {
 }
 
 function updateDataAndCharts(result) {
-    console.log("updateDataAndCharts");
+    if (window.console) console.log("Calling updateDataAndCharts");
     setupData(result);
     updateCharts();
     setTimeout(loadData, NumberOfSecondsBetweenReloadingData * 1000, updateDataAndCharts);
 }
 
 function updateCharts() {
-    console.log("updateCharts");
+    if (window.console) console.log("Calling updateCharts");
     chtTemp.update(intTemperature);
     chtHumidity.update(intHumidity);
     chtPressure.update(intPressure);
@@ -126,9 +165,11 @@ function updateCharts() {
     chtPC12h.update(intPrCh12h);
     chtPC24h.update(intPrCh24h);
     chtPC48h.update(intPrCh48h);
+    compass.animateCompass(intWindDirection);
 }
 
 function drawChart(chartSetObj, strChartDiv, strLabel, intValue) {
+    if (window.console) console.log("Calling drawChart(" + chartSetObj + ", " + strChartDiv + ", " + strLabel + ", " + intValue + ")");
     if (!chartSetObj.options) {
         chartSetObj.options = chartOptions();
     }

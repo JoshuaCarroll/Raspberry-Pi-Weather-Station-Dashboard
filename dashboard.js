@@ -5,6 +5,7 @@ var NumberOfSecondsBetweenReloadingData = 120;
 var boolShowMetricAndCelsiusMeasurements = true;
 var boolShowPressureInMillibars = true;
 var intTemperature = 0;
+var intGroundTemperature = 0;
 var intHumidity = 0;
 var intPressure = 0;
 var intPrCh1h = 0;
@@ -20,6 +21,7 @@ var chtPC12h = new chartSet();
 var chtPC24h = new chartSet();
 var chtPC48h = new chartSet();
 var chtTemp = new chartSet();
+var chtGroundTemp = new chartSet();
 var chtHumidity = new chartSet();
 var chtPressure = new chartSet();
 var compass = null;
@@ -58,6 +60,7 @@ function setupData(result) {
     if (window.console) console.log("Calling setupData");
     var obj = result.WeatherObservations.Observation1;
     intTemperature = obj.AMBIENT_TEMPERATURE;
+    intGroundTemperature = obj.GROUND_TEMPERATURE;
     intHumidity = obj.HUMIDITY;
     intWindDirection = obj.WIND_DIRECTION;
     intPressure = obj.AIR_PRESSURE;
@@ -94,7 +97,8 @@ function setupCharts() {
         chtTemp.options.max = 50;
     }
     drawChart(chtTemp, "chart_temp", "Temperature", intTemperature);
-
+                                                                                        drawChart(chtGroundTemp, "chart_ground_temp", "Ground temp", intGroundTemperature);
+    
     chtHumidity.options = chartOptions();
     chtHumidity.options.redFrom = 85;
     chtHumidity.options.redTo = 100;
@@ -158,6 +162,7 @@ function updateDataAndCharts(result) {
 function updateCharts() {
     if (window.console) console.log("Calling updateCharts");
     chtTemp.update(intTemperature);
+    chtGroundTemp.update(intGroundTemperature);
     chtHumidity.update(intHumidity);
     chtPressure.update(intPressure);
     chtPC1h.update(intPrCh1h);

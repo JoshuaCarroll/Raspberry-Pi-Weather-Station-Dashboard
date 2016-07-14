@@ -31,10 +31,18 @@ if ($result->num_rows > 0) {
 
         echo "\r\n\t\t\"Observation" . $numberOfRows . "\" : {";
         
+        if ($numberOfRows == 1) {
+            $feelsLike = calculateFeelsLike($result[0]["AMBIENT_TEMPERATURE"], $result[0]["HUMIDITY"], $result[0]["WIND_SPEED"]);
+            if (!$showMetricAndCelsiusMeasurements) {
+                $feelsLike = convertCelsiusToFahrenheit($feelsLike);
+            }
+            echo "\r\n\t\t\t\"FEELS_LIKE\" : " . "\"" . $feelsLike . "\",";
+        }
+        
         for ($i = 0; $i < $fieldcount; $i++) {   // Columns
             $fieldName = $fields[$i];
             $fieldValue = $row[$i];
-
+            
             if (strpos($fieldName, "_TEMPERATURE")) {
                 if ($showMetricAndCelsiusMeasurements) {
                     echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° C\",";
@@ -67,16 +75,10 @@ if ($result->num_rows > 0) {
 
             echo "\r\n\t\t\t\"" . $fieldName . "\" : " . "\"" . $fieldValue . "\"";
 
-            //if ($i+1 < $fieldcount) {
+            if ($i+1 < $fieldcount) {
                     echo ",";
-            //}
+            }
         }
-        
-        $feelsLike = calculateFeelsLike($result[0]["AMBIENT_TEMPERATURE"], $result[0]["HUMIDITY"], $result[0]["WIND_SPEED"]);
-        if (!$showMetricAndCelsiusMeasurements) {
-            $feelsLike = convertCelsiusToFahrenheit($feelsLike);
-        }
-        echo "\r\n\t\t\t\"FEELS_LIKE\" : " . "\"" . $feelsLike . "\"";
         
         echo "\r\n\t\t}";
     }

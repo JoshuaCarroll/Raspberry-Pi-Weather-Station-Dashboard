@@ -160,7 +160,7 @@ function calculateFeelsLike($temperature, $humidity, $windSpeed) {
     $windMPH = convertKilometersToMiles($windSpeed);
     
     // Calculate Heat Index based on temperature in F and relative humidity (65 = 65%)
-    if ($tempF > 79 && $rh > 39) { 
+    if ($tempF > 79 && $humidity > 39) { 
         $feelsLike = -42.379 + 2.04901523 * $tempF + 10.14333127 * $humidity - 0.22475541 * $tempF * $humidity;
         $feelsLike += -0.00683783 * pow($tempF, 2) - 0.05481717 * pow($humidity, 2);
         $feelsLike += 0.00122874 * pow($tempF, 2) * $humidity + 0.00085282 * $tempF * pow($humidity, 2);
@@ -175,7 +175,7 @@ function calculateFeelsLike($temperature, $humidity, $windSpeed) {
         $feelsLike = $tempF;
     }
     
-    return $feelsLike;
+    return convertFahrenheitToCelsius($feelsLike);
 }
 
 // Calculate Wind Chill Temperature based on temperature in F and wind speed in miles per hour

@@ -36,7 +36,7 @@ if ($result->num_rows > 0) {
 		$fieldValue = $row[$i];
         
         
-        if (strpos($fieldName, "_TEMPERATURE")) {
+        if ((strpos($fieldName, "_TEMPERATURE")) || ($fieldName == "LowSinceMidnight") || ($fieldName == "HighSinceMidnight")) {
             if ($showMetricAndCelsiusMeasurements) {
                 echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° C\",";
             }

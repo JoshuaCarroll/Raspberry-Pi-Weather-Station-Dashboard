@@ -8,8 +8,9 @@ div { float: left; }
 
 #rawData { font-size: 0.75em; color: #7f7f7f; margin-bottom: 100px; }
 #rawData ul {
-  column-count: 2;
-  column-gap: 20px;   
+  column-count: 3;
+  column-gap: 20px; 
+  list-style-position: inside;
 }
 #footer {
   position: fixed;

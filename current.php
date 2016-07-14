@@ -32,7 +32,7 @@ if ($result->num_rows > 0) {
         echo "\r\n\t\t\"Observation" . $numberOfRows . "\" : {";
         
         if ($numberOfRows == 1) {
-            $feelsLike = calculateFeelsLike($result[0]["AMBIENT_TEMPERATURE"], $result[0]["HUMIDITY"], $result[0]["WIND_SPEED"]);
+            $feelsLike = calculateFeelsLike($row["AMBIENT_TEMPERATURE"], $row["HUMIDITY"], $row["WIND_SPEED"]);
             if (!$showMetricAndCelsiusMeasurements) {
                 $feelsLike = convertCelsiusToFahrenheit($feelsLike);
             }

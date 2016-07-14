@@ -142,4 +142,46 @@ function convertMillibarsToInches($millibars) {
     return $inches;
 }
 
+function calculateHeatIndex($relativeHumidity, $airTemperature) {
+    $airTemperature = convertCelsiusToFahrenheit($airTemperature);
+    
+    if ($relativeHumidity > 100){
+        $relativeHumidity = 100;
+    }
+    else if ($relativeHumidity < 0) {
+        $relativeHumidity = 0;
+    }
+    
+    if ($airTemperature <= 40.0) {
+        $hi = $airTemperature;
+    }
+    else {
+        $hitemp = 61.0+(($airTemperature-68.0)*1.2)+($relativeHumidity*0.094);
+        $fptemp = $airTemperature;
+        $hifinal = 0.5*($fptemp+$hitemp);
+
+        if ($hifinal > 79.0) {
+            $hi = -42.379+2.04901523*$airTemperature+10.14333127*$relativeHumidity-0.22475541*$airTemperature*$relativeHumidity-6.83783*(Math.pow(10, -3))*(Math.pow($airTemperature, 2))-5.481717*(Math.pow(10, -2))*(Math.pow($relativeHumidity, 2))+1.22874*(Math.pow(10, -3))*(Math.pow($airTemperature, 2))*$relativeHumidity+8.5282*(Math.pow(10, -4))*$airTemperature*(Math.pow($relativeHumidity, 2))-1.99*(Math.pow(10, -6))*(Math.pow($airTemperature, 2))*(Math.pow($relativeHumidity,2));
+            
+            if (($relativeHumidity <= 13) && ($airTemperature >= 80.0) && ($airTemperature <= 112.0)) {
+                $adj1 = (13.0-$relativeHumidity)/4.0;
+                $adj2 = Math.sqrt((17.0-Math.abs($airTemperature-95.0))/17.0);
+                $adj = $adj1 * $adj2;
+                $hi = $hi - $adj;
+            }
+            else if (($relativeHumidity > 85.0) && ($airTemperature >= 80.0) && ($airTemperature <= 87.0)) {
+                $adj1 = ($relativeHumidity-85.0)/10.0;
+                $adj2 = (87.0-$airTemperature)/5.0;
+                $adj = $adj1 * $adj2;
+                $hi = $hi + $adj;
+            }
+        }
+        else {
+            $hi = $hifinal;
+        }
+    }
+    
+    return $hi;
+}
+
 ?>

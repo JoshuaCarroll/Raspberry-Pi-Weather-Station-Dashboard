@@ -36,7 +36,7 @@ if ($result->num_rows > 0) {
 		$fieldValue = $row[$i];
         
         
-        if ((strpos($fieldName, "_TEMPERATURE")) || ($fieldName == "LowSinceMidnight") || ($fieldName == "HighSinceMidnight")) {
+        if (strpos($fieldName, "_TEMPERATURE")) {
             if ($showMetricAndCelsiusMeasurements) {
                 echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° C\",";
             }
@@ -96,6 +96,16 @@ if ($result->num_rows > 0) {
         $fieldName = $fields[$i];
         $fieldValue = $row[$i];
 
+        if (($fieldName == "LowSinceMidnight") || ($fieldName == "HighSinceMidnight")) {
+            if ($showMetricAndCelsiusMeasurements) {
+                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° C\",";
+            }
+            else {
+                $fieldValue = convertCelsiusToFahrenheit($fieldValue);
+                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° F\",";
+            }
+        }
+        
         echo "\r\n\t\t\"" . $fieldName . "\" : " . "\"" . $fieldValue . "\"";
 
         if ($i+1 < $fieldcount) {

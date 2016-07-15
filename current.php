@@ -2,7 +2,7 @@
 include 'variables.php';
 header('content-type: application/json; charset=utf-8');
 header("access-control-allow-origin: *");
-$con = new mysqli($databaseAddress,$databaseUsername,$databasePassword,'weather');
+$con = new mysqli($databaseAddress,$databaseUsername,$databasePassword, $databaseSchema);
 
 // Check connection
 if (mysqli_connect_errno()) {

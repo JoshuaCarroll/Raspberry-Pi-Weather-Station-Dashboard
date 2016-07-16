@@ -9,32 +9,9 @@ if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
 
-/*
-SELECT SUM(Rainfall) FROM WEATHER_MEASUREMENT WHERE created >= DATEADD(HOUR, -1, GETDATE()) INTO @rainPastHour;
-
-SELECT SUM(Rainfall) FROM WEATHER_MEASUREMENT WHERE created >= DATE(NOW()) INTO @rainSinceMidnight;
-
-SELECT WIND_DIRECTION, WIND_SPEED, WIND_GUST_SPEED, HUMIDITY, AMBIENT_TEMPERATURE, @rainPastHour, @rainSinceMidnight, AIR_PRESSURE, GROUND_TEMPERATURE FROM WEATHER
-
-
-*/
-
 echo "http://weatherstation.wunderground.com/weatherstation/updateweatherstation.php?ID=&PASSWORD=&softwaretype=N5JLC%20Raspberry%20Pi%20Wx%20Dashboard&";
 
-$sql = "SELECT SUM(Rainfall) as rainPastHour FROM WEATHER_MEASUREMENT WHERE created >= DATEADD(HOUR, -1, GETDATE());";
-$result = $con->query($sql);
-$value = mysql_fetch_object($result);
-$rainPastHour = $value->rainPastHour;
-echo "rainin=" . $rainPastHour . "&";
-    
-
-$sql = "SELECT SUM(Rainfall) as rainSinceMidnight FROM WEATHER_MEASUREMENT WHERE created >= DATE(NOW());";
-$result = $con->query($sql);
-$value = mysql_fetch_object($result);
-$rainSinceMidnight = $value->rainSinceMidnight;
-echo "dailyrainin=" . $rainSinceMidnight . "&";
-
-$result = $con->query('SELECT WIND_DIRECTION, WIND_SPEED, WIND_GUST_SPEED, HUMIDITY, AMBIENT_TEMPERATURE, AIR_PRESSURE, GROUND_TEMPERATURE FROM WEATHER_MEASUREMENT ORDER BY CREATED DESC LIMIT 1');
+$result = $con->query('call GETWUNDERGROUNDDATA');
 
 if ($result->num_rows > 0) {
     $row = mysqli_fetch_array($result);
@@ -45,7 +22,9 @@ if ($result->num_rows > 0) {
     echo "humidity=" . $row["HUMIDITY"] . "&";
     echo "tempf=" . $row["AMBIENT_TEMPERATURE"] . "&";
     echo "baromin=" . $row["AIR_PRESSURE"] . "&";
-    echo "soiltempf " . $row["GROUND_TEMPERATURE"] . "&";
+    echo "soiltempf=" . $row["GROUND_TEMPERATURE"] . "&";
+    echo "rainin=" . $row["@rainPastHour"] . "&";
+    echo "dailyrainin=" . $row["@rainSinceMidnight"] . "&";
     
     $result->close();
     $con->next_result();

@@ -25,8 +25,8 @@ if ($result->num_rows > 0) {
     $url .= "soiltempf=" . $row["GROUND_TEMPERATURE"] . "&";
     $url .= "rainin=" . $row["@rainPastHour"] . "&";
     $url .= "dailyrainin=" . $row["@rainSinceMidnight"] . "&";
-    $url .= "id=" . $row["@WUNDERGROUND_ID"] . "&";
-    $url .= "password=" . $row["@WUNDERGROUND_PASSWORD"] . "&";
+    $url .= "ID=" . $row["@WUNDERGROUND_ID"] . "&";
+    $url .= "PASSWORD=" . $row["@WUNDERGROUND_PASSWORD"] . "&";
 }
 
 $result->close();

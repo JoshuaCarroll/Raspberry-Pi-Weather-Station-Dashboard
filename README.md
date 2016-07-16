@@ -72,11 +72,23 @@ You should now be in `/var/www/html/dashboard`
 
     `ifconfig`
   
-  The IP address will be on the second line just after `inet addr:`
+    The IP address will be on the second line just after `inet addr:`. Enter this IP address into a browser followed by `/dashboard`. For example:
 
-Enter this IP address into a browser followed by `/dashboard`. For example:
+    `http://192.168.0.X/dashboard`
+  
+### Set up external API's (optional)
 
-  - `http://192.168.0.X/dashboard`
+- Weather Underground
+	-- Populate WUNDERGROUND_ID and WUNDERGROUND_PASSWORD in the Settings table.
+	-- Open crontab for editing.
+
+	`crontab -e`
+
+	-- Copy this line and paste it into CRON:
+	
+    `*/10 * * * * curl http://localhost/dev/wunderground-api.php`
+
+	Press `Ctrl O` then `Enter` to save and `Ctrl X` to quit nano.
   
 ----------
 

@@ -9,25 +9,28 @@ if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
 
-echo "http://weatherstation.wunderground.com/weatherstation/updateweatherstation.php?ID=&PASSWORD=&softwaretype=N5JLC%20Raspberry%20Pi%20Wx%20Dashboard&";
+$url = "http://weatherstation.wunderground.com/weatherstation/updateweatherstation.php?ID=&PASSWORD=&softwaretype=N5JLC Raspberry Pi Wx Dashboard&";
 $result = $con->query('call GETWUNDERGROUNDDATA');
 
 if ($result->num_rows > 0) {
     $row = mysqli_fetch_array($result);
-    echo "dateutc=" . $row["CREATEDUTC"] . "&";
-    echo "winddir=" . $row["WIND_DIRECTION"] . "&";
-    echo "windspeedmph=" . $row["WIND_SPEED"] . "&";
-    echo "windgustmph=" . $row["WIND_GUST_SPEED"] . "&";
-    echo "humidity=" . $row["HUMIDITY"] . "&";
-    echo "tempf=" . $row["AMBIENT_TEMPERATURE"] . "&";
-    echo "baromin=" . $row["AIR_PRESSURE"] . "&";
-    echo "soiltempf=" . $row["GROUND_TEMPERATURE"] . "&";
-    echo "rainin=" . $row["@rainPastHour"] . "&";
-    echo "dailyrainin=" . $row["@rainSinceMidnight"] . "&";
+    $url += "dateutc=" . $row["CREATEDUTC"] . "&";
+    $url += "winddir=" . $row["WIND_DIRECTION"] . "&";
+    $url += "windspeedmph=" . $row["WIND_SPEED"] . "&";
+    $url += "windgustmph=" . $row["WIND_GUST_SPEED"] . "&";
+    $url += "humidity=" . $row["HUMIDITY"] . "&";
+    $url += "tempf=" . $row["AMBIENT_TEMPERATURE"] . "&";
+    $url += "baromin=" . $row["AIR_PRESSURE"] . "&";
+    $url += "soiltempf=" . $row["GROUND_TEMPERATURE"] . "&";
+    $url += "rainin=" . $row["@rainPastHour"] . "&";
+    $url += "dailyrainin=" . $row["@rainSinceMidnight"] . "&";
 }
 
 $result->close();
 $con->close();
+
+$url = str_replace(" ", "%20", $url);
+echo $url;
 
 // ===============================================================
 function convertKilometersToMiles($kilometers) {

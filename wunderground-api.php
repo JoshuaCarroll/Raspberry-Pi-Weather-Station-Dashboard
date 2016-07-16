@@ -14,6 +14,7 @@ $result = $con->query('call GETWUNDERGROUNDDATA');
 
 if ($result->num_rows > 0) {
     $row = mysqli_fetch_array($result);
+    echo "dateutc=" . $row["CREATEDUTC"] . "&";
     echo "winddir=" . $row["WIND_DIRECTION"] . "&";
     echo "windspeedmph=" . $row["WIND_SPEED"] . "&";
     echo "windgustmph=" . $row["WIND_GUST_SPEED"] . "&";

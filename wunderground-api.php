@@ -9,7 +9,7 @@ if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
 
-$url = "http://weatherstation.wunderground.com/weatherstation/updateweatherstation.php?ID=&PASSWORD=&softwaretype=N5JLC Raspberry Pi Wx Dashboard&";
+$url = "http://weatherstation.wunderground.com/weatherstation/updateweatherstation.php?softwaretype=N5JLC Raspberry Pi Wx Dashboard&";
 
 $result = $con->query('call GETWUNDERGROUNDDATA');
 if ($result->num_rows > 0) {
@@ -25,13 +25,16 @@ if ($result->num_rows > 0) {
     $url .= "soiltempf=" . $row["GROUND_TEMPERATURE"] . "&";
     $url .= "rainin=" . $row["@rainPastHour"] . "&";
     $url .= "dailyrainin=" . $row["@rainSinceMidnight"] . "&";
+    $url .= "id=" . $row["@WUNDERGROUND_ID"] . "&";
+    $url .= "password=" . $row["@WUNDERGROUND_PASSWORD"] . "&";
 }
 
 $result->close();
 $con->close();
 
 $url = str_replace(" ", "%20", $url);
-echo $url;
+
+echo file_get_contents($url);
 
 // ===============================================================
 function convertKilometersToMiles($kilometers) {

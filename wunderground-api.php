@@ -22,14 +22,14 @@ SELECT WIND_DIRECTION, WIND_SPEED, WIND_GUST_SPEED, HUMIDITY, AMBIENT_TEMPERATUR
 echo "http://weatherstation.wunderground.com/weatherstation/updateweatherstation.php?ID=&PASSWORD=&softwaretype=N5JLC%20Raspberry%20Pi%20Wx%20Dashboard&";
 
 $sql = "SELECT SUM(Rainfall) as rainPastHour FROM WEATHER_MEASUREMENT WHERE created >= DATEADD(HOUR, -1, GETDATE());";
-$result = mysql_query($sql);
+$result = $con->query($sql);
 $value = mysql_fetch_object($result);
 $rainPastHour = $value->rainPastHour;
 echo "rainin=" . $rainPastHour . "&";
     
 
 $sql = "SELECT SUM(Rainfall) as rainSinceMidnight FROM WEATHER_MEASUREMENT WHERE created >= DATE(NOW());";
-$result = mysql_query($sql);
+$result = $con->query($sql);
 $value = mysql_fetch_object($result);
 $rainSinceMidnight = $value->rainSinceMidnight;
 echo "dailyrainin=" . $rainSinceMidnight . "&";

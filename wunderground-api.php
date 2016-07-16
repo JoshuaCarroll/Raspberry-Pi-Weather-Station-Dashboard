@@ -10,12 +10,10 @@ if (mysqli_connect_errno()) {
 }
 
 echo "http://weatherstation.wunderground.com/weatherstation/updateweatherstation.php?ID=&PASSWORD=&softwaretype=N5JLC%20Raspberry%20Pi%20Wx%20Dashboard&";
-
 $result = $con->query('call GETWUNDERGROUNDDATA');
 
 if ($result->num_rows > 0) {
     $row = mysqli_fetch_array($result);
-    
     echo "winddir=" . $row["WIND_DIRECTION"] . "&";
     echo "windspeedmph=" . $row["WIND_SPEED"] . "&";
     echo "windgustmph=" . $row["WIND_GUST_SPEED"] . "&";
@@ -25,13 +23,10 @@ if ($result->num_rows > 0) {
     echo "soiltempf=" . $row["GROUND_TEMPERATURE"] . "&";
     echo "rainin=" . $row["@rainPastHour"] . "&";
     echo "dailyrainin=" . $row["@rainSinceMidnight"] . "&";
-    
-    $result->close();
-    $con->next_result();
 }
 
 $result->close();
-mysqli_close($con);
+$con->close();
 
 // ===============================================================
 function convertKilometersToMiles($kilometers) {

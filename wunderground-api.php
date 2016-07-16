@@ -34,6 +34,7 @@ $con->close();
 
 $url = str_replace(" ", "%20", $url);
 
+echo $url . "<hr>";
 echo file_get_contents($url);
 
 // ===============================================================

@@ -10,10 +10,11 @@ if (mysqli_connect_errno()) {
 }
 
 $url = "http://weatherstation.wunderground.com/weatherstation/updateweatherstation.php?ID=&PASSWORD=&softwaretype=N5JLC Raspberry Pi Wx Dashboard&";
-$result = $con->query('call GETWUNDERGROUNDDATA');
 
+$result = $con->query('call GETWUNDERGROUNDDATA');
 if ($result->num_rows > 0) {
     $row = mysqli_fetch_array($result);
+    
     $url += "dateutc=" . $row["CREATEDUTC"] . "&";
     $url += "winddir=" . $row["WIND_DIRECTION"] . "&";
     $url += "windspeedmph=" . $row["WIND_SPEED"] . "&";
@@ -29,6 +30,7 @@ if ($result->num_rows > 0) {
 $result->close();
 $con->close();
 
+echo $url . "<hr>";
 $url = str_replace(" ", "%20", $url);
 echo $url;
 

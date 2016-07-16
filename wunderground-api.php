@@ -15,22 +15,21 @@ $result = $con->query('call GETWUNDERGROUNDDATA');
 if ($result->num_rows > 0) {
     $row = mysqli_fetch_array($result);
     
-    $url += "dateutc=" . $row["CREATEDUTC"] . "&";
-    $url += "winddir=" . $row["WIND_DIRECTION"] . "&";
-    $url += "windspeedmph=" . $row["WIND_SPEED"] . "&";
-    $url += "windgustmph=" . $row["WIND_GUST_SPEED"] . "&";
-    $url += "humidity=" . $row["HUMIDITY"] . "&";
-    $url += "tempf=" . $row["AMBIENT_TEMPERATURE"] . "&";
-    $url += "baromin=" . $row["AIR_PRESSURE"] . "&";
-    $url += "soiltempf=" . $row["GROUND_TEMPERATURE"] . "&";
-    $url += "rainin=" . $row["@rainPastHour"] . "&";
-    $url += "dailyrainin=" . $row["@rainSinceMidnight"] . "&";
+    $url .= "dateutc=" . $row["CREATEDUTC"] . "&";
+    $url .= "winddir=" . $row["WIND_DIRECTION"] . "&";
+    $url .= "windspeedmph=" . $row["WIND_SPEED"] . "&";
+    $url .= "windgustmph=" . $row["WIND_GUST_SPEED"] . "&";
+    $url .= "humidity=" . $row["HUMIDITY"] . "&";
+    $url .= "tempf=" . $row["AMBIENT_TEMPERATURE"] . "&";
+    $url .= "baromin=" . $row["AIR_PRESSURE"] . "&";
+    $url .= "soiltempf=" . $row["GROUND_TEMPERATURE"] . "&";
+    $url .= "rainin=" . $row["@rainPastHour"] . "&";
+    $url .= "dailyrainin=" . $row["@rainSinceMidnight"] . "&";
 }
 
 $result->close();
 $con->close();
 
-echo $url . "<hr>";
 $url = str_replace(" ", "%20", $url);
 echo $url;
 

@@ -17,14 +17,14 @@ if ($result->num_rows > 0) {
     
     $url .= "dateutc=" . $row["CREATEDUTC"] . "&";
     $url .= "winddir=" . $row["WIND_DIRECTION"] . "&";
-    $url .= "windspeedmph=" . $row["WIND_SPEED"] . "&";
-    $url .= "windgustmph=" . $row["WIND_GUST_SPEED"] . "&";
+    $url .= "windspeedmph=" . convertKilometersToMiles($row["WIND_SPEED"]) . "&";
+    $url .= "windgustmph=" . convertKilometersToMiles($row["WIND_GUST_SPEED"]) . "&";
     $url .= "humidity=" . $row["HUMIDITY"] . "&";
-    $url .= "tempf=" . $row["AMBIENT_TEMPERATURE"] . "&";
-    $url .= "baromin=" . $row["AIR_PRESSURE"] . "&";
-    $url .= "soiltempf=" . $row["GROUND_TEMPERATURE"] . "&";
-    $url .= "rainin=" . $row["@rainPastHour"] . "&";
-    $url .= "dailyrainin=" . $row["@rainSinceMidnight"] . "&";
+    $url .= "tempf=" . convertCelsiusToFahrenheit($row["AMBIENT_TEMPERATURE"]) . "&";
+    $url .= "baromin=" . convertMillibarsToInches($row["AIR_PRESSURE"]) . "&";
+    $url .= "soiltempf=" . convertCelsiusToFahrenheit($row["GROUND_TEMPERATURE"]) . "&";
+    $url .= "rainin=" . convertmillimetersToInches($row["@rainPastHour"]) . "&";
+    $url .= "dailyrainin=" . convertmillimetersToInches($row["@rainSinceMidnight"]) . "&";
     $url .= "ID=" . $row["@WUNDERGROUND_ID"] . "&";
     $url .= "PASSWORD=" . $row["@WUNDERGROUND_PASSWORD"] . "&";
 }
@@ -49,6 +49,11 @@ function convertCelsiusToFahrenheit($celsiusDegrees) {
 
 function convertMillibarsToInches($millibars) {
     $inches = $millibars * 0.0295301;
+    return $inches;
+}
+
+function convertmillimetersToInches($mm) {
+    $inches = $mm * 0.039370;
     return $inches;
 }
 

@@ -9,7 +9,7 @@ if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
 
-$url = "http://weatherstation.wunderground.com/weatherstation/updateweatherstation.php?softwaretype=N5JLC Raspberry Pi Wx Dashboard&";
+$url = "http://weatherstation.wunderground.com/weatherstation/updateweatherstation.php?softwaretype=Raspberry Pi Weather Station Dashboard&";
 
 $result = $con->query('call GETWUNDERGROUNDDATA');
 if ($result->num_rows > 0) {

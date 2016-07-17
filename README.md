@@ -72,11 +72,13 @@ You should now be in `/var/www/html/dashboard`
 
     `ifconfig`
   
-  The IP address will be on the second line just after `inet addr:`
+    The IP address will be on the second line just after `inet addr:`. Enter this IP address into a browser followed by `/dashboard`. For example:
 
-Enter this IP address into a browser followed by `/dashboard`. For example:
+    `http://192.168.0.X/dashboard`
+  
+### Set up external API's (optional)
 
-  - `http://192.168.0.X/dashboard`
+- Weather Underground: See [README-API-WeatherUnderground.md](README-API-WeatherUnderground.md).
   
 ----------
 

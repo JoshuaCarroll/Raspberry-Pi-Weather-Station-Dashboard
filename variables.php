@@ -4,6 +4,7 @@
 $databaseAddress = '127.0.0.1';
 $databaseUsername = 'root';
 $databasePassword = 'tiger';
+$databaseSchema = 'weather';
 
 // ___ Preferences _____________________________________________________
 // These settings only change the display. Does not effect the values stored in the database.

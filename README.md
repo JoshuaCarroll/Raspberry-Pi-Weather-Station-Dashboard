@@ -78,17 +78,7 @@ You should now be in `/var/www/html/dashboard`
   
 ### Set up external API's (optional)
 
-- Weather Underground
-	-- Populate WUNDERGROUND_ID and WUNDERGROUND_PASSWORD in the Settings table.
-	-- Open crontab for editing.
-
-	`crontab -e`
-
-	-- Copy this line and paste it into CRON:
-	
-    `*/10 * * * * curl http://localhost/dev/wunderground-api.php`
-
-	Press `Ctrl O` then `Enter` to save and `Ctrl X` to quit nano.
+- Weather Underground: See [README-API-WeatherUnderground.md](README-API-WeatherUnderground.md).
   
 ----------
 

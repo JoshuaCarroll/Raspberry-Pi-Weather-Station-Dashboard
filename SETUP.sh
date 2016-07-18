@@ -42,36 +42,57 @@ if [$databasePassword = ""]
 then
   databasePassword = "tiger"
 fi
+echo
+echo
+echo
 
-echo
-echo
-echo
+echo "  First, we will run setup for the database. This will install (or update) stored procedures and create the table for settings to be stored."
+echo "  NOTE: Even if you have done this before it may be a good idea to run it again, especially if you have pulled a new update from the repository."
+echo -n "  Continue?  (Y/n): "
+read runSetupSql
+if [ $runSetupSql = "y" ] || [ $runSetupSql = "Y" ] ||[ $runSetupSql = "" ]
+then
+  mysql -u root -p"$databasePassword" weather < SETUP.sql
+fi
+echo 
+echo 
+echo 
+
 echo "  Your measurements will be recorded in the database in Celsius and metric units. But how do you"
 echo "  want the dashboard to display the measurements?"
-echo "    (1) Celsius and metric units"
 echo "    (0) Fahrenheit and imperial units"
+echo "    (1) Celsius and metric units"
 echo
 echo -n "  !> "
 read showMetricAndCelsiusMeasurements
-mysql -u root -p"$databasePassword" weather -e "Update SETTINGS set value='$showMetricAndCelsiusMeasurements' where name='showMetricAndCelsiusMeasurements'"
-echo
-echo
+echo 
+echo 
+echo "    Storing setting showMetricAndCelsiusMeasurements = $showMetricAndCelsiusMeasurements."
+echo "---------------------------------------------------------------------------------------------"
+mysql -vv -u root -p"$databasePassword" weather -e "Update SETTINGS set value='$showMetricAndCelsiusMeasurements' where name='showMetricAndCelsiusMeasurements'"
+echo "---------------------------------------------------------------------------------------------"
+echo 
+echo 
+echo 
 
 echo "  Barometric pressure will be recorded in millibars. How do you want the dashboard to display the"
 echo "  barometric pressure?"
-echo "    (1) Millibars"
 echo "    (0) Inches of mercury"
+echo "    (1) Millibars"
+echo 
 echo -n "  !> "
 read showPressureInMillibars
-mysql -u root -p"$databasePassword" weather -e "Update SETTINGS set value='$showPressureInMillibars' where name='showPressureInMillibars'"
+echo 
+echo 
+echo "    Storing setting showPressureInMillibars = $showPressureInMillibars."
+echo "---------------------------------------------------------------------------------------------"
+mysql -vv -u root -p"$databasePassword" weather -e "Update SETTINGS set value='$showPressureInMillibars' where name='showPressureInMillibars'"
+echo "---------------------------------------------------------------------------------------------"
+echo
 echo
 echo
 
-echo "* Store options. Use metric: $showMetricAndCelsiusMeasurements, Use millibars: $showPressureInMillibars"
-echo
-echo
-
-echo -n "  Do you want to setup your station to report readings to Weather Underground? (y/n): "
+echo -n "  Do you want to setup your station to report readings to Weather Underground? (y/N): "
 read reportToWunderground
 echo
 echo
@@ -120,18 +141,18 @@ then
   read wuURL
   echo 
   
-#write out current crontab
-crontab -l > mycron
-#echo new cron into cron file
-echo "00 09 * * 1-5 echo hello" >> mycron
-#install new cron file
-crontab mycron
-rm mycron
-
-*/10 * * * * curl http://localhost/development/wunderground-api.php
-
-  
-  
+  # Write out current crontab
+  crontab -l > crontemp1
+  # If there is a line already presnt for Weather Underground, remove it.
+  grep -vwE "(wunderground-api.php)" crontemp1 > crontemp2
+  # Echo new cron into cron file
+  echo "*/$wuMinutes * * * * curl $wuURL" >> crontemp2
+  # Install new cron file
+  crontab crontemp2
+  rm crontemp1
+  rm crontemp2  
+  echo 
+  echo
   echo 
 fi
 

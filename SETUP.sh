@@ -142,19 +142,67 @@ then
   echo 
   
   # Write out current crontab
-  crontab -l > crontemp1
+  crontab -l > ~/crontemp1
   # If there is a line already presnt for Weather Underground, remove it.
-  grep -vwE "(wunderground-api.php)" crontemp1 > crontemp2
+  grep -vwE "(wunderground-api.php)" ~/crontemp1 > ~/crontemp2
   # Echo new cron into cron file
-  echo "*/$wuMinutes * * * * curl $wuURL" >> crontemp2
+  echo "*/$wuMinutes * * * * curl $wuURL" >> ~/crontemp2
   # Install new cron file
   crontab crontemp2
-  rm crontemp1
-  rm crontemp2  
+  rm ~/crontemp1
+  rm ~/crontemp2  
   echo 
   echo
   echo 
 fi
 
+echo 
 echo
-echo
+echo 
+echo "   Done.  Remember, if you find any bugs or have any suggestions, please open an issue in the Github repository at:"
+echo "    https://github.com/JoshuaCarroll/Raspberry-Pi-Weather-Station-Dashboard"
+echo 
+echo 
+echo "                          Pikachu says, 'Pikachu!'
+echo "                               / "
+echo "   quu..__"
+echo "    $$$b  `---.__"
+echo "     "$$b        `--.                          ___.---uuudP"
+echo "      `$$b           `.__.------.__     __.---'      $$$$"              ."
+echo "        "$b          -'            `-.-'            $$$"              .'|"
+echo "          ".                                       d$"             _.'  |"
+echo "            `.   /                              ..."             .'     |"
+echo "              `./                           ..::-'            _.'       |"
+echo "               /                         .:::-'            .-'         .'"
+echo "              :                          ::''\          _.'            |"
+echo "             .' .-.             .-.           `.      .'               |"
+echo "             : /'$$|           .@"$\           `.   .'              _.-'"
+echo "            .'|$u$$|          |$$,$$|           |  <            _.-'"
+echo "            | `:$$:'          :$$$$$:           `.  `.       .-'"
+echo "            :                  `"--'             |    `-.     \"
+echo "           :##.       ==             .###.       `.      `.    `\"
+echo "           |##:                      :###:        |        >     >"
+echo "           |#'     `..'`..'          `###'        x:      /     /"
+echo "            \                                   xXX|     /    ./"
+echo "             \                                xXXX'|    /   ./"
+echo "             /`-.                                  `.  /   /"
+echo "            :    `-  ...........,                   | /  .'"
+echo "            |         ``:::::::'       .            |<    `."
+echo "            |             ```          |           x| \ `.:``."
+echo "            |                         .'    /'   xXX|  `:`M`M':."
+echo "            |    |                    ;    /:' xXXX'|  -'MMMMM:'"
+echo "            `.  .'                   :    /:'       |-'MMMM.-'"
+echo "             |  |                   .'   /'        .'MMM.-'"
+echo "             `'`'                   :  ,'          |MMM<"
+echo "               |                     `'            |tbap\"
+echo "                \                                  :MM.-'"
+echo "                 \                 |              .''"
+echo "                  \.               `.            /"
+echo "                   /     .:::::::.. :           /"
+echo "                  |     .:::::::::::`.         /"
+echo "                  |   .:::------------\       /"
+echo "                 /   .''               >::'  /"
+echo "                 `',:                 :    .'"
+echo 
+echo 
+echo 

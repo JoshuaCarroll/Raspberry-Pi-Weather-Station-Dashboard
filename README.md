@@ -66,7 +66,7 @@ You should now be in `/var/www/html/dashboard`
     
 2. Create the GETCURRENTOBS stored procedure.
 
-    `mysql -u root -p weather < CREATE-SP.sql`
+    `mysql -u root -p weather < SETUP.sql`
 
 3. Find the weather station's ip address:
 
@@ -100,7 +100,7 @@ This is a work-in-progress. New features and bug-fixes will be added here as nee
     
 4. Update the stored procedure in your database:
 
-    `sudo mysql -u root -p weather < CREATE-SP.sql`
+    `sudo mysql -u root -p weather < SETUP.sql`
     
 5. Update the variables file with the values appropriate to your environment and installation:
 

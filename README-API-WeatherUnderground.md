@@ -3,13 +3,13 @@ Weather Underground API integration
 
 1. Run the SQL statement again. This is written in such a way that it will only add whatever you don't have.
 
-    `mysql -u root -p weather < CREATE-SP.sql`
+    `mysql -u root -p weather < SETUP.sql`
 
 2. Add your own values to the settings table.
 
     ```
-    mysql -u root -p weather -e "update SETTINGS set value='YOUR-STATION-ID' where name='WUNDERGROUND_ID'"
-    mysql -u root -p weather -e "update SETTINGS set value='YOUR-STATION-PASSWORD' where name='WUNDERGROUND_PASSWORD'"
+    mysql -u root -p weather -e "update RPiWx_SETTINGS set value='YOUR-STATION-ID' where name='WUNDERGROUND_ID'"
+    mysql -u root -p weather -e "update RPiWx_SETTINGS set value='YOUR-STATION-PASSWORD' where name='WUNDERGROUND_PASSWORD'"
     ```
     
 3. Open CRONTAB to configure a recurring task.

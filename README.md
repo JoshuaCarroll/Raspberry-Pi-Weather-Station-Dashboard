@@ -60,13 +60,17 @@ You should now be in `/var/www/html/dashboard`
 
     `nano variables.php`
   
-    Update the variables to the values that you chose.
+    Update the database connection variables to the values that you chose.
   
     Press `Ctrl O` then `Enter` to save and `Ctrl X` to quit nano.
     
-2. Create the GETCURRENTOBS stored procedure.
+2. Give `SETUP.sh` execute access.
 
-    `mysql -u root -p weather < SETUP.sql`
+    `chmod 755 SETUP.sh`
+
+2. Run the SETUP.sh script to setup additional preferences.
+
+    `./SETUP.sh`
 
 3. Find the weather station's ip address:
 

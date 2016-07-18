@@ -69,7 +69,7 @@ echo
 echo 
 echo "    Storing setting showMetricAndCelsiusMeasurements = $showMetricAndCelsiusMeasurements."
 echo "---------------------------------------------------------------------------------------------"
-mysql -vv -u root -p"$databasePassword" weather -e "Update SETTINGS set value='$showMetricAndCelsiusMeasurements' where name='showMetricAndCelsiusMeasurements'"
+mysql -vv -u root -p"$databasePassword" weather -e "Update RPiWx_SETTINGS set value='$showMetricAndCelsiusMeasurements' where name='showMetricAndCelsiusMeasurements'"
 echo "---------------------------------------------------------------------------------------------"
 echo 
 echo 
@@ -86,7 +86,7 @@ echo
 echo 
 echo "    Storing setting showPressureInMillibars = $showPressureInMillibars."
 echo "---------------------------------------------------------------------------------------------"
-mysql -vv -u root -p"$databasePassword" weather -e "Update SETTINGS set value='$showPressureInMillibars' where name='showPressureInMillibars'"
+mysql -vv -u root -p"$databasePassword" weather -e "Update RPiWx_SETTINGS set value='$showPressureInMillibars' where name='showPressureInMillibars'"
 echo "---------------------------------------------------------------------------------------------"
 echo
 echo
@@ -128,10 +128,10 @@ then
 
   echo -n "  What is your Weather Underground station ID? "
   read wuStationID
-  mysql -u root -p"$databasePassword" weather -e "Update SETTINGS set value='$wuStationID' where name='WUNDERGROUND_ID'"
+  mysql -u root -p"$databasePassword" weather -e "Update RPiWx_SETTINGS set value='$wuStationID' where name='WUNDERGROUND_ID'"
   echo
   echo -n "  What is your Weather Underground station key? "
-  mysql -u root -p"$databasePassword" weather -e "Update SETTINGS set value='$wuStationKey' where name='WUNDERGROUND_PASSWORD'"
+  mysql -u root -p"$databasePassword" weather -e "Update RPiWx_SETTINGS set value='$wuStationKey' where name='WUNDERGROUND_PASSWORD'"
   read wuStationKey
   echo
   echo -n "  At what minute interval would you like your system to send data to Weather Underground [10]? "

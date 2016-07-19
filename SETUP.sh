@@ -163,46 +163,9 @@ echo "   Done.  Remember, if you find any bugs or have any suggestions, please o
 echo "    https://github.com/JoshuaCarroll/Raspberry-Pi-Weather-Station-Dashboard"
 echo 
 echo 
-echo "                          Pikachu says, 'Pikachu!'
-echo "                               / "
-echo "   quu..__"
-echo "    $$$b  `---.__"
-echo "     "$$b        `--.                          ___.---uuudP"
-echo "      `$$b           `.__.------.__     __.---'      $$$$"              ."
-echo "        "$b          -'            `-.-'            $$$"              .'|"
-echo "          ".                                       d$"             _.'  |"
-echo "            `.   /                              ..."             .'     |"
-echo "              `./                           ..::-'            _.'       |"
-echo "               /                         .:::-'            .-'         .'"
-echo "              :                          ::''\          _.'            |"
-echo "             .' .-.             .-.           `.      .'               |"
-echo "             : /'$$|           .@"$\           `.   .'              _.-'"
-echo "            .'|$u$$|          |$$,$$|           |  <            _.-'"
-echo "            | `:$$:'          :$$$$$:           `.  `.       .-'"
-echo "            :                  `"--'             |    `-.     \"
-echo "           :##.       ==             .###.       `.      `.    `\"
-echo "           |##:                      :###:        |        >     >"
-echo "           |#'     `..'`..'          `###'        x:      /     /"
-echo "            \                                   xXX|     /    ./"
-echo "             \                                xXXX'|    /   ./"
-echo "             /`-.                                  `.  /   /"
-echo "            :    `-  ...........,                   | /  .'"
-echo "            |         ``:::::::'       .            |<    `."
-echo "            |             ```          |           x| \ `.:``."
-echo "            |                         .'    /'   xXX|  `:`M`M':."
-echo "            |    |                    ;    /:' xXXX'|  -'MMMMM:'"
-echo "            `.  .'                   :    /:'       |-'MMMM.-'"
-echo "             |  |                   .'   /'        .'MMM.-'"
-echo "             `'`'                   :  ,'          |MMM<"
-echo "               |                     `'            |tbap\"
-echo "                \                                  :MM.-'"
-echo "                 \                 |              .''"
-echo "                  \.               `.            /"
-echo "                   /     .:::::::.. :           /"
-echo "                  |     .:::::::::::`.         /"
-echo "                  |   .:::------------\       /"
-echo "                 /   .''               >::'  /"
-echo "                 `',:                 :    .'"
+echo 
+echo 
+echo 
 echo 
 echo 
 echo 

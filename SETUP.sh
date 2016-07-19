@@ -144,13 +144,14 @@ then
   # Write out current crontab
   crontab -l > ~/crontemp1
   # If there is a line already presnt for Weather Underground, remove it.
-  grep -vwE "(wunderground-api.php)" ~/crontemp1 > ~/crontemp2
-  # Echo new cron into cron file
+  grep -vwE "wunderground-api.php" ~/crontemp1 > ~/crontemp2
+  # New cron into cron file
   echo "*/$wuMinutes * * * * curl $wuURL" >> ~/crontemp2
   # Install new cron file
   crontab crontemp2
+  # Remove temp files
   rm ~/crontemp1
-  rm ~/crontemp2  
+  rm ~/crontemp2
   echo 
   echo
   echo 

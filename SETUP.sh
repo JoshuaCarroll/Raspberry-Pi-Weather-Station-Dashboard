@@ -1,6 +1,10 @@
 #!/bin/bash
 
 clear
+echo 
+echo 
+echo 
+echo "     INTRO  /  database  /  preferences  /  weather underground  /  done"
 echo
 echo
 echo
@@ -31,8 +35,14 @@ echo
 echo "  Press <ENTER> when you are ready to begin..."
 read enter
 
+clear
 echo 
 echo 
+echo 
+echo "     intro  /  DATABASE  /  preferences  /  weather underground  /  done"
+echo
+echo
+echo
 echo "  This program will make several calls to the SETTINGS table in your database. To do this, you"
 echo "  will need to provide your database connection information."
 echo 
@@ -46,18 +56,34 @@ echo
 echo
 echo
 
-echo "  First, we will run setup for the database. This will install (or update) stored procedures and create the table for settings to be stored."
+echo "  Next, we will install (or update) stored procedures and create the table for settings to be stored."
 echo "  NOTE: Even if you have done this before it may be a good idea to run it again, especially if you have pulled a new update from the repository."
 echo -n "  Continue?  (Y/n): "
 read runSetupSql
 if [ $runSetupSql = "y" ] || [ $runSetupSql = "Y" ] ||[ $runSetupSql = "" ]
 then
-  mysql -u root -p"$databasePassword" weather < SETUP.sql
+  echo 
+  echo 
+  echo "    Executing SETUP.sql."
+  echo "---------------------------------------------------------------------------------------------"
+  mysql -vv -e -u root -p"$databasePassword" weather < SETUP.sql
+  echo "---------------------------------------------------------------------------------------------"
+  echo 
+  echo "  Press <ENTER> to continue..."
+  read enter
 fi
 echo 
 echo 
 echo 
 
+clear
+echo 
+echo 
+echo 
+echo "     intro  /  database  /  PREFERENCES  /  weather underground  /  done"
+echo
+echo
+echo
 echo "  Your measurements will be recorded in the database in Celsius and metric units. But how do you"
 echo "  want the dashboard to display the measurements?"
 echo "    (0) Fahrenheit and imperial units"
@@ -73,8 +99,17 @@ mysql -vv -u root -p"$databasePassword" weather -e "Update RPiWx_SETTINGS set va
 echo "---------------------------------------------------------------------------------------------"
 echo 
 echo 
-echo 
+echo "  Press <ENTER> to continue..."
+read enter
 
+clear
+echo 
+echo 
+echo 
+echo "     intro  /  database  /  PREFERENCES  /  weather underground  /  done"
+echo
+echo
+echo
 echo "  Barometric pressure will be recorded in millibars. How do you want the dashboard to display the"
 echo "  barometric pressure?"
 echo "    (0) Inches of mercury"
@@ -90,8 +125,17 @@ mysql -vv -u root -p"$databasePassword" weather -e "Update RPiWx_SETTINGS set va
 echo "---------------------------------------------------------------------------------------------"
 echo
 echo
-echo
+echo "  Press <ENTER> to continue..."
+read enter
 
+clear
+echo 
+echo 
+echo 
+echo "     intro  /  database  /  preferences  /  WEATHER UNDERGROUND  /  done"
+echo
+echo
+echo
 echo -n "  Do you want to setup your station to report readings to Weather Underground? (y/N): "
 read reportToWunderground
 echo
@@ -116,9 +160,7 @@ then
     echo "    *                                                                                      *"
     echo "    ****************************************************************************************"
     echo
-    echo "    Press <ENTER> when you are ready to continue."
-    echo
-    echo
+    echo "    Press <ENTER> to continue..."
     echo
     echo
     read enter
@@ -148,18 +190,27 @@ then
   # New cron into cron file
   echo "*/$wuMinutes * * * * curl $wuURL" >> ~/crontemp2
   # Install new cron file
-  crontab crontemp2
+  crontab ~/crontemp2
   # Remove temp files
   rm ~/crontemp1
   rm ~/crontemp2
   echo 
   echo
+  echo "    Weather Underground CRON job created and will run every $wuMinutes minutes."
+  echo
   echo 
+  echo "  Press <ENTER> to continue..."
+  read enter
 fi
 
+clear
 echo 
+echo 
+echo 
+echo "     intro  /  database  /  preferences  /  weather underground  /  DONE"
 echo
-echo 
+echo
+echo
 echo "   Done.  Remember, if you find any bugs or have any suggestions, please open an issue in the Github repository at:"
 echo "    https://github.com/JoshuaCarroll/Raspberry-Pi-Weather-Station-Dashboard"
 echo 

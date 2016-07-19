@@ -40,7 +40,7 @@ echo -n "Database root password [tiger]: "
 read databasePassword
 if [$databasePassword = ""]
 then
-  $databasePassword = "tiger"
+  databasePassword="tiger"
 fi
 echo
 echo

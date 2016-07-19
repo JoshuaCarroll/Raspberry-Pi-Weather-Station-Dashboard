@@ -1,5 +1,5 @@
 <?php
-include 'variables.php';
+include 'database.php';
 header("access-control-allow-origin: *");
 
 $con = new mysqli($databaseAddress,$databaseUsername,$databasePassword,$databaseSchema);

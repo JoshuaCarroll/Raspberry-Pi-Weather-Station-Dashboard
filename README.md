@@ -58,7 +58,7 @@ You should now be in `/var/www/html/dashboard`
   
 1. Update the the php script with the MySQL password that you chose when installing the database.
 
-    `nano variables.php`
+    `nano database.php`
   
     Update the database connection variables to the values that you chose.
   

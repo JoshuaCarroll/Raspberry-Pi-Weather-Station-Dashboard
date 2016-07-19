@@ -173,8 +173,8 @@ then
   mysql -u root -p"$databasePassword" weather -e "Update RPiWx_SETTINGS set value='$wuStationID' where name='WUNDERGROUND_ID'"
   echo
   echo -n "  What is your Weather Underground station key? "
-  mysql -u root -p"$databasePassword" weather -e "Update RPiWx_SETTINGS set value='$wuStationKey' where name='WUNDERGROUND_PASSWORD'"
   read wuStationKey
+  mysql -u root -p"$databasePassword" weather -e "Update RPiWx_SETTINGS set value='$wuStationKey' where name='WUNDERGROUND_PASSWORD'"
   echo
   echo -n "  At what minute interval would you like your system to send data to Weather Underground [10]? "
   read wuMinutes

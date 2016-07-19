@@ -63,10 +63,6 @@ You should now be in `/var/www/html/dashboard`
     Update the database connection variables to the values that you chose.
   
     Press `Ctrl O` then `Enter` to save and `Ctrl X` to quit nano.
-    
-2. Give `SETUP.sh` execute access.
-
-    `chmod 755 SETUP.sh`
 
 2. Run the SETUP.sh script to setup additional preferences.
 

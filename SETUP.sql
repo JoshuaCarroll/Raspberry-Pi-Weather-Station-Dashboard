@@ -11,11 +11,28 @@ CREATE TABLE IF NOT EXISTS `RPiWx_SETTINGS` (
   UNIQUE KEY `NAME_UNIQUE` (`NAME`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Add the known settings. This won't add them if they are there because of the Unique key.
+-- Create the WEATHER_MEASUREMENT table if it doesn't exist
+CREATE TABLE IF NOT EXISTS `WEATHER_MEASUREMENT` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `REMOTE_ID` bigint(20) DEFAULT NULL,
+  `AMBIENT_TEMPERATURE` decimal(6,2) NOT NULL,
+  `GROUND_TEMPERATURE` decimal(6,2) NOT NULL,
+  `AIR_QUALITY` decimal(6,2) NOT NULL,
+  `AIR_PRESSURE` decimal(6,2) NOT NULL,
+  `HUMIDITY` decimal(6,2) NOT NULL,
+  `WIND_DIRECTION` decimal(6,2) DEFAULT NULL,
+  `WIND_SPEED` decimal(6,2) NOT NULL,
+  `WIND_GUST_SPEED` decimal(6,2) NOT NULL,
+  `RAINFALL` decimal(6,4) DEFAULT NULL,
+  `CREATED` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4126 DEFAULT CHARSET=latin1;
+
+-- Add the known settings. This won't add them if they are there because of the Unique key constraint on the name column.
 INSERT IGNORE INTO RPiWx_SETTINGS (name) VALUE ('WUNDERGROUND_ID');
 INSERT IGNORE INTO RPiWx_SETTINGS (name) VALUE ('WUNDERGROUND_PASSWORD');
-INSERT IGNORE INTO RPiWx_SETTINGS (name) VALUE ('showMetricAndCelsiusMeasurements');
-INSERT IGNORE INTO RPiWx_SETTINGS (name) VALUE ('showPressureInMillibars');
+INSERT IGNORE INTO RPiWx_SETTINGS (`name`, `value`) VALUE ('showMetricAndCelsiusMeasurements', '1');
+INSERT IGNORE INTO RPiWx_SETTINGS (`name`, `value`) VALUE ('showPressureInMillibars', '1');
 
 -- Create the stored procedures
 DELIMITER $$

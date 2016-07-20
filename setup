@@ -1,10 +1,42 @@
 #!/bin/bash
 
+####################################################################
+#
+# Function definitions
+#
+####################################################################
+getBreadcrumbs() {
+    local currentSection="$1"
+    getBreadcrumbs_=""
+    sections=('intro' 'database' 'preferences' 'dynamic dns' 'weather underground' 'done')
+    local firstOne=1
+    for i in ${sections[@]}; do
+        j=$i
+        if [ $currentSection = $j ]
+        then
+            j="${j^^}"
+        fi
+        if [ $firstOne -eq 0 ] 
+        then
+            getBreadcrumbs_="$getBreadcrumbs_  /  "
+        fi
+        getBreadcrumbs_="$getBreadcrumbs_$j"
+        firstOne=0
+    done
+    
+}
+
+####################################################################
+#
+# Introduction
+#
+####################################################################
 clear
 echo 
 echo 
 echo 
-echo "     INTRO  /  database  /  preferences  /  weather underground  /  done"
+getBreadcrumbs "intro"
+echo $getBreadcrumbs_
 echo
 echo
 echo
@@ -35,11 +67,17 @@ echo
 echo "  Press <ENTER> when you are ready to begin..."
 read enter
 
+####################################################################
+#
+# Database setup
+#
+####################################################################
 clear
 echo 
 echo 
 echo 
-echo "     intro  /  DATABASE  /  preferences  /  weather underground  /  done"
+getBreadcrumbs "database"
+echo $getBreadcrumbs_
 echo
 echo
 echo
@@ -76,11 +114,17 @@ echo
 echo 
 echo 
 
+####################################################################
+#
+# Dashboard preferences
+#
+####################################################################
 clear
 echo 
 echo 
 echo 
-echo "     intro  /  database  /  PREFERENCES  /  weather underground  /  done"
+getBreadcrumbs "PREFERENCES"
+echo $getBreadcrumbs_
 echo
 echo
 echo
@@ -111,7 +155,8 @@ clear
 echo 
 echo 
 echo 
-echo "     intro  /  database  /  PREFERENCES  /  weather underground  /  done"
+getBreadcrumbs "PREFERENCES"
+echo $getBreadcrumbs_
 echo
 echo
 echo
@@ -138,11 +183,50 @@ echo
 echo "  Press <ENTER> to continue..."
 read enter
 
+
+####################################################################
+#
+# Dynamic DNS setup
+#
+####################################################################
 clear
 echo 
 echo 
 echo 
-echo "     intro  /  database  /  preferences  /  WEATHER UNDERGROUND  /  done"
+getBreadcrumbs "DYNAMIC DNS"
+echo $getBreadcrumbs_
+echo
+echo
+echo
+echo "  Dynamic DNS is the term the describes a service that will provide DNS services that can be rapidly"
+echo "  updated for changing IP addresses. Most residential internet connections have dynamic IP addresses, "
+echo "  meaning the IP address can and will change without notice.
+echo 
+echo "  Those who would like to host their own website must either pay business rates for Internet access"
+echo "  (and a static IP address), or they must use a dynamic DNS service. There are many available, but"
+echo "  I use DuckDNS.org: a free and simple dynamic DNS service.
+echo 
+echo -n "  Do you want to setup DuckDNS dynamic DNS service? (y/N): "
+read enableDuckDNS
+echo
+echo
+if [ "$enableDuckDNS" = "y" ] || [ "$enableDuckDNS" = "Y" ]
+then
+    echo "** This section hasn't been finished yet.  Be sure to watch the repository online for updates to this script."
+fi
+
+
+####################################################################
+#
+# Weather Underground setup
+#
+####################################################################
+clear
+echo 
+echo 
+echo 
+getBreadcrumbs "WEATHER UNDERGROUND"
+echo $getBreadcrumbs_
 echo
 echo
 echo
@@ -213,11 +297,18 @@ then
   read enter
 fi
 
+
+####################################################################
+#
+# Done
+#
+####################################################################
 clear
 echo 
 echo 
 echo 
-echo "     intro  /  database  /  preferences  /  weather underground  /  DONE"
+getBreadcrumbs "done"
+echo $getBreadcrumbs_
 echo
 echo
 echo
@@ -231,3 +322,4 @@ echo
 echo 
 echo 
 echo 
+

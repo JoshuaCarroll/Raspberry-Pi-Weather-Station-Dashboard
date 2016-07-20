@@ -78,6 +78,8 @@ You should now be in `/var/www/html/dashboard`
   
 ### Set up external API's (optional)
 
+Configuration of supported external APIs is included in the setup script, but if you would like to see the details, they are included in the respective links below:
+
 - Weather Underground: See [README-API-WeatherUnderground.md](README-API-WeatherUnderground.md).
   
 ----------

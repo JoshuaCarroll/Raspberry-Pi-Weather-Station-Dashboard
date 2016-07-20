@@ -91,12 +91,17 @@ echo "    (1) Celsius and metric units"
 echo
 echo -n "  !> "
 read showMetricAndCelsiusMeasurements
-echo 
-echo 
-echo "    Storing setting showMetricAndCelsiusMeasurements = $showMetricAndCelsiusMeasurements."
-echo "---------------------------------------------------------------------------------------------"
-mysql -vv -u root -p"$databasePassword" weather -e "Update RPiWx_SETTINGS set value='$showMetricAndCelsiusMeasurements' where name='showMetricAndCelsiusMeasurements'"
-echo "---------------------------------------------------------------------------------------------"
+if [ $showMetricAndCelsiusMeasurements = "0" ] || [ $showMetricAndCelsiusMeasurements = "1" ]
+then
+    echo 
+    echo 
+    echo "    Storing setting showMetricAndCelsiusMeasurements = $showMetricAndCelsiusMeasurements."
+    echo "---------------------------------------------------------------------------------------------"
+    mysql -vv -u root -p"$databasePassword" weather -e "Update RPiWx_SETTINGS set value='$showMetricAndCelsiusMeasurements' where name='showMetricAndCelsiusMeasurements'"
+    echo "---------------------------------------------------------------------------------------------"
+else
+    echo "    Invalid selection.  Moving on..."
+fi
 echo 
 echo 
 echo "  Press <ENTER> to continue..."
@@ -117,12 +122,17 @@ echo "    (1) Millibars"
 echo 
 echo -n "  !> "
 read showPressureInMillibars
-echo 
-echo 
-echo "    Storing setting showPressureInMillibars = $showPressureInMillibars."
-echo "---------------------------------------------------------------------------------------------"
-mysql -vv -u root -p"$databasePassword" weather -e "Update RPiWx_SETTINGS set value='$showPressureInMillibars' where name='showPressureInMillibars'"
-echo "---------------------------------------------------------------------------------------------"
+if [ $showPressureInMillibars = "0" ] || [ $showPressureInMillibars = "1" ]
+then
+    echo 
+    echo 
+    echo "    Storing setting showPressureInMillibars = $showPressureInMillibars."
+    echo "---------------------------------------------------------------------------------------------"
+    mysql -vv -u root -p"$databasePassword" weather -e "Update RPiWx_SETTINGS set value='$showPressureInMillibars' where name='showPressureInMillibars'"
+    echo "---------------------------------------------------------------------------------------------"
+else
+    echo "    Invalid selection.  Moving on..."
+fi
 echo
 echo
 echo "  Press <ENTER> to continue..."

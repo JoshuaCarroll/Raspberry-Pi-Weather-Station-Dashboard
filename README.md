@@ -58,15 +58,15 @@ You should now be in `/var/www/html/dashboard`
   
 1. Update the the php script with the MySQL password that you chose when installing the database.
 
-    `nano database.php`
+    `sudo nano database.php`
   
-    Update the database connection variables to the values that you chose.
+    Update the database connection variables to the values for your environment.
   
     Press `Ctrl O` then `Enter` to save and `Ctrl X` to quit nano.
 
 2. Run the SETUP.sh script to setup additional preferences.
 
-    `./SETUP.sh`
+    `./setup`
 
 3. Find the weather station's ip address:
 

@@ -66,7 +66,7 @@ then
   echo 
   echo "    Executing SETUP.sql."
   echo "---------------------------------------------------------------------------------------------"
-  mysql -vv -e -u root -p"$databasePassword" weather < SETUP.sql
+  mysql -vv -e -u root -p"$databasePassword" weather < setup.sql
   echo "---------------------------------------------------------------------------------------------"
   echo 
   echo "  Press <ENTER> to continue..."

@@ -36,19 +36,15 @@ Contributions to this project can be made by using the program and providing fee
 
 ### Get the dashboard code
 
-1. You will need root access on the Raspberry Pi. From the command line type:
-
-    `sudo -s`
-
-2. Navigate to the web folder:
+1. Navigate to the web folder:
 
     `cd /var/www/html`
 
-3. Download the files to a folder named `dashboard`:
+2. Download the files to a folder named `dashboard`:
 
-    `git clone https://github.com/JoshuaCarroll/Raspberry-Pi-Weather-Station-Dashboard.git dashboard`
+    `sudo git clone https://github.com/JoshuaCarroll/Raspberry-Pi-Weather-Station-Dashboard.git dashboard`
   
-4. Return to the dashboard site root.
+3. Return to the dashboard site root.
 
     `cd dashboard`
 
@@ -64,7 +60,7 @@ You should now be in `/var/www/html/dashboard`
   
     Press `Ctrl O` then `Enter` to save and `Ctrl X` to quit nano.
 
-2. Run the SETUP.sh script to setup additional preferences.
+2. Run the setup script to setup additional preferences.
 
     `./setup`
 
@@ -86,26 +82,30 @@ Configuration of supported external APIs is included in the setup script, but if
 
 # Installing updates
 
-This is a work-in-progress. New features and bug-fixes will be added here as needed. If you want to update your copy with the latest changes, follow these steps.
+New features and bug-fixes will be added to this repository as needed. If you want to update your copy with the latest changes, follow these steps.
 
 1. Navigate to the dashboard folder:
 
     `cd /var/www/html/dashboard`
     
-2. Backup your variables file:
+2. Backup your database settings file:
 
-    `sudo cp variables.php ../`
+    `sudo cp database.php ../`
     
 3. Update your code with the latest changes:
 
     `sudo git pull`
     
-4. Update the stored procedure in your database:
+3. Restore your database settings file:
+
+    `sudo mv ../database.php ./`
+    
+5. Update the stored procedure in your database:
 
     `sudo mysql -u root -p weather < SETUP.sql`
     
-5. Update the variables file with the values appropriate to your environment and installation:
+6. Run the setup script to setup additional preferences.
 
-    `sudo nano variables.php`
+    `./setup`
     
-    *NOTE: Since new variables may have been introduced since the time when you initially installed this program, do not overwrite the new variables file with your old one. Rather edit the new file and enter the appropriate values. If needed, refer to the backup copy of the variables file you made (located at /var/www/html) for values that you don't remember.*
+    

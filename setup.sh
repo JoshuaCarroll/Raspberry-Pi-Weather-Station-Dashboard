@@ -26,6 +26,8 @@ getBreadcrumbs() {
     
 }
 
+
+
 ####################################################################
 #
 # Introduction
@@ -67,6 +69,8 @@ echo
 echo "  Press <ENTER> when you are ready to begin..."
 read enter
 
+
+
 ####################################################################
 #
 # Database setup
@@ -96,7 +100,7 @@ echo
 
 echo "  Next, we will install (or update) stored procedures and create the table for settings to be stored."
 echo "  NOTE: Even if you have done this before it may be a good idea to run it again, especially if you have pulled a new update from the repository."
-echo -n "  Continue?  (Y/n): "
+echo -n "  Continue?  [Y/n]: "
 read runSetupSql
 if [ $runSetupSql = "y" ] || [ $runSetupSql = "Y" ] ||[ $runSetupSql = "" ]
 then
@@ -113,6 +117,8 @@ fi
 echo 
 echo 
 echo 
+
+
 
 ####################################################################
 #
@@ -183,37 +189,6 @@ echo
 echo "  Press <ENTER> to continue..."
 read enter
 
-
-####################################################################
-#
-# Dynamic DNS setup
-#
-####################################################################
-clear
-echo 
-echo 
-echo 
-getBreadcrumbs "DYNAMIC DNS"
-echo $getBreadcrumbs_
-echo
-echo
-echo
-echo "  Dynamic DNS is the term the describes a service that will provide DNS services that can be rapidly"
-echo "  updated for changing IP addresses. Most residential internet connections have dynamic IP addresses, "
-echo "  meaning the IP address can and will change without notice.
-echo 
-echo "  Those who would like to host their own website must either pay business rates for Internet access"
-echo "  (and a static IP address), or they must use a dynamic DNS service. There are many available, but"
-echo "  I use DuckDNS.org: a free and simple dynamic DNS service.
-echo 
-echo -n "  Do you want to setup DuckDNS dynamic DNS service? (y/N): "
-read enableDuckDNS
-echo
-echo
-if [ "$enableDuckDNS" = "y" ] || [ "$enableDuckDNS" = "Y" ]
-then
-    echo "** This section hasn't been finished yet.  Be sure to watch the repository online for updates to this script."
-fi
 
 
 ####################################################################
@@ -296,6 +271,50 @@ then
   echo "  Press <ENTER> to continue..."
   read enter
 fi
+
+
+####################################################################
+#
+# Dynamic DNS setup
+#
+####################################################################
+clear
+echo 
+echo 
+echo 
+getBreadcrumbs "DYNAMIC DNS"
+echo $getBreadcrumbs_
+echo
+echo
+echo 
+echo -n "  Would you like information about setting up dynamic DNS so you can access your weather dashboard remotely? [y/N]: "
+read dynamicDnsInfo
+if [ $dynamicDnsInfo = "y" ] || [ $dynamicDnsInfo = "Y" ]
+then
+    echo 
+    echo 
+    echo 
+    echo "  Dynamic DNS is the term the describes a service that will provide DNS services that can be rapidly"
+    echo "  updated for changing IP addresses. Most residential internet connections have dynamic IP addresses, "
+    echo "  meaning the IP address can and will change without notice."
+    echo 
+    echo "  Those who would like to host their own website must either pay business rates for Internet access"
+    echo "  (and a static IP address), or they must use a dynamic DNS service. There are many available, but"
+    echo "  I use DuckDNS.org: a free and simple dynamic DNS service."
+    echo 
+    echo "  The process of setting this up is very simple:"
+    echo 
+    echo "    1. Just browse to https://www.duckdns.org"
+    echo "    2. Create an account (relax, it's free)."
+    echo "    3. Select and add a domain to your account."
+    echo "    4. In the main menu, click 'install'."
+    echo "    5. Select your operating system (probably 'linux cron'), then select the domain you just created in the dropdown list."
+    echo "    6. Follow the instructions provided. These are specific to your setup, account, and domain - so just enter the commands given exactly."
+    echo 
+    echo 
+    echo 
+fi
+
 
 
 ####################################################################

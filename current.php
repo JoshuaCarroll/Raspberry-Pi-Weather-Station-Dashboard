@@ -178,18 +178,4 @@ function calculateFeelsLike($temperature, $humidity, $windSpeed) {
     return convertFahrenheitToCelsius($feelsLike);
 }
 
-// Calculate Wind Chill Temperature based on temperature in F and wind speed in miles per hour
-function get_wind_chill($tempF, &$wxInfo) {
-    if ($tempF < 51 && $wxInfo['WIND'] != 'calm') {
-        $pieces = explode(' ', $wxInfo['WIND']);
-        $windspeed = (integer) $pieces[2];   // wind speed must be in miles per hour
-        if ($windspeed > 3) {
-            $chillF = 35.74 + 0.6215 * $tempF - 35.75 * pow($windspeed, 0.16) + 0.4275 * $tempF * pow($windspeed, 0.16);
-            $chillF = round($chillF);
-            $chillC = round(($chillF - 32) / 1.8);
-            $wxInfo['WIND CHILL'] = "$chillF&deg;F ($chillC&deg;C)";
-        }
-    }
-}
-
 ?>

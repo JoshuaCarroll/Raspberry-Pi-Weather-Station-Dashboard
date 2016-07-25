@@ -33,7 +33,7 @@ if ($result->num_rows > 0) {
         
         if ($numberOfRows == 1) {
             $feelsLike = calculateFeelsLike($row["AMBIENT_TEMPERATURE"], $row["HUMIDITY"], $row["WIND_SPEED"]);
-            if (!$showMetricAndCelsiusMeasurements) {
+            if (!$showMetricAndCelsiusMeasurements = "1") {
                 $feelsLike = convertCelsiusToFahrenheit($feelsLike);
             }
             echo "\r\n\t\t\t\"FEELS_LIKE\" : " . "\"" . $feelsLike . "\",";
@@ -44,7 +44,7 @@ if ($result->num_rows > 0) {
             $fieldValue = $row[$i];
             
             if (strpos($fieldName, "_TEMPERATURE")) {
-                if ($showMetricAndCelsiusMeasurements) {
+                if ($showMetricAndCelsiusMeasurements = "1") {
                     echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° C\",";
                 }
                 else {
@@ -54,7 +54,7 @@ if ($result->num_rows > 0) {
             }
 
             if (strpos($fieldName, "_SPEED")) {
-                if ($showMetricAndCelsiusMeasurements) {
+                if ($showMetricAndCelsiusMeasurements = "1") {
                     echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " Km/H\",";
                 }
                 else {
@@ -64,7 +64,7 @@ if ($result->num_rows > 0) {
             }
 
             if (strpos($fieldName, "_PRESSURE")) {
-                if ($showPressureInMillibars) {
+                if ($showPressureInMillibars == "1") {
                     echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " mb\",";
                 }
                 else {
@@ -105,7 +105,7 @@ if ($result->num_rows > 0) {
         $fieldValue = $row[$i];
 
         if (($fieldName == "LowSinceMidnight") || ($fieldName == "HighSinceMidnight")) {
-            if ($showMetricAndCelsiusMeasurements) {
+            if ($showMetricAndCelsiusMeasurements == "1") {
                 echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° C\",";
             }
             else {

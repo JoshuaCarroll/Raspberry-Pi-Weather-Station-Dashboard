@@ -62,7 +62,7 @@ You should now be in `/var/www/html/dashboard`
 
 2. Run the setup script to setup additional preferences.
 
-    `./setup`
+    `./setup.sh`
 
 3. Find the weather station's ip address:
 

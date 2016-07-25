@@ -1,7 +1,7 @@
 Weather Underground API integration
 ===================================
 
-The easiest way to setup Weather Underground integration, is to simply run the `SETUP.sh` script.  But if you are a control freak, here are the steps to do it yourself.
+The easiest way to setup Weather Underground integration, is to simply run the `setup.sh` script.  But if you are a control freak, here are the steps to do it yourself.
 
 1. Run the SQL statement again. This is written in such a way that it will only add whatever you don't have.
 

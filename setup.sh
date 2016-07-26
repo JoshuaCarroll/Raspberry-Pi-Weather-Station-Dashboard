@@ -141,7 +141,7 @@ then
     echo 
     echo "    Storing setting showMetricAndCelsiusMeasurements = $showMetricAndCelsiusMeasurements."
     echo "---------------------------------------------------------------------------------------------"
-    mysql -vv -u root -p"$databasePassword" weather -e "Update RPiWx_SETTINGS set value='$showMetricAndCelsiusMeasurements' where name='showMetricAndCelsiusMeasurements'"
+    mysql -vv -u root -p"$databasePassword" weather -e "CALL UPDATEWXSETTING('showMetricAndCelsiusMeasurements','$showMetricAndCelsiusMeasurements');"
     echo "---------------------------------------------------------------------------------------------"
 else
     echo "    Invalid selection.  Moving on..."
@@ -173,7 +173,7 @@ then
     echo 
     echo "    Storing setting showPressureInMillibars = $showPressureInMillibars."
     echo "---------------------------------------------------------------------------------------------"
-    mysql -vv -u root -p"$databasePassword" weather -e "Update RPiWx_SETTINGS set value='$showPressureInMillibars' where name='showPressureInMillibars'"
+    mysql -vv -u root -p"$databasePassword" weather -e "CALL UPDATEWXSETTING('showPressureInMillibars','$showPressureInMillibars');"
     echo "---------------------------------------------------------------------------------------------"
 else
     echo "    Invalid selection.  Moving on..."
@@ -201,7 +201,7 @@ echo
 echo 
 echo "    Storing setting stationElevationInMeters = $stationElevationInMeters."
 echo "---------------------------------------------------------------------------------------------"
-mysql -vv -u root -p"$databasePassword" weather -e "Update RPiWx_SETTINGS set value='$stationElevationInMeters' where name='stationElevationInMeters'"
+mysql -vv -u root -p"$databasePassword" weather -e "CALL UPDATEWXSETTING('stationElevationInMeters','$stationElevationInMeters');"
 echo "---------------------------------------------------------------------------------------------"
 echo
 echo

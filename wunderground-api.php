@@ -21,6 +21,7 @@ if ($result->num_rows > 0) {
     $url .= "windgustmph=" . convertKilometersToMiles($row["WIND_GUST_SPEED"]) . "&";
     $url .= "humidity=" . $row["HUMIDITY"] . "&";
     $url .= "tempf=" . convertCelsiusToFahrenheit($row["AMBIENT_TEMPERATURE"]) . "&";
+    $url .= "dewptf=" . calculateDewPointF($row["AMBIENT_TEMPERATURE"], $row["HUMIDITY"]) . "&";
     $url .= "baromin=" . convertMillibarsToInches($row["AIR_PRESSURE"]) . "&";
     $url .= "soiltempf=" . convertCelsiusToFahrenheit($row["GROUND_TEMPERATURE"]) . "&";
     $url .= "rainin=" . convertmillimetersToInches($row["@rainPastHour"]) . "&";
@@ -57,5 +58,10 @@ function convertmillimetersToInches($mm) {
     return $inches;
 }
 
+function calculateDewPointF($tempC, $humidity) {
+    $dewPoint = $tempC - ((100 - $humidity) / 5);
+    $dewPoint = convertCelsiusToFahrenheit($dewPoint);
+    return $dewPoint;
+}
 
 ?>

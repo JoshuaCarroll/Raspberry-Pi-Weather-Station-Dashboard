@@ -34,7 +34,7 @@ if ($result->num_rows > 0) {
         
         if ($numberOfRows == 1) {
             $feelsLike = calculateFeelsLike($row["AMBIENT_TEMPERATURE"], $row["HUMIDITY"], $row["WIND_SPEED"]);
-            if (!$showMetricAndCelsiusMeasurements == "1") {
+            if (!Settings::$showMetricAndCelsiusMeasurements == "1") {
                 $feelsLike = convertCelsiusToFahrenheit($feelsLike);
             }
             echo "\r\n\t\t\t\"FEELS_LIKE\" : " . "\"" . $feelsLike . "\",";
@@ -45,7 +45,7 @@ if ($result->num_rows > 0) {
             $fieldValue = $row[$i];
             
             if (strpos($fieldName, "_TEMPERATURE")) {
-                if ($showMetricAndCelsiusMeasurements == "1") {
+                if (Settings::$showMetricAndCelsiusMeasurements == "1") {
                     echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° C\",";
                 }
                 else {
@@ -55,7 +55,7 @@ if ($result->num_rows > 0) {
             }
 
             if (strpos($fieldName, "_SPEED")) {
-                if ($showMetricAndCelsiusMeasurements == "1") {
+                if (Settings::$showMetricAndCelsiusMeasurements == "1") {
                     echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " Km/H\",";
                 }
                 else {
@@ -66,9 +66,9 @@ if ($result->num_rows > 0) {
 
             if (strpos($fieldName, "_PRESSURE")) {
                 
-                $mslp = calculateMeanSeaLevelPressure($fieldValue, $stationElevationInMeters);
+                $mslp = calculateMeanSeaLevelPressure($fieldValue, Settings::$stationElevationInMeters);
                 
-                if ($showPressureInMillibars == "1") {
+                if (Settings::$showPressureInMillibars == "1") {
                     echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $mslp . " mb\",";
                 }
                 else {
@@ -109,7 +109,7 @@ if ($result->num_rows > 0) {
         $fieldValue = $row[$i];
 
         if (($fieldName == "LowSinceMidnight") || ($fieldName == "HighSinceMidnight")) {
-            if ($showMetricAndCelsiusMeasurements == "1") {
+            if (Settings::$showMetricAndCelsiusMeasurements == "1") {
                 echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° C\",";
             }
             else {
@@ -128,8 +128,8 @@ if ($result->num_rows > 0) {
 echo "\r\n\t}"; // Close daily stats object
 
 echo ",\r\n\t\"Settings\" : {"; // Open settings object
-echo "\r\n\t\t\"showMetricAndCelsiusMeasurements\" : " . "\"" . $showMetricAndCelsiusMeasurements . "\",";
-echo "\r\n\t\t\"showPressureInMillibars\" : " . "\"" . $showPressureInMillibars . "\"";
+echo "\r\n\t\t\"showMetricAndCelsiusMeasurements\" : " . "\"" . Settings::$showMetricAndCelsiusMeasurements . "\",";
+echo "\r\n\t\t\"showPressureInMillibars\" : " . "\"" . Settings::$showPressureInMillibars . "\"";
 
 echo "\r\n\t}"; // Close settings object
 

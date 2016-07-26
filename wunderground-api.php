@@ -34,7 +34,7 @@ function main() {
         $url .= "humidity=" . $row["HUMIDITY"] . "&";
         $url .= "tempf=" . convertCelsiusToFahrenheit($row["AMBIENT_TEMPERATURE"]) . "&";
         $url .= "dewptf=" . calculateDewPointF($row["AMBIENT_TEMPERATURE"], $row["HUMIDITY"]) . "&";
-        $url .= "baromin=" . convertMillibarsToInches(calculateMeanSeaLevelPressure($row["AIR_PRESSURE"], $stationElevationInMeters)) . "&";
+        $url .= "baromin=" . convertMillibarsToInches(calculateMeanSeaLevelPressure($row["AIR_PRESSURE"], Settings::$stationElevationInMeters)) . "&";
         $url .= "soiltempf=" . convertCelsiusToFahrenheit($row["GROUND_TEMPERATURE"]) . "&";
         $url .= "rainin=" . convertmillimetersToInches($row["@rainPastHour"]) . "&";
         $url .= "dailyrainin=" . convertmillimetersToInches($row["@rainSinceMidnight"]) . "&";
@@ -56,32 +56,6 @@ function main() {
         $url .= $stationPassword . "&";
         echo file_get_contents($url);
     }
-}
-
-function convertKilometersToMiles($kilometers) {
-    $miles = $kilometers * 0.621371;
-    return $miles;
-}
-        
-function convertCelsiusToFahrenheit($celsiusDegrees) {
-    $F = ((($celsiusDegrees * 9) / 5) + 32);
-    return $F;
-}
-
-function convertMillibarsToInches($millibars) {
-    $inches = $millibars * 0.0295301;
-    return $inches;
-}
-
-function convertmillimetersToInches($mm) {
-    $inches = $mm * 0.039370;
-    return $inches;
-}
-
-function calculateDewPointF($tempC, $humidity) {
-    $dewPoint = $tempC - ((100 - $humidity) / 5);
-    $dewPoint = convertCelsiusToFahrenheit($dewPoint);
-    return $dewPoint;
 }
 
 main();

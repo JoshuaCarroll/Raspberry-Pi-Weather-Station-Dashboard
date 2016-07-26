@@ -8,7 +8,7 @@
 getBreadcrumbs() {
     local currentSection="$1"
     getBreadcrumbs_=""
-    sections=('intro' 'database' 'preferences' 'dynamic dns' 'weather underground' 'done')
+    sections=('intro' 'database' 'preferences' 'dynamic_dns' 'weather_underground' 'done')
     local firstOne=1
     for i in ${sections[@]}; do
         j=$i
@@ -219,7 +219,7 @@ clear
 echo 
 echo 
 echo 
-getBreadcrumbs "DYNAMIC DNS"
+getBreadcrumbs "DYNAMIC_DNS"
 echo $getBreadcrumbs_
 echo
 echo
@@ -251,7 +251,7 @@ clear
 echo 
 echo 
 echo 
-getBreadcrumbs "WEATHER UNDERGROUND"
+getBreadcrumbs "WEATHER_UNDERGROUND"
 echo $getBreadcrumbs_
 echo
 echo

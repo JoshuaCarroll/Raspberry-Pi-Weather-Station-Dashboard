@@ -308,10 +308,13 @@ then
     echo "    2. Create an account (relax, it's free)."
     echo "    3. Select and add a domain to your account."
     echo "    4. In the main menu, click 'install'."
-    echo "    5. Select your operating system (probably 'linux cron'), then select the domain you just created in the dropdown list."
-    echo "    6. Follow the instructions provided. These are specific to your setup, account, and domain - so just enter the commands given exactly."
+    echo "    5. Select your operating system (probably 'linux cron'), then select the domain you just created"
+    echo "       in the dropdown list."
+    echo "    6. Follow the instructions provided. These are specific to your setup, account, and domain - so"
+    echo "       just enter the commands given exactly."
     echo 
-    echo 
+    echo "  At this point you'll need to refer to your router's instructions for allowing HTTP traffic (port 80)"
+    echo "  through to your Raspberry Pi."
     echo 
 fi
 

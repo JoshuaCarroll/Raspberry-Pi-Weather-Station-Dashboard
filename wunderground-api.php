@@ -10,6 +10,7 @@ if (mysqli_connect_errno()) {
 }
 
 $url = "http://weatherstation.wunderground.com/weatherstation/updateweatherstation.php?softwaretype=Raspberry Pi Weather Station Dashboard&";
+$stationPassword = "";
 
 $result = $con->query('call GETWUNDERGROUNDDATA');
 if ($result->num_rows > 0) {
@@ -27,7 +28,8 @@ if ($result->num_rows > 0) {
     $url .= "rainin=" . convertmillimetersToInches($row["@rainPastHour"]) . "&";
     $url .= "dailyrainin=" . convertmillimetersToInches($row["@rainSinceMidnight"]) . "&";
     $url .= "ID=" . $row["@WUNDERGROUND_ID"] . "&";
-    $url .= "PASSWORD=" . $row["@WUNDERGROUND_PASSWORD"] . "&";
+    $url .= "PASSWORD=";
+    $stationPassword = $row["@WUNDERGROUND_PASSWORD"];
 }
 
 $result->close();
@@ -35,7 +37,15 @@ $con->close();
 
 $url = str_replace(" ", "%20", $url);
 
-echo file_get_contents($url);
+if ($_GET['debug'] == "true") {
+    $url .= "HIDDEN-IN-DEBUG_MODE" . "&";
+    echo $url
+}
+else {
+    $url .= $stationPassword . "&";
+    echo file_get_contents($url);
+}
+
 
 // ===============================================================
 function convertKilometersToMiles($kilometers) {

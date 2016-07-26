@@ -58,10 +58,30 @@ function calculateDewPointF($tempC, $humidity) {
 
 // Database connection settings
 class Settings {
-    public static $showMetricAndCelsiusMeasurements = getSetting("showMetricAndCelsiusMeasurements");
-    public static $showPressureInMillibars = getSetting("showPressureInMillibars");
-    public static $stationElevationInMeters = getSetting("stationElevationInMeters");
-}
+    public static $showMetricAndCelsiusMeasurements = NULL;
+    public static $showPressureInMillibars = NULL;
+    public static $stationElevationInMeters = NULL;
+    
+    public function __construct() {
+        if ( (!isset(self::$showMetricAndCelsiusMeasurements)) || (!isset(self::$showPressureInMillibars)) || (!isset(self::$stationElevationInMeters)) )  {
+            self::initializeStStateArr();
+        }
+    }
 
+    public static function initializeStStateArr() {
+        if (!isset(self::$showMetricAndCelsiusMeasurements)) {
+            self::$showMetricAndCelsiusMeasurements = getSetting("showMetricAndCelsiusMeasurements");
+        }
+        
+        if (!isset(self::$showPressureInMillibars)) {
+            self::$showPressureInMillibars = getSetting("showPressureInMillibars");
+        }
+        
+        if (!isset(self::$stationElevationInMeters)) {
+            self::$stationElevationInMeters = getSetting("stationElevationInMeters");
+        }
+    }
+}
+Settings::initializeStStateArr();
 
 ?>

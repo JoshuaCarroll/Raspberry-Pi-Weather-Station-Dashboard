@@ -3,8 +3,7 @@
 // ______ Database functions _____________________________________________
 
 function getSetting($setting) {
-    $dbSettings = new DbSettings();
-    $con = new mysqli($dbSettings->Address,$dbSettings->Username,$dbSettings->Password,$dbSettings->Schema);
+    $con = new mysqli(DbSettings::$Address,DbSettings::$Username,DbSettings::$Password,DbSettings::$Schema);
     $returnValue = "";
     
     if (mysqli_connect_errno()) {
@@ -23,7 +22,14 @@ function getSetting($setting) {
     return $returnValue;
 }
 
+// ------ General weather utilities ------------------------------------
+function calculateMeanSeaLevelPressure($pressure, $elevation) {
+    $msl = $pressure / (pow(1 - ($elevation / 44330.0), 5.255));
+    return $msl;
+}
+
 $showMetricAndCelsiusMeasurements = getSetting("showMetricAndCelsiusMeasurements");
 $showPressureInMillibars = getSetting("showPressureInMillibars");
+$stationElevationInMeters = getSetting("stationElevationInMeters");
 
 ?>

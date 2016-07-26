@@ -2,7 +2,8 @@
 include 'database.php';
 header('content-type: application/json; charset=utf-8');
 header("access-control-allow-origin: *");
-$con = new mysqli($databaseAddress,$databaseUsername,$databasePassword, $databaseSchema);
+
+$con = new mysqli(DbSettings::$Address,DbSettings::$Username,DbSettings::$Password,DbSettings::$Schema);
 
 // Check connection
 if (mysqli_connect_errno()) {
@@ -64,11 +65,14 @@ if ($result->num_rows > 0) {
             }
 
             if (strpos($fieldName, "_PRESSURE")) {
+                
+                $mslp = calculateMeanSeaLevelPressure($fieldValue, $stationElevationInMeters);
+                
                 if ($showPressureInMillibars == "1") {
-                    echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " mb\",";
+                    echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $mslp . " mb\",";
                 }
                 else {
-                    $fieldValue = convertMillibarsToInches($fieldValue);
+                    $fieldValue = convertMillibarsToInches($mslp);
                     echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " in\",";
                 }
             }

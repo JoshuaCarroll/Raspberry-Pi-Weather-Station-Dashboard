@@ -3,8 +3,7 @@
 // ______ Database functions _____________________________________________
 
 function getSetting($setting) {
-    $dbSettings = new DbSettings();
-    $con = new mysqli($dbSettings->Address,$dbSettings->Username,$dbSettings->Password,$dbSettings->Schema);
+    $con = new mysqli(DbSettings::$Address,DbSettings::$Username,DbSettings::$Password,DbSettings::$Schema);
     $returnValue = "";
     
     if (mysqli_connect_errno()) {

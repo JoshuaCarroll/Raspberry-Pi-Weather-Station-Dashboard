@@ -2,7 +2,7 @@
 include 'database.php';
 header("access-control-allow-origin: *");
 
-$con = new mysqli($databaseAddress,$databaseUsername,$databasePassword,$databaseSchema);
+$con = new mysqli(DbSettings::$Address,DbSettings::$Username,DbSettings::$Password,DbSettings::$Schema);
 
 // Check connection
 if (mysqli_connect_errno()) {

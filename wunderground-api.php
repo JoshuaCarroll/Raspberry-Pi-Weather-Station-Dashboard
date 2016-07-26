@@ -39,7 +39,7 @@ $url = str_replace(" ", "%20", $url);
 
 if ($_GET['debug'] == "true") {
     $url .= "HIDDEN-IN-DEBUG_MODE" . "&";
-    echo $url
+    echo $url;
 }
 else {
     $url .= $stationPassword . "&";

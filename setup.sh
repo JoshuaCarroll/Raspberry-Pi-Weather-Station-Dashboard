@@ -226,11 +226,11 @@ echo
 echo
 echo "  Dynamic DNS is the term the describes a service that will provide DNS services that can be rapidly"
 echo "  updated for changing IP addresses. Most residential internet connections have dynamic IP addresses, "
-echo "  meaning the IP address can and will change without notice.
+echo "  meaning the IP address can and will change without notice."
 echo 
 echo "  Those who would like to host their own website must either pay business rates for Internet access"
 echo "  (and a static IP address), or they must use a dynamic DNS service. There are many available, but"
-echo "  I use DuckDNS.org: a free and simple dynamic DNS service.
+echo "  I use DuckDNS.org: a free and simple dynamic DNS service."
 echo 
 echo -n "  Do you want to setup DuckDNS dynamic DNS service? (y/N): "
 read enableDuckDNS

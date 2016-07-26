@@ -37,7 +37,7 @@ $con->close();
 
 $url = str_replace(" ", "%20", $url);
 
-if (isset($_GET['debug'])) { {
+if (isset($_GET['debug'])) {
     $url .= "HIDDEN-IN-DEBUG_MODE" . "&";
     echo $url;
 }

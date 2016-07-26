@@ -1,22 +1,27 @@
 <?php
 
 function getSetting($setting) {
-    $con = new mysqli(DbSettings::$Address,DbSettings::$Username,DbSettings::$Password,DbSettings::$Schema);
     $returnValue = "";
     
-    if (mysqli_connect_errno()) {
-        $returnValue = "ERROR CONNECTING TO DATABASE";
-    }
-    else {
-        $result = $con->query("select VALUE from RPiWx_SETTINGS where name = '$setting' ");
-        if( !$result ) {
-          $returnValue = "";
+    if (apc_exists($setting)) {
+        $returnValue = apc_fetch($setting);
+    } else {
+        $con = new mysqli(DbSettings::$Address,DbSettings::$Username,DbSettings::$Password,DbSettings::$Schema);
+
+        if (mysqli_connect_errno()) {
+            $returnValue = "ERROR";
         }
         else {
-          $returnValue = $result->fetch_object()->VALUE;
+            $result = $con->query("select VALUE from RPiWx_SETTINGS where name = '$setting' ");
+            if( !$result ) {
+              $returnValue = "";
+            }
+            else {
+              $returnValue = $result->fetch_object()->VALUE;
+            }
+            apc_store($setting, $returnValue);
         }
     }
-    
     return $returnValue;
 }
 

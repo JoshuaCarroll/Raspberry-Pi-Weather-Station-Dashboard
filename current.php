@@ -65,11 +65,14 @@ if ($result->num_rows > 0) {
             }
 
             if (strpos($fieldName, "_PRESSURE")) {
+                
+                $mslp = calculateMeanSeaLevelPressure($fieldValue, $stationElevationInMeters);
+                
                 if ($showPressureInMillibars == "1") {
-                    echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " mb\",";
+                    echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $mslp . " mb\",";
                 }
                 else {
-                    $fieldValue = convertMillibarsToInches($fieldValue);
+                    $fieldValue = convertMillibarsToInches($mslp);
                     echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " in\",";
                 }
             }

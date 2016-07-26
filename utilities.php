@@ -22,7 +22,14 @@ function getSetting($setting) {
     return $returnValue;
 }
 
+// ------ General weather utilities ------------------------------------
+function calculateMeanSeaLevelPressure($pressure, $elevation) {
+    $msl = $pressure / (pow(1 - ($elevation / 44330.0), 5.255));
+    return $msl;
+}
+
 $showMetricAndCelsiusMeasurements = getSetting("showMetricAndCelsiusMeasurements");
 $showPressureInMillibars = getSetting("showPressureInMillibars");
+$stationElevationInMeters = getSetting("stationElevationInMeters");
 
 ?>

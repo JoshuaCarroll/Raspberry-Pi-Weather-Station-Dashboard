@@ -22,7 +22,7 @@ if ($result->num_rows > 0) {
     $url .= "humidity=" . $row["HUMIDITY"] . "&";
     $url .= "tempf=" . convertCelsiusToFahrenheit($row["AMBIENT_TEMPERATURE"]) . "&";
     $url .= "dewptf=" . calculateDewPointF($row["AMBIENT_TEMPERATURE"], $row["HUMIDITY"]) . "&";
-    $url .= "baromin=" . convertMillibarsToInches($row["AIR_PRESSURE"]) . "&";
+    $url .= "baromin=" . convertMillibarsToInches(calculateMeanSeaLevelPressure($row["AIR_PRESSURE"], $stationElevationInMeters)) . "&";
     $url .= "soiltempf=" . convertCelsiusToFahrenheit($row["GROUND_TEMPERATURE"]) . "&";
     $url .= "rainin=" . convertmillimetersToInches($row["@rainPastHour"]) . "&";
     $url .= "dailyrainin=" . convertmillimetersToInches($row["@rainSinceMidnight"]) . "&";

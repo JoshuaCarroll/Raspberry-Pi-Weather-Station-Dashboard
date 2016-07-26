@@ -183,6 +183,32 @@ echo
 echo "  Press <ENTER> to continue..."
 read enter
 
+clear
+echo 
+echo 
+echo 
+getBreadcrumbs "PREFERENCES"
+echo $getBreadcrumbs_
+echo
+echo
+echo
+echo "  What is the elevation of your weather station in meters?"
+echo "  (Hint: If you don't know, you can browse to http://www.whatismyelevation.com.)"
+echo 
+echo -n "  !> "
+read stationElevationInMeters
+echo 
+echo 
+echo "    Storing setting stationElevationInMeters = $stationElevationInMeters."
+echo "---------------------------------------------------------------------------------------------"
+mysql -vv -u root -p"$databasePassword" weather -e "Update RPiWx_SETTINGS set value='$stationElevationInMeters' where name='stationElevationInMeters'"
+echo "---------------------------------------------------------------------------------------------"
+echo
+echo
+echo "  Press <ENTER> to continue..."
+read enter
+
+
 
 ####################################################################
 #

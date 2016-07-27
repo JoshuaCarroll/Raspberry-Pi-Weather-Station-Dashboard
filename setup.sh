@@ -225,7 +225,7 @@ then
     echo "    *  Once you are done come back here and press <ENTER>.                                 *"
     echo "    *                                                                                      *"
     echo "    *  To setup your station and get a station ID and key, browse to:                      *"
-    echo "    *          https://www.wunderground.com/personal-weather-station/signup?new=1          *"
+    echo "    *          https://www.wunderground.com/personal-weather-station/signup                *"
     echo "    *                                                                                      *"
     echo "    ****************************************************************************************"
     echo

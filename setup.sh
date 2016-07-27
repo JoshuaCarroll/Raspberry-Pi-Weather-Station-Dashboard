@@ -189,6 +189,35 @@ echo
 echo "  Press <ENTER> to continue..."
 read enter
 
+clear
+echo 
+echo 
+echo 
+getBreadcrumbs "PREFERENCES"
+echo $getBreadcrumbs_
+echo
+echo
+echo
+echo "  Barometric pressure is usually shown relative to Mean Sea Level. In order to calculate this"
+echo "  the program needs the elevation of the station from sea level in meters.  If you don't know"
+echo "  your elevation, you can find it at http://www.whatismyelevation.com"
+echo 
+echo "  'station elevation' = 'ground elevation' + 'meters above the ground'"
+echo 
+echo 
+echo -n "  What is your station elevation in meters? "
+read stationElevationInMeters
+echo 
+echo 
+echo "    Storing setting stationElevationInMeters = $stationElevationInMeters."
+echo "---------------------------------------------------------------------------------------------"
+mysql -vv -u root -p"$databasePassword" weather -e "call UPDATEWXSETTING('showPressureInMillibars','$showPressureInMillibars')"
+echo "---------------------------------------------------------------------------------------------"
+echo
+echo
+echo "  Press <ENTER> to continue..."
+read enter
+
 
 
 ####################################################################

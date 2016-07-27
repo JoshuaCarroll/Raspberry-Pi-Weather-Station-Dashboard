@@ -3,9 +3,9 @@
 function getSetting($setting) {
     $returnValue = "";
     
-    if (apc_exists($setting)) {
-        $returnValue = apc_fetch($setting);
-    } else {
+    //if (apc_exists($setting)) {
+    //    $returnValue = apc_fetch($setting);
+    //} else {
         $con = new mysqli(DbSettings::$Address,DbSettings::$Username,DbSettings::$Password,DbSettings::$Schema);
 
         if (mysqli_connect_errno()) {
@@ -19,9 +19,9 @@ function getSetting($setting) {
             else {
               $returnValue = $result->fetch_object()->VALUE;
             }
-            apc_store($setting, $returnValue);
+    //        apc_store($setting, $returnValue);
         }
-    }
+    //}
     return $returnValue;
 }
 

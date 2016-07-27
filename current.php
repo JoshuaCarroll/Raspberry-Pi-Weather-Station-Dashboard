@@ -110,11 +110,11 @@ if ($result->num_rows > 0) {
 
         if (($fieldName == "LowSinceMidnight") || ($fieldName == "HighSinceMidnight")) {
             if (Settings::$showMetricAndCelsiusMeasurements == "1") {
-                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° C\",";
+                echo "\r\n\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° C\",";
             }
             else {
                 $fieldValue = convertCelsiusToFahrenheit($fieldValue);
-                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° F\",";
+                echo "\r\n\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° F\",";
             }
         }
         

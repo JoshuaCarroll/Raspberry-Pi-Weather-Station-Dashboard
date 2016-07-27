@@ -36,8 +36,8 @@ function main() {
         $url .= "dewptf=" . calculateDewPointF($row["AMBIENT_TEMPERATURE"], $row["HUMIDITY"]) . "&";
         $url .= "baromin=" . convertMillibarsToInches(calculateMeanSeaLevelPressure($row["AIR_PRESSURE"], Settings::$stationElevationInMeters)) . "&";
         $url .= "soiltempf=" . convertCelsiusToFahrenheit($row["GROUND_TEMPERATURE"]) . "&";
-        $url .= "rainin=" . convertmillimetersToInches($row["@rainPastHour"]) . "&";
-        $url .= "dailyrainin=" . convertmillimetersToInches($row["@rainSinceMidnight"]) . "&";
+        $url .= "rainin=" . convertMillimetersToInches($row["@rainPastHour"]) . "&";
+        $url .= "dailyrainin=" . convertMillimetersToInches($row["@rainSinceMidnight"]) . "&";
         $url .= "ID=" . $row["@WUNDERGROUND_ID"] . "&";
         $url .= "PASSWORD=";
         $stationPassword = $row["@WUNDERGROUND_PASSWORD"];

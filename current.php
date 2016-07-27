@@ -138,48 +138,4 @@ echo "\r\n}"; // Close document object
 $result->close();
 mysqli_close($con);
 
-// ===============================================================
-function convertKilometersToMiles($kilometers) {
-    $miles = $kilometers * 0.621371;
-    return $miles;
-}
-        
-function convertCelsiusToFahrenheit($celsiusDegrees) {
-    $F = ((($celsiusDegrees * 9) / 5) + 32);
-    return $F;
-}
-
-function convertFahrenheitToCelsius($fahrenheitDegrees) {
-    $C = ($fahrenheitDegrees - 32) * 5 / 9;
-    return $C;
-}
-
-function convertMillibarsToInches($millibars) {
-    $inches = $millibars * 0.0295301;
-    return $inches;
-}
-
-function calculateFeelsLike($temperature, $humidity, $windSpeed) {
-    $tempF = convertCelsiusToFahrenheit($temperature);
-    $windMPH = convertKilometersToMiles($windSpeed);
-    
-    // Calculate Heat Index based on temperature in F and relative humidity (65 = 65%)
-    if ($tempF > 70 && $humidity > 39) { 
-        $feelsLike = -42.379 + 2.04901523 * $tempF + 10.14333127 * $humidity - 0.22475541 * $tempF * $humidity;
-        $feelsLike += -0.00683783 * pow($tempF, 2) - 0.05481717 * pow($humidity, 2);
-        $feelsLike += 0.00122874 * pow($tempF, 2) * $humidity + 0.00085282 * $tempF * pow($humidity, 2);
-        $feelsLike += -0.00000199 * pow($tempF, 2) * pow($humidity, 2);
-        $feelsLike = round($feelsLike);
-    }
-    elseif (($tempF < 60) && ($windMPH > 3)) {
-        $feelsLike = 35.74 + 0.6215 * $tempF - 35.75 * pow($windMPH, 0.16) + 0.4275 * $tempF * pow($windMPH, 0.16);
-        $feelsLike = round($feelsLike);
-    }
-    else {
-        $feelsLike = $tempF;
-    }
-    
-    return convertFahrenheitToCelsius($feelsLike);
-}
-
 ?>

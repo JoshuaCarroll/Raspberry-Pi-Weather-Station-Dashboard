@@ -1,8 +1,9 @@
 <?php
-include 'variables.php';
+include 'database.php';
 header('content-type: application/json; charset=utf-8');
 header("access-control-allow-origin: *");
-$con = new mysqli($databaseAddress,$databaseUsername,$databasePassword, $databaseSchema);
+
+$con = new mysqli(DbSettings::$Address,DbSettings::$Username,DbSettings::$Password,DbSettings::$Schema);
 
 // Check connection
 if (mysqli_connect_errno()) {
@@ -33,7 +34,7 @@ if ($result->num_rows > 0) {
         
         if ($numberOfRows == 1) {
             $feelsLike = calculateFeelsLike($row["AMBIENT_TEMPERATURE"], $row["HUMIDITY"], $row["WIND_SPEED"]);
-            if (!$showMetricAndCelsiusMeasurements) {
+            if (!Settings::$showMetricAndCelsiusMeasurements == "1") {
                 $feelsLike = convertCelsiusToFahrenheit($feelsLike);
             }
             echo "\r\n\t\t\t\"FEELS_LIKE\" : " . "\"" . $feelsLike . "\",";
@@ -44,7 +45,7 @@ if ($result->num_rows > 0) {
             $fieldValue = $row[$i];
             
             if (strpos($fieldName, "_TEMPERATURE")) {
-                if ($showMetricAndCelsiusMeasurements) {
+                if (Settings::$showMetricAndCelsiusMeasurements == "1") {
                     echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° C\",";
                 }
                 else {
@@ -54,7 +55,7 @@ if ($result->num_rows > 0) {
             }
 
             if (strpos($fieldName, "_SPEED")) {
-                if ($showMetricAndCelsiusMeasurements) {
+                if (Settings::$showMetricAndCelsiusMeasurements == "1") {
                     echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " Km/H\",";
                 }
                 else {
@@ -64,11 +65,14 @@ if ($result->num_rows > 0) {
             }
 
             if (strpos($fieldName, "_PRESSURE")) {
-                if ($showPressureInMillibars) {
-                    echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " mb\",";
+                
+                $mslp = calculateMeanSeaLevelPressure($fieldValue, Settings::$stationElevationInMeters);
+                
+                if (Settings::$showPressureInMillibars == "1") {
+                    echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $mslp . " mb\",";
                 }
                 else {
-                    $fieldValue = convertMillibarsToInches($fieldValue);
+                    $fieldValue = convertMillibarsToInches($mslp);
                     echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " in\",";
                 }
             }
@@ -105,12 +109,12 @@ if ($result->num_rows > 0) {
         $fieldValue = $row[$i];
 
         if (($fieldName == "LowSinceMidnight") || ($fieldName == "HighSinceMidnight")) {
-            if ($showMetricAndCelsiusMeasurements) {
-                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° C\",";
+            if (Settings::$showMetricAndCelsiusMeasurements == "1") {
+                echo "\r\n\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° C\",";
             }
             else {
                 $fieldValue = convertCelsiusToFahrenheit($fieldValue);
-                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° F\",";
+                echo "\r\n\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° F\",";
             }
         }
         
@@ -124,8 +128,8 @@ if ($result->num_rows > 0) {
 echo "\r\n\t}"; // Close daily stats object
 
 echo ",\r\n\t\"Settings\" : {"; // Open settings object
-echo "\r\n\t\t\"showMetricAndCelsiusMeasurements\" : " . "\"" . $showMetricAndCelsiusMeasurements . "\",";
-echo "\r\n\t\t\"showPressureInMillibars\" : " . "\"" . $showPressureInMillibars . "\"";
+echo "\r\n\t\t\"showMetricAndCelsiusMeasurements\" : " . "\"" . Settings::$showMetricAndCelsiusMeasurements . "\",";
+echo "\r\n\t\t\"showPressureInMillibars\" : " . "\"" . Settings::$showPressureInMillibars . "\"";
 
 echo "\r\n\t}"; // Close settings object
 
@@ -133,63 +137,5 @@ echo "\r\n}"; // Close document object
 
 $result->close();
 mysqli_close($con);
-
-// ===============================================================
-function convertKilometersToMiles($kilometers) {
-    $miles = $kilometers * 0.621371;
-    return $miles;
-}
-        
-function convertCelsiusToFahrenheit($celsiusDegrees) {
-    $F = ((($celsiusDegrees * 9) / 5) + 32);
-    return $F;
-}
-
-function convertFahrenheitToCelsius($fahrenheitDegrees) {
-    $C = ($fahrenheitDegrees - 32) * 5 / 9;
-    return $C;
-}
-
-function convertMillibarsToInches($millibars) {
-    $inches = $millibars * 0.0295301;
-    return $inches;
-}
-
-function calculateFeelsLike($temperature, $humidity, $windSpeed) {
-    $tempF = convertCelsiusToFahrenheit($temperature);
-    $windMPH = convertKilometersToMiles($windSpeed);
-    
-    // Calculate Heat Index based on temperature in F and relative humidity (65 = 65%)
-    if ($tempF > 79 && $humidity > 39) { 
-        $feelsLike = -42.379 + 2.04901523 * $tempF + 10.14333127 * $humidity - 0.22475541 * $tempF * $humidity;
-        $feelsLike += -0.00683783 * pow($tempF, 2) - 0.05481717 * pow($humidity, 2);
-        $feelsLike += 0.00122874 * pow($tempF, 2) * $humidity + 0.00085282 * $tempF * pow($humidity, 2);
-        $feelsLike += -0.00000199 * pow($tempF, 2) * pow($humidity, 2);
-        $feelsLike = round($feelsLike);
-    }
-    elseif (($tempF < 51) && ($windMPH > 3)) {
-        $feelsLike = 35.74 + 0.6215 * $tempF - 35.75 * pow($windMPH, 0.16) + 0.4275 * $tempF * pow($windMPH, 0.16);
-        $feelsLike = round($feelsLike);
-    }
-    else {
-        $feelsLike = $tempF;
-    }
-    
-    return convertFahrenheitToCelsius($feelsLike);
-}
-
-// Calculate Wind Chill Temperature based on temperature in F and wind speed in miles per hour
-function get_wind_chill($tempF, &$wxInfo) {
-    if ($tempF < 51 && $wxInfo['WIND'] != 'calm') {
-        $pieces = explode(' ', $wxInfo['WIND']);
-        $windspeed = (integer) $pieces[2];   // wind speed must be in miles per hour
-        if ($windspeed > 3) {
-            $chillF = 35.74 + 0.6215 * $tempF - 35.75 * pow($windspeed, 0.16) + 0.4275 * $tempF * pow($windspeed, 0.16);
-            $chillF = round($chillF);
-            $chillC = round(($chillF - 32) / 1.8);
-            $wxInfo['WIND CHILL'] = "$chillF&deg;F ($chillC&deg;C)";
-        }
-    }
-}
 
 ?>

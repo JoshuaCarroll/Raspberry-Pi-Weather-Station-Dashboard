@@ -69,8 +69,8 @@ function setupData(result) {
     intPrCh12h = obj.AIR_PRESSURE - result.WeatherObservations.Observation4.AIR_PRESSURE;
     intPrCh24h = obj.AIR_PRESSURE - result.WeatherObservations.Observation5.AIR_PRESSURE;
     intPrCh48h = obj.AIR_PRESSURE - result.WeatherObservations.Observation6.AIR_PRESSURE;
-    boolShowMetricAndCelsiusMeasurements = result.Settings.showMetricAndCelsiusMeasurements;
-    boolShowPressureInMillibars = result.Settings.showPressureInMillibars ;
+    if (result.Settings.showMetricAndCelsiusMeasurements == "0") { boolShowMetricAndCelsiusMeasurements = false; }
+    if (result.Settings.showPressureInMillibars == "0") { boolShowPressureInMillibars = false; }
     
     $("#rawData").empty();
     var rawList = "<ul>";

@@ -36,19 +36,15 @@ Contributions to this project can be made by using the program and providing fee
 
 ### Get the dashboard code
 
-1. You will need root access on the Raspberry Pi. From the command line type:
-
-    `sudo -s`
-
-2. Navigate to the web folder:
+1. Navigate to the web folder:
 
     `cd /var/www/html`
 
-3. Download the files to a folder named `dashboard`:
+2. Download the files to a folder named `dashboard`:
 
-    `git clone https://github.com/JoshuaCarroll/Raspberry-Pi-Weather-Station-Dashboard.git dashboard`
+    `sudo git clone https://github.com/JoshuaCarroll/Raspberry-Pi-Weather-Station-Dashboard.git dashboard`
   
-4. Return to the dashboard site root.
+3. Return to the dashboard site root.
 
     `cd dashboard`
 
@@ -58,15 +54,15 @@ You should now be in `/var/www/html/dashboard`
   
 1. Update the the php script with the MySQL password that you chose when installing the database.
 
-    `nano variables.php`
+    `sudo nano database.php`
   
-    Update the variables to the values that you chose.
+    Update the database connection variables to the values for your environment.
   
     Press `Ctrl O` then `Enter` to save and `Ctrl X` to quit nano.
-    
-2. Create the GETCURRENTOBS stored procedure.
 
-    `mysql -u root -p weather < CREATE-SP.sql`
+2. Run the setup script to setup additional preferences.
+
+    `./setup.sh`
 
 3. Find the weather station's ip address:
 
@@ -78,32 +74,38 @@ You should now be in `/var/www/html/dashboard`
   
 ### Set up external API's (optional)
 
+Configuration of supported external APIs is included in the setup script, but if you would like to see the details, they are included in the respective links below:
+
 - Weather Underground: See [README-API-WeatherUnderground.md](README-API-WeatherUnderground.md).
   
 ----------
 
 # Installing updates
 
-This is a work-in-progress. New features and bug-fixes will be added here as needed. If you want to update your copy with the latest changes, follow these steps.
+New features and bug-fixes will be added to this repository as needed. If you want to update your copy with the latest changes, follow these steps.
 
 1. Navigate to the dashboard folder:
 
     `cd /var/www/html/dashboard`
     
-2. Backup your variables file:
+2. Backup your database settings file:
 
-    `sudo cp variables.php ../`
+    `sudo cp database.php ../`
     
 3. Update your code with the latest changes:
 
     `sudo git pull`
     
-4. Update the stored procedure in your database:
+3. Restore your database settings file:
 
-    `sudo mysql -u root -p weather < CREATE-SP.sql`
+    `sudo mv ../database.php ./`
     
-5. Update the variables file with the values appropriate to your environment and installation:
+5. Update the stored procedure in your database:
 
-    `sudo nano variables.php`
+    `sudo mysql -u root -p weather < SETUP.sql`
     
-    *NOTE: Since new variables may have been introduced since the time when you initially installed this program, do not overwrite the new variables file with your old one. Rather edit the new file and enter the appropriate values. If needed, refer to the backup copy of the variables file you made (located at /var/www/html) for values that you don't remember.*
+6. Run the setup script to setup additional preferences.
+
+    `./setup`
+    
+    

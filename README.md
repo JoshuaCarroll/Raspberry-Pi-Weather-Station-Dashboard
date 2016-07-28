@@ -104,8 +104,8 @@ New features and bug-fixes will be added to this repository as needed. If you wa
 
     `sudo mysql -u root -p weather < SETUP.sql`
     
-6. Run the setup script to setup additional preferences.
+6. Run the setup script to update database objects and setup additional preferences:
 
-    `./setup`
+    `./setup.sh`
     
     

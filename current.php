@@ -53,6 +53,30 @@ if ($result->num_rows > 0) {
                     echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° F\",";
                 }
             }
+            
+            if ($fieldName == "DEWPOINT") {
+                if (Settings::$showMetricAndCelsiusMeasurements == "1") {
+                    echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° C\",";
+                }
+                else {
+                    $fieldValue = convertCelsiusToFahrenheit($fieldValue);
+                    echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . "° F\",";
+                }
+            }
+
+            if ($fieldName == "RAINFALL") {
+                if (Settings::$showMetricAndCelsiusMeasurements == "1") {
+                    echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " mm\",";
+                }
+                else {
+                    $fieldValue = convertMillibarsToInches($fieldValue);
+                    echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " in\",";
+                }
+            }
+
+            if ($fieldName == "HUMIDITY") {
+                echo "\r\n\t\t\t\"" . $fieldName . "_STRING\" : " . "\"" . $fieldValue . " %\",";
+            }
 
             if (strpos($fieldName, "_SPEED")) {
                 if (Settings::$showMetricAndCelsiusMeasurements == "1") {

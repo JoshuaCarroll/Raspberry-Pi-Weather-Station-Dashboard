@@ -64,13 +64,35 @@ function setupData(result) {
     intHumidity = obj.HUMIDITY;
     intWindDirection = obj.WIND_DIRECTION;
     intPressure = obj.AIR_PRESSURE;
-    intPrCh1h = obj.AIR_PRESSURE - result.WeatherObservations.Observation2.AIR_PRESSURE;
-    intPrCh6h = obj.AIR_PRESSURE - result.WeatherObservations.Observation3.AIR_PRESSURE;
-    intPrCh12h = obj.AIR_PRESSURE - result.WeatherObservations.Observation4.AIR_PRESSURE;
-    intPrCh24h = obj.AIR_PRESSURE - result.WeatherObservations.Observation5.AIR_PRESSURE;
-    intPrCh48h = obj.AIR_PRESSURE - result.WeatherObservations.Observation6.AIR_PRESSURE;
+
     if (result.Settings.showMetricAndCelsiusMeasurements == "0") { boolShowMetricAndCelsiusMeasurements = false; }
     if (result.Settings.showPressureInMillibars == "0") { boolShowPressureInMillibars = false; }
+
+    if (result.WeatherObservations.Observation2 != null) {
+        intPrCh1h = obj.AIR_PRESSURE - result.WeatherObservations.Observation2.AIR_PRESSURE;
+    } else {
+        intPrCh1h = 0;
+    }
+    if (result.WeatherObservations.Observation3 != null) {
+        intPrCh6h = obj.AIR_PRESSURE - result.WeatherObservations.Observation3.AIR_PRESSURE;
+    } else {
+        intPrCh6h = 0;
+    }
+    if (result.WeatherObservations.Observation4 != null) {
+        intPrCh12h = obj.AIR_PRESSURE - result.WeatherObservations.Observation4.AIR_PRESSURE;
+    } else {
+        intPrCh12h = 0;
+    }
+    if (result.WeatherObservations.Observation5 != null) {
+        intPrCh24h = obj.AIR_PRESSURE - result.WeatherObservations.Observation5.AIR_PRESSURE;
+    } else {
+        intPrCh24h = 0;
+    }
+    if (result.WeatherObservations.Observation6 != null) {
+        intPrCh48h = obj.AIR_PRESSURE - result.WeatherObservations.Observation6.AIR_PRESSURE;
+    } else {
+        intPrCh48h = 0;
+    }
     
     $("#rawData").empty();
     var rawList = "<ul>";
@@ -97,6 +119,7 @@ function setupCharts() {
         chtTemp.options.min = -30;
         chtTemp.options.max = 50;
     }
+
     drawChart(chtTemp, "chart_temp", "Temperature", intTemperature);
     
     chtGroundTemp.options = chtTemp.options;

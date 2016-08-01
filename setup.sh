@@ -211,7 +211,7 @@ echo
 echo 
 echo "    Storing setting stationElevationInMeters = $stationElevationInMeters."
 echo "---------------------------------------------------------------------------------------------"
-mysql -vv -u root -p"$databasePassword" weather -e "call UPDATEWXSETTING('showPressureInMillibars','$showPressureInMillibars')"
+mysql -vv -u root -p"$databasePassword" weather -e "call UPDATEWXSETTING('stationElevationInMeters','$stationElevationInMeters')"
 echo "---------------------------------------------------------------------------------------------"
 echo
 echo

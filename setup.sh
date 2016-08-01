@@ -90,7 +90,7 @@ echo "  will need to provide your database connection information."
 echo 
 echo -n "Database root password [tiger]: "
 read databasePassword
-if [$databasePassword = ""]
+if ["$databasePassword" = ""]
 then
   databasePassword="tiger"
 fi
@@ -102,7 +102,7 @@ echo "  Next, we will install (or update) stored procedures and create the table
 echo "  NOTE: Even if you have done this before it may be a good idea to run it again, especially if you have pulled a new update from the repository."
 echo -n "  Continue?  [Y/n]: "
 read runSetupSql
-if [ $runSetupSql = "y" ] || [ $runSetupSql = "Y" ] ||[ $runSetupSql = "" ]
+if [ "$runSetupSql" = "y" ] || [ "$runSetupSql" = "Y" ] ||[ "$runSetupSql" = "" ]
 then
   echo 
   echo 
@@ -141,7 +141,7 @@ echo "    (1) Celsius and metric units"
 echo
 echo -n "  !> "
 read showMetricAndCelsiusMeasurements
-if [ $showMetricAndCelsiusMeasurements = "0" ] || [ $showMetricAndCelsiusMeasurements = "1" ]
+if [ "$showMetricAndCelsiusMeasurements" = "0" ] || [ "$showMetricAndCelsiusMeasurements" = "1" ]
 then
     echo 
     echo 
@@ -173,7 +173,7 @@ echo "    (1) Millibars"
 echo 
 echo -n "  !> "
 read showPressureInMillibars
-if [ $showPressureInMillibars = "0" ] || [ $showPressureInMillibars = "1" ]
+if [ "$showPressureInMillibars" = "0" ] || [ "$showPressureInMillibars" = "1" ]
 then
     echo 
     echo 
@@ -239,7 +239,7 @@ read reportToWunderground
 echo
 echo
 
-if [ "$reportToWunderground" = "y" ] || [ "$reportToWunderground" = "Y" ]
+if [ "$reportToWunderground" = "y" ] || [ "$reportToWunderground" = "Y" ] 
 then
   echo -n "  Do you already have a station ID and key? (Y/n): "
   read haveStationID

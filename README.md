@@ -3,8 +3,6 @@ Raspberry Pi Weather Station Dashboard
 
 This project will provide you with a graphical dashboard of the current weather observation based on the Raspberry Pi Weather Station data.
 
-<img src="http://shrinktheweb.snapito.io/v2/webshot/spu-ea68c8-ogi2-3cwn3bmfojjlb56e?size=800x0&screen=1024x768&url=http%3A%2F%2Fn5jlc.duckdns.org%2Fdashboard" width="400" height="300">
-
 You can see a live version of the master branch at [n5jlc.duckdns.org/dashboard](http://n5jlc.duckdns.org/dashboard).
 
 #### Contributing

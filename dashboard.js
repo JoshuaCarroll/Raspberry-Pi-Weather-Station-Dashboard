@@ -2,8 +2,8 @@ var NumberOfSecondsBetweenReloadingData = 120;
 
 // ============================
 
-var boolShowMetricAndCelsiusMeasurements = true;
-var boolShowPressureInMillibars = true;
+var boolShowMetricAndCelsiusMeasurements = false;
+var boolShowPressureInMillibars = false;
 var intTemperature = 0;
 var intGroundTemperature = 0;
 var intHumidity = 0;
@@ -65,8 +65,8 @@ function setupData(result) {
     intWindDirection = obj.WIND_DIRECTION;
     intPressure = obj.AIR_PRESSURE;
 
-    if (result.Settings.showMetricAndCelsiusMeasurements == "0") { boolShowMetricAndCelsiusMeasurements = false; }
-    if (result.Settings.showPressureInMillibars == "0") { boolShowPressureInMillibars = false; }
+    if (result.Settings.showMetricAndCelsiusMeasurements == "1") { boolShowMetricAndCelsiusMeasurements = true; }
+    if (result.Settings.showPressureInMillibars == "1") { boolShowPressureInMillibars = true; }
 
     if (result.WeatherObservations.Observation2 != null) {
         intPrCh1h = obj.AIR_PRESSURE - result.WeatherObservations.Observation2.AIR_PRESSURE;

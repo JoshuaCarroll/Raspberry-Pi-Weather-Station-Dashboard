@@ -142,6 +142,10 @@ if ($result->num_rows > 0) {
             }
         }
         
+        if ((Settings::$showMetricAndCelsiusMeasurements == "0") && (($fieldName == "RainFallSinceMidnight") || $fieldName == "LastStormTotal")) {
+            $fieldValue = convertMillimetersToInches($fieldValue);
+        }
+        
         echo "\r\n\t\t\"" . $fieldName . "\" : " . "\"" . $fieldValue . "\"";
 
         if ($i+1 < $fieldcount) {

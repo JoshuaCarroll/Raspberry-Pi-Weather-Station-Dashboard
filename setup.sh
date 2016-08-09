@@ -4,7 +4,7 @@ CurrentUser="$(whoami)"
 if [ "$CurrentUser" -ne "root" ]
 then
   echo "Usage: sudo ./test.s";
-  exit
+  exit 1
 fi
 
 ####################################################################

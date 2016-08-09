@@ -128,6 +128,17 @@ echo "}" >> "database.php"
 echo "" >> "database.php"
 echo "?>" >> "database.php"
 
+# create the setup_db.sql
+echo "CREATE DATABASE IF NOT EXISTS `$databaseScheme`;" > setup_db.sql
+echo -n "Create the database? [Yn]"
+read createDB
+if [ -z "$createDB" ]
+  createDB = "Y"
+fi
+if [ "$createDB" = "y" ] || [ "$createDB" = "Y"]
+  mysql -vv -e -h "$databaseAddress" -u "$databaseUsername" -p"$databasePassword" < setup_db.sql
+fi
+
 echo "  Next, we will install (or update) stored procedures and create the table for settings to be stored."
 echo "  NOTE: Even if you have done this before it may be a good idea to run it again, especially if you have pulled a new update from the repository."
 echo -n "  Continue?  [Y/n]: "

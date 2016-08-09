@@ -1,11 +1,14 @@
 #!/bin/bash
 
 CurrentUser="$(whoami)"
-if [ "$CurrentUser" -ne "root" ]
+if [ "$CurrentUser" = "root" ]
 then
-  echo "Usage: sudo ./test.s";
+  echo "$CurrentUser ok."
+else
+  echo "Usage: sudo ./setup.sh";
   exit 1
 fi
+
 
 ####################################################################
 #

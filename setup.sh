@@ -1,5 +1,12 @@
 #!/bin/bash
 
+CurrentUser="$(whoami)"
+if [ "$CurrentUser" -ne "root" ]
+then
+  echo "Usage: sudo ./test.s";
+  exit
+fi
+
 ####################################################################
 #
 # Function definitions
@@ -119,7 +126,8 @@ fi
 
 echo
 echo
-# create the database.php file with these options
+echo "Creating the database.php file with these options..."
+echo
 echo "<?php" > "database.php"
 echo "include 'utilities.php';" >> "database.php"
 echo "" >> "database.php"

@@ -84,6 +84,7 @@ getBreadcrumbs "database"
 echo $getBreadcrumbs_
 echo "  This program will make several calls to the SETTINGS table in your database. To do this, you"
 echo "  will need to provide your database connection information."
+
 echo 
 echo -n "Database server address [127.0.0.1]: "
 read databaseAddress
@@ -91,13 +92,15 @@ if [ -z "$databaseAddress" ]
 then
   databaseAddress="127.0.0.1"
 fi
+
 echo
-echo -n "Database scheme [weather]: "
-read databaseScheme
-if [ -z "$databaseScheme" ]
+echo -n "Database schema [weather]: "
+read databaseSchema
+if [ -z "$databaseSchema" ]
 then
-  databaseScheme="weather"
+  databaseSchema="weather"
 fi
+
 echo
 echo -n "Database username [root]: "
 read databaseUsername
@@ -105,6 +108,7 @@ if [ -z "$databaseUsername" ]
 then
   databaseUsername="root"
 fi
+
 echo
 echo -n "Database password [tiger]: "
 read databasePassword
@@ -112,6 +116,7 @@ if [ -z "$databasePassword" ]
 then
   databasePassword="tiger"
 fi
+
 echo
 echo
 # create the database.php file with these options
@@ -123,19 +128,19 @@ echo "class DbSettings {" >> "database.php"
 echo "    public static $Address = '$databaseAddress';" >> "database.php"
 echo "    public static $Username = '$databaseUsername';" >> "database.php"
 echo "    public static $Password = '$databasePassword';" >> "database.php"
-echo "    public static $Schema = '$databaseScheme';" >> "database.php"
+echo "    public static $Schema = '$databaseSchema';" >> "database.php"
 echo "}" >> "database.php"
 echo "" >> "database.php"
 echo "?>" >> "database.php"
 
 # create the setup_db.sql
-echo "CREATE DATABASE IF NOT EXISTS `$databaseScheme`;" > setup_db.sql
-echo -n "Create the database? [Yn]"
+echo "CREATE DATABASE IF NOT EXISTS `$databaseSchema`;" > setup_db.sql
+echo -n "Create the database? [Y/n]: "
 read createDB
 if [ -z "$createDB" ]
   createDB = "Y"
 fi
-if [ "$createDB" = "y" ] || [ "$createDB" = "Y"]
+if [ "$createDB" = "y" ] || [ "$createDB" = "Y" ]
   mysql -vv -e -h "$databaseAddress" -u "$databaseUsername" -p"$databasePassword" < setup_db.sql
 fi
 
@@ -143,13 +148,13 @@ echo "  Next, we will install (or update) stored procedures and create the table
 echo "  NOTE: Even if you have done this before it may be a good idea to run it again, especially if you have pulled a new update from the repository."
 echo -n "  Continue?  [Y/n]: "
 read runSetupSql
-if [ "$runSetupSql" = "y" ] || [ "$runSetupSql" = "Y" ] ||[ "$runSetupSql" = "" ]
+if [ "$runSetupSql" = "y" ] || [ "$runSetupSql" = "Y" ] || [ "$runSetupSql" = "" ]
 then
   echo 
   echo 
   echo "    Executing SETUP.sql."
   echo "---------------------------------------------------------------------------------------------"
-  mysql -vv -e -h "$databaseAddress" -u "$databaseUsername" -p"$databasePassword" "$databaseScheme" < setup.sql
+  mysql -vv -e -h "$databaseAddress" -u "$databaseUsername" -p"$databasePassword" "$databaseSchema" < setup.sql
   echo "---------------------------------------------------------------------------------------------"
   echo 
   echo "  Press <ENTER> to continue..."

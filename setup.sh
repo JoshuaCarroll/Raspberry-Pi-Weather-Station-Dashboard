@@ -147,10 +147,8 @@ echo "?>" >> "database.php"
 # create the setup_db.sql
 echo -n "Create the $databaseSchema database? [Y/n]: "
 read createDB
-if [ -z "$createDB" ]
-  createDB="Y"
-fi
-if [ "$createDB" = "y" ] || [ "$createDB" = "Y" ]
+if [ "$createDB" = "y" ] || [ "$createDB" = "Y" ] || [ "$createDB" = "" ]
+then
   mysql -vv -e -h "$databaseAddress" -u "$databaseUsername" -p"$databasePassword" "CREATE DATABASE IF NOT EXISTS $databaseSchema"
 fi
 

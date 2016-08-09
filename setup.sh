@@ -82,13 +82,31 @@ echo
 echo 
 getBreadcrumbs "database"
 echo $getBreadcrumbs_
-echo
-echo
-echo
 echo "  This program will make several calls to the SETTINGS table in your database. To do this, you"
 echo "  will need to provide your database connection information."
 echo 
-echo -n "Database root password [tiger]: "
+echo -n "Database server address [127.0.0.1]: "
+read databaseAddress
+if ["$databaseAddress" = ""]
+then
+  databaseAddress="127.0.0.1"
+fi
+echo
+echo -n "Database scheme [weather]: "
+read databaseScheme
+if ["$databaseScheme" = ""]
+then
+  databaseScheme="weather"
+fi
+echo
+echo -n "Database username [root]: "
+read databaseUsername
+if ["$databaseUsername" = ""]
+then
+  databaseUsername="root"
+fi
+echo
+echo -n "Database password [tiger]: "
 read databasePassword
 if ["$databasePassword" = ""]
 then
@@ -96,7 +114,19 @@ then
 fi
 echo
 echo
-echo
+# create the database.php file with these options
+echo "<?php" > "database.php"
+echo "include 'utilities.php';" > "database.php"
+echo "" > "database.php"
+echo "// Database connection settings" > "database.php"
+echo "class DbSettings {" > "database.php"
+echo "    public static $Address = '$databaseAddress';" > "database.php"
+echo "    public static $Username = '$databaseUsername';" > "database.php"
+echo "    public static $Password = '$databasePassword';" > "database.php"
+echo "    public static $Schema = '$databaseScheme';" > "database.php"
+echo "}" > "database.php"
+echo "" > "database.php"
+echo "?>" > "database.php"
 
 echo "  Next, we will install (or update) stored procedures and create the table for settings to be stored."
 echo "  NOTE: Even if you have done this before it may be a good idea to run it again, especially if you have pulled a new update from the repository."
@@ -108,7 +138,7 @@ then
   echo 
   echo "    Executing SETUP.sql."
   echo "---------------------------------------------------------------------------------------------"
-  mysql -vv -e -u root -p"$databasePassword" weather < setup.sql
+  mysql -vv -e -h "$databaseAddress" -u "$databaseUsername" -p"$databasePassword" "$databaseScheme" < setup.sql
   echo "---------------------------------------------------------------------------------------------"
   echo 
   echo "  Press <ENTER> to continue..."

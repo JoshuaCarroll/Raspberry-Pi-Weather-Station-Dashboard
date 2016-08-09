@@ -87,28 +87,28 @@ echo "  will need to provide your database connection information."
 echo 
 echo -n "Database server address [127.0.0.1]: "
 read databaseAddress
-if ["$databaseAddress" = ""]
+if [ -z "$databaseAddress" ]
 then
   databaseAddress="127.0.0.1"
 fi
 echo
 echo -n "Database scheme [weather]: "
 read databaseScheme
-if ["$databaseScheme" = ""]
+if [ -z "$databaseScheme" ]
 then
   databaseScheme="weather"
 fi
 echo
 echo -n "Database username [root]: "
 read databaseUsername
-if ["$databaseUsername" = ""]
+if [ -z "$databaseUsername" ]
 then
   databaseUsername="root"
 fi
 echo
 echo -n "Database password [tiger]: "
 read databasePassword
-if ["$databasePassword" = ""]
+if [ -z "$databasePassword" ]
 then
   databasePassword="tiger"
 fi

@@ -1,6 +1,3 @@
-CREATE DATABASE IF NOT EXISTS `weather`;
-USE `weather`;
-
 -- Create the Settings table if it doesn't exist
 CREATE TABLE IF NOT EXISTS `RPiWx_SETTINGS` (
   `idSETTINGS` int(11) NOT NULL AUTO_INCREMENT,

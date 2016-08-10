@@ -96,35 +96,55 @@ echo "  This program will make several calls to the SETTINGS table in your datab
 echo "  will need to provide your database connection information."
 
 echo 
-echo -n "Database server address [127.0.0.1]: "
+orgDatabaseAddress="$(grep -oE '\$Address = .*;' database.php | tail -1 | sed 's/$Address = //g;s/;//g')"
+if [ -z "$orgDatabaseAddress" ]
+then
+  orgDatabaseAddress="127.0.0.1"
+fi
+echo -n "Database server address [$orgDatabaseAddress]: "
 read databaseAddress
 if [ -z "$databaseAddress" ]
 then
-  databaseAddress="127.0.0.1"
+  databaseAddress="$orgDatabaseAddress"
 fi
 
-echo
-echo -n "Database schema [weather]: "
+echo 
+orgDatabaseSchema="$(grep -oE '\$Schema = .*;' database.php | tail -1 | sed 's/$Schema = //g;s/;//g')"
+if [ -z "$orgDatabaseSchema" ]
+then
+  orgDatabaseSchema="weather"
+fi
+echo -n "Database schema [$orgDatabaseSchema]: "
 read databaseSchema
 if [ -z "$databaseSchema" ]
 then
-  databaseSchema="weather"
+  databaseSchema="$orgDatabaseSchema"
 fi
 
 echo
-echo -n "Database username [root]: "
+orgDatabaseUsername="$(grep -oE '\$Username = .*;' database.php | tail -1 | sed 's/$Username = //g;s/;//g')"
+if [ -z "$orgDatabaseUsername" ]
+then
+  orgDatabaseUsername="root"
+fi
+echo -n "Database username [$orgDatabaseUsername]: "
 read databaseUsername
 if [ -z "$databaseUsername" ]
 then
-  databaseUsername="root"
+  databaseUsername="$orgDatabaseUsername"
 fi
 
 echo
-echo -n "Database password [tiger]: "
+orgDatabasePassword="$(grep -oE '\$Password = .*;' database.php | tail -1 | sed 's/$Password = //g;s/;//g')"
+if [ -z "$orgDatabasePassword" ]
+then
+  orgDatabasePassword="root"
+fi
+echo -n "Database password [$orgDatabasePassword]: "
 read databasePassword
 if [ -z "$databasePassword" ]
 then
-  databasePassword="tiger"
+  databasePassword="$orgDatabasePassword"
 fi
 
 echo
@@ -144,13 +164,7 @@ echo "}" >> "database.php"
 echo "" >> "database.php"
 echo "?>" >> "database.php"
 
-# create the setup_db.sql
-echo -n "Create the $databaseSchema database? [Y/n]: "
-read createDB
-if [ "$createDB" = "y" ] || [ "$createDB" = "Y" ] || [ "$createDB" = "" ]
-then
-  mysql -vv -e -h "$databaseAddress" -u "$databaseUsername" -p"$databasePassword" "CREATE DATABASE IF NOT EXISTS $databaseSchema"
-fi
+mysql -vv -e -h "$databaseAddress" -u "$databaseUsername" -p"$databasePassword" "CREATE DATABASE IF NOT EXISTS $databaseSchema"
 
 echo "  Next, we will install (or update) stored procedures and create the table for settings to be stored."
 echo "  NOTE: Even if you have done this before it may be a good idea to run it again, especially if you have pulled a new update from the repository."

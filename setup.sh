@@ -164,8 +164,13 @@ echo "}" >> "database.php"
 echo "" >> "database.php"
 echo "?>" >> "database.php"
 
-mysql -vv -e -h "$databaseAddress" -u "$databaseUsername" -p"$databasePassword" "CREATE DATABASE IF NOT EXISTS $databaseSchema"
+echo 
+echo 
+echo "Executing: mysql -vv -h $databaseAddress -u'$databaseUsername' -p'$databasePassword' -e 'CREATE DATABASE IF NOT EXISTS $databaseSchema'"
+mysql -vv -h "$databaseAddress" -u "$databaseUsername" -p"$databasePassword" -e "CREATE DATABASE IF NOT EXISTS $databaseSchema"
 
+echo
+echo
 echo "  Next, we will install (or update) stored procedures and create the table for settings to be stored."
 echo "  NOTE: Even if you have done this before it may be a good idea to run it again, especially if you have pulled a new update from the repository."
 echo -n "  Continue?  [Y/n]: "

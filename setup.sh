@@ -189,7 +189,7 @@ then
   echo 
   echo "    Executing SETUP.sql."
   echo "---------------------------------------------------------------------------------------------"
-  mysql -vv -h "$databaseAddress" -u "$databaseUsername" -p"$databasePassword" "$databaseSchema" -e < SETUP.sql
+  mysql -vv -h "$databaseAddress" -u "$databaseUsername" -p"$databasePassword" "$databaseSchema" < SETUP.sql
   echo "---------------------------------------------------------------------------------------------"
   echo 
   echo -e "\e[1m  Press \e[7m<ENTER>\e[27m to continue...\e[0m"

@@ -30,10 +30,10 @@ getBreadcrumbs() {
         then
             getBreadcrumbs_="$getBreadcrumbs_  /  "
         fi
-        getBreadcrumbs_="$getBreadcrumbs_$j"
+        getBreadcrumbs_="$getBreadcrumbs_\e[4m$j\e[24m"
         firstOne=0
     done
-    getBreadcrumbs_="\e[4;36m$getBreadcrumbs_\e[0m"
+    getBreadcrumbs_="\e[36m$getBreadcrumbs_\e[0m"
 }
 
 

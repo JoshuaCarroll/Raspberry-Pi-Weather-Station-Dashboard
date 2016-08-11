@@ -423,6 +423,10 @@ then
     echo "  At this point you'll need to refer to your router's instructions for allowing HTTP traffic (port 80)"
     echo "  through to your Raspberry Pi."
     echo 
+    echo
+    echo 
+    echo -e "\e[1m  Press \e[7m<ENTER>\e[27m to continue...\e[0m"
+    read enter
 fi
 
 

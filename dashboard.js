@@ -4,6 +4,7 @@ var NumberOfSecondsBetweenReloadingData = 120;
 
 var boolShowMetricAndCelsiusMeasurements = false;
 var boolShowPressureInMillibars = false;
+var boolSoilTemperatureProbePresent = false;
 var intTemperature = 0;
 var intGroundTemperature = 0;
 var intHumidity = 0;
@@ -67,6 +68,7 @@ function setupData(result) {
 
     if (result.Settings.showMetricAndCelsiusMeasurements == "1") { boolShowMetricAndCelsiusMeasurements = true; }
     if (result.Settings.showPressureInMillibars == "1") { boolShowPressureInMillibars = true; }
+    if (result.Settings.soilTemperatureProbePresent == "1") { boolSoilTemperatureProbePresent = true; }
 
     if (result.WeatherObservations.Observation2 != null) {
         intPrCh1h = obj.AIR_PRESSURE - result.WeatherObservations.Observation2.AIR_PRESSURE;
@@ -122,8 +124,10 @@ function setupCharts() {
 
     drawChart(chtTemp, "chart_temp", "Temperature", intTemperature);
     
-    chtGroundTemp.options = chtTemp.options;
-    drawChart(chtGroundTemp, "chart_ground_temp", "Ground temp", intGroundTemperature);
+    if (boolSoilTemperatureProbePresent) {
+        chtGroundTemp.options = chtTemp.options;
+        drawChart(chtGroundTemp, "chart_ground_temp", "Ground temp", intGroundTemperature);
+    }
     
     chtHumidity.options = chartOptions();
     chtHumidity.options.redFrom = 85;

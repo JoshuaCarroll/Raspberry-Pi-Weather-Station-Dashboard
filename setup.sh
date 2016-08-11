@@ -176,7 +176,9 @@ echo
 echo 
 getBreadcrumbs "database"
 echo -e $getBreadcrumbs_
-
+echo
+echo
+echo
 echo "  Next, we will install (or update) stored procedures and create the table for settings to be stored."
 echo "  NOTE: Even if you have done this before it may be a good idea to run it again, especially if you have pulled a new update from the repository."
 echo -n "  Continue?  [Y/n]: "
@@ -187,7 +189,7 @@ then
   echo 
   echo "    Executing SETUP.sql."
   echo "---------------------------------------------------------------------------------------------"
-  mysql -vv -e -h "$databaseAddress" -u "$databaseUsername" -p"$databasePassword" "$databaseSchema" < SETUP.sql
+  mysql -vv -h "$databaseAddress" -u "$databaseUsername" -p"$databasePassword" "$databaseSchema" -e < SETUP.sql
   echo "---------------------------------------------------------------------------------------------"
   echo 
   echo -e "\e[1m  Press \e[7m<ENTER>\e[27m to continue...\e[0m"

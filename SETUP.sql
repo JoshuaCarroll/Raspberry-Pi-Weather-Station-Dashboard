@@ -30,6 +30,7 @@ INSERT IGNORE INTO RPiWx_SETTINGS (name) VALUE ('WUNDERGROUND_PASSWORD');
 INSERT IGNORE INTO RPiWx_SETTINGS (`name`, `value`) VALUE ('showMetricAndCelsiusMeasurements', '1');
 INSERT IGNORE INTO RPiWx_SETTINGS (`name`, `value`) VALUE ('showPressureInMillibars', '1');
 INSERT IGNORE INTO RPiWx_SETTINGS (`name`, `value`) VALUE ('showPressureInMillibars', '0');
+INSERT IGNORE INTO RPiWx_SETTINGS (`name`, `value`) VALUE ('soilTemperatureProbePresent', '1');
 
 -- Create the stored procedures
 DROP PROCEDURE IF EXISTS GETRECENTOBS;

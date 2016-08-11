@@ -301,7 +301,7 @@ echo
 echo 
 echo 
 getBreadcrumbs "preferences"
-echo $getBreadcrumbs_
+echo -e "$getBreadcrumbs_"
 echo
 echo
 echo
@@ -324,7 +324,7 @@ else
 fi
 echo
 echo
-echo "  Press <ENTER> to continue..."
+echo -e "\e[1m  Press \e[7m<ENTER>\e[27m to continue...\e[0m"
 read enter
 
 

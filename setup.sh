@@ -148,8 +148,7 @@ then
 fi
 
 echo
-echo
-echo "Creating the database.php file with these options..."
+echo "Writing to the database.php file..."
 echo
 echo "<?php" > "database.php"
 echo "include 'utilities.php';" >> "database.php"
@@ -165,12 +164,19 @@ echo "" >> "database.php"
 echo "?>" >> "database.php"
 
 echo 
-echo 
-echo "Executing: mysql -vv -h $databaseAddress -u'$databaseUsername' -p'$databasePassword' -e 'CREATE DATABASE IF NOT EXISTS $databaseSchema'"
+echo "Creating $databaseSchema database if it doesn't exist..."
 mysql -vv -h "$databaseAddress" -u "$databaseUsername" -p"$databasePassword" -e "CREATE DATABASE IF NOT EXISTS $databaseSchema"
+echo 
+echo -e "\e[1m  Press \e[7m<ENTER>\e[27m to continue...\e[0m"
+read enter
+  
+clear
+echo 
+echo 
+echo 
+getBreadcrumbs "database"
+echo -e $getBreadcrumbs_
 
-echo
-echo
 echo "  Next, we will install (or update) stored procedures and create the table for settings to be stored."
 echo "  NOTE: Even if you have done this before it may be a good idea to run it again, especially if you have pulled a new update from the repository."
 echo -n "  Continue?  [Y/n]: "
@@ -187,9 +193,6 @@ then
   echo -e "\e[1m  Press \e[7m<ENTER>\e[27m to continue...\e[0m"
   read enter
 fi
-echo 
-echo 
-echo 
 
 
 

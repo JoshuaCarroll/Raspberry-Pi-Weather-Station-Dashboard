@@ -24,7 +24,7 @@ getBreadcrumbs() {
         j=$i
         if [ $currentSection = $j ]
         then
-            j="${j^^}"
+            j="\e[1m${j^^}\e[21m"
         fi
         if [ $firstOne -eq 0 ] 
         then
@@ -33,7 +33,7 @@ getBreadcrumbs() {
         getBreadcrumbs_="$getBreadcrumbs_$j"
         firstOne=0
     done
-    
+    getBreadcrumbs_="\e[4;36m$getBreadcrumbs_\e[0m"
 }
 
 
@@ -48,21 +48,21 @@ echo
 echo 
 echo 
 getBreadcrumbs "intro"
-echo $getBreadcrumbs_
+echo -e "$getBreadcrumbs_"
 echo
 echo
 echo
-echo "           _\|/_"
-echo "          (o o)"
-echo "  +----oOO-{_}-OOo----------------------+"
-echo "  |                                     |"
-echo "  |    Raspberry Pi Weather Station     |"
-echo "  |      Dashboard Setup Utility        |"
-echo "  |                                     |"
-echo "  |                                     |"
-echo "  | Created by Joshua Carroll           |"
-echo "  | Released under the MIT license      |"
-echo "  +-------------------------------------+"
+echo -e "\e[34m          _\|/_"
+echo -e "\e[34m          (o o)"
+echo -e "\e[93m  +----\e[34moOO\e[93m-\e[34m{_}\e[93m-\e[34mOOo\e[93m----------------------+"
+echo -e "\e[93m  |                                   \e[93m  |"
+echo -e "\e[93m  | \e[37m   Raspberry Pi Weather Station   \e[93m  |"
+echo -e "\e[93m  | \e[37m     Dashboard Setup Utility      \e[93m  |"
+echo -e "\e[93m  |                                   \e[93m  |"
+echo -e "\e[93m  |                                   \e[93m  |"
+echo -e "\e[93m  | \e[37mCreated by Joshua Carroll         \e[93m  |"
+echo -e "\e[93m  | \e[37mReleased under the MIT license    \e[93m  |"
+echo -e "\e[93m  +-------------------------------------+\e[0m"
 echo
 echo
 echo "  This small shell script will help you configure your weather station. Simply answer the"
@@ -76,7 +76,7 @@ echo "  If you find any bugs or have any suggestions, please open an issue in th
 echo "    https://github.com/JoshuaCarroll/Raspberry-Pi-Weather-Station-Dashboard"
 echo
 echo
-echo "  Press <ENTER> when you are ready to begin..."
+echo -e "\e[1m  Press \e[7m<ENTER>\e[27m when you are ready to begin...\e[0m"
 read enter
 
 
@@ -91,7 +91,7 @@ echo
 echo 
 echo 
 getBreadcrumbs "database"
-echo $getBreadcrumbs_
+echo -e $getBreadcrumbs_
 echo "  This program will make several calls to the SETTINGS table in your database. To do this, you"
 echo "  will need to provide your database connection information."
 
@@ -184,7 +184,7 @@ then
   mysql -vv -e -h "$databaseAddress" -u "$databaseUsername" -p"$databasePassword" "$databaseSchema" < setup.sql
   echo "---------------------------------------------------------------------------------------------"
   echo 
-  echo "  Press <ENTER> to continue..."
+  echo -e "\e[1m  Press \e[7m<ENTER>\e[27m to continue...\e[0m"
   read enter
 fi
 echo 
@@ -203,7 +203,7 @@ echo
 echo 
 echo 
 getBreadcrumbs "preferences"
-echo $getBreadcrumbs_
+echo -e $getBreadcrumbs_
 echo
 echo
 echo
@@ -227,7 +227,7 @@ else
 fi
 echo 
 echo 
-echo "  Press <ENTER> to continue..."
+echo -e "\e[1m  Press \e[7m<ENTER>\e[27m to continue...\e[0m"
 read enter
 
 clear
@@ -235,7 +235,7 @@ echo
 echo 
 echo 
 getBreadcrumbs "preferences"
-echo $getBreadcrumbs_
+echo -e $getBreadcrumbs_
 echo
 echo
 echo
@@ -259,7 +259,7 @@ else
 fi
 echo
 echo
-echo "  Press <ENTER> to continue..."
+echo -e "\e[1m  Press \e[7m<ENTER>\e[27m to continue...\e[0m"
 read enter
 
 clear
@@ -267,7 +267,7 @@ echo
 echo 
 echo 
 getBreadcrumbs "preferences"
-echo $getBreadcrumbs_
+echo -e $getBreadcrumbs_
 echo
 echo
 echo
@@ -288,7 +288,7 @@ mysql -vv -u root -p"$databasePassword" weather -e "call UPDATEWXSETTING('statio
 echo "---------------------------------------------------------------------------------------------"
 echo
 echo
-echo "  Press <ENTER> to continue..."
+echo -e "\e[1m  Press \e[7m<ENTER>\e[27m to continue...\e[0m"
 read enter
 
 
@@ -303,7 +303,7 @@ echo
 echo 
 echo 
 getBreadcrumbs "weather_underground"
-echo $getBreadcrumbs_
+echo -e $getBreadcrumbs_
 echo
 echo
 echo
@@ -331,7 +331,7 @@ then
     echo "    *                                                                                      *"
     echo "    ****************************************************************************************"
     echo
-    echo "    Press <ENTER> to continue..."
+    echo -e "\e[1m  Press \e[7m<ENTER>\e[27m to continue...\e[0m"
     echo
     echo
     read enter
@@ -370,7 +370,7 @@ then
   echo "    Weather Underground CRON job created and will run every $wuMinutes minutes."
   echo
   echo 
-  echo "  Press <ENTER> to continue..."
+  echo -e "\e[1m  Press \e[7m<ENTER>\e[27m to continue...\e[0m"
   read enter
 fi
 
@@ -385,7 +385,7 @@ echo
 echo 
 echo 
 getBreadcrumbs "dynamic_dns"
-echo $getBreadcrumbs_
+echo -e $getBreadcrumbs_
 echo
 echo
 echo 
@@ -432,7 +432,7 @@ echo
 echo 
 echo 
 getBreadcrumbs "done"
-echo $getBreadcrumbs_
+echo -e $getBreadcrumbs_
 echo
 echo
 echo

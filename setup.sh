@@ -96,7 +96,7 @@ echo "  This program will make several calls to the SETTINGS table in your datab
 echo "  will need to provide your database connection information."
 
 echo 
-orgDatabaseAddress="$(grep -oE '\$Address = .*;' database.php | tail -1 | sed 's/$Address = //g;s/;//g')"
+orgDatabaseAddress="$(grep -oE '\$Address = .*;' database.php | tail -1 | sed 's/$Address = //g;s/;//g;s/\x27//g')"
 if [ -z "$orgDatabaseAddress" ]
 then
   orgDatabaseAddress="127.0.0.1"
@@ -109,7 +109,7 @@ then
 fi
 
 echo 
-orgDatabaseSchema="$(grep -oE '\$Schema = .*;' database.php | tail -1 | sed 's/$Schema = //g;s/;//g')"
+orgDatabaseSchema="$(grep -oE '\$Schema = .*;' database.php | tail -1 | sed 's/$Schema = //g;s/;//g;s/\x27//g')"
 if [ -z "$orgDatabaseSchema" ]
 then
   orgDatabaseSchema="weather"
@@ -122,7 +122,7 @@ then
 fi
 
 echo
-orgDatabaseUsername="$(grep -oE '\$Username = .*;' database.php | tail -1 | sed 's/$Username = //g;s/;//g')"
+orgDatabaseUsername="$(grep -oE '\$Username = .*;' database.php | tail -1 | sed 's/$Username = //g;s/;//g;s/\x27//g')"
 if [ -z "$orgDatabaseUsername" ]
 then
   orgDatabaseUsername="root"
@@ -135,10 +135,10 @@ then
 fi
 
 echo
-orgDatabasePassword="$(grep -oE '\$Password = .*;' database.php | tail -1 | sed 's/$Password = //g;s/;//g')"
+orgDatabasePassword="$(grep -oE '\$Password = .*;' database.php | tail -1 | sed 's/$Password = //g;s/;//g;s/\x27//g')"
 if [ -z "$orgDatabasePassword" ]
 then
-  orgDatabasePassword="root"
+  orgDatabasePassword="tiger"
 fi
 echo -n "Database password [$orgDatabasePassword]: "
 read databasePassword

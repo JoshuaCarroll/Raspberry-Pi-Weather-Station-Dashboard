@@ -296,6 +296,37 @@ echo
 echo -e "\e[1m  Press \e[7m<ENTER>\e[27m to continue...\e[0m"
 read enter
 
+clear
+echo 
+echo 
+echo 
+getBreadcrumbs "preferences"
+echo $getBreadcrumbs_
+echo
+echo
+echo
+echo "  Do you have a soil temperature probe installed?"
+echo "    (0) No"
+echo "    (1) Yes"
+echo
+echo -n "  !> "
+read soilTemperatureProbePresent
+if [ "$soilTemperatureProbePresent" = "0" ] || [ "$soilTemperatureProbePresent" = "1" ]
+then
+    echo 
+    echo 
+    echo "    Storing setting soilTemperatureProbePresent = $soilTemperatureProbePresent."
+    echo "---------------------------------------------------------------------------------------------"
+    mysql -vv -u root -p"$databasePassword" weather -e "call UPDATEWXSETTING('soilTemperatureProbePresent','$soilTemperatureProbePresent')"
+    echo "---------------------------------------------------------------------------------------------"
+else
+    echo "    Invalid selection.  Moving on..."
+fi
+echo
+echo
+echo "  Press <ENTER> to continue..."
+read enter
+
 
 
 ####################################################################

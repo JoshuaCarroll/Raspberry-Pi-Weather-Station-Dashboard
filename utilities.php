@@ -89,9 +89,10 @@ class Settings {
     public static $showMetricAndCelsiusMeasurements = NULL;
     public static $showPressureInMillibars = NULL;
     public static $stationElevationInMeters = NULL;
+    public static $soilTemperatureProbePresent = NULL;
     
     public function __construct() {
-        if ( (!isset(self::$showMetricAndCelsiusMeasurements)) || (!isset(self::$showPressureInMillibars)) || (!isset(self::$stationElevationInMeters)) )  {
+        if ( (!isset(self::$showMetricAndCelsiusMeasurements)) || (!isset(self::$showPressureInMillibars)) || (!isset(self::$stationElevationInMeters)) || (!isset(self::$soilTemperatureProbePresent)) )  {
             self::initializeStStateArr();
         }
     }
@@ -107,6 +108,10 @@ class Settings {
         
         if (!isset(self::$stationElevationInMeters)) {
             self::$stationElevationInMeters = getSetting("stationElevationInMeters");
+        }
+        
+        if (!isset(self::$soilTemperatureProbePresent)) {
+            self::$soilTemperatureProbePresent = getSetting("soilTemperatureProbePresent");
         }
     }
 }
